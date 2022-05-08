@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 
@@ -29,5 +30,9 @@ public class HelloController {
         ObservableList<String> friend = FXCollections.observableList(strings);
 
         friendList.setItems(friend);
+    }
+
+    public void createChat(MouseEvent mouseEvent) {
+
     }
 }
