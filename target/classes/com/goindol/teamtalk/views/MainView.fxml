@@ -8,7 +8,7 @@
    <left>
       <VBox prefHeight="400.0" prefWidth="183.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="49.0" prefWidth="183.0" text="친구목록" onMouseClicked="#setFriendList">
+            <Label prefHeight="49.0" prefWidth="183.0" text="친구목록">
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

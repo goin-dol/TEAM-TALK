@@ -1,29 +1,34 @@
 package com.goindol.teamtalk;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.IOException;
+import java.util.Objects;
 
 public class HelloApplication extends Application {
+
+    private static Stage primaryStage;
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/InitialView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 600);
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+        Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.setTitle("Team Talk");
+        Scene scene = new Scene(root,400, 600);
+        scene.setRoot(root);
+        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
 
-        stage.setScene(scene);
-        stage.show();
-
-        Stage secondStage = new Stage();
-        FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("views/Main.fxml"));
-        Scene scene2 = new Scene(fxmlLoader2.load(), 600, 400);
-        secondStage.setScene(scene2);
-        secondStage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

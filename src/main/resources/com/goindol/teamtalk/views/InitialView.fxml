@@ -4,17 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.HelloController">
    <children>
-      <Button layoutX="231.0" layoutY="448.0" mnemonicParsing="false" text="로그인" />
+      <Button layoutX="231.0" layoutY="448.0" mnemonicParsing="false" text="로그인" onAction="#login"/>
       <Button layoutX="146.0" layoutY="448.0" mnemonicParsing="false" text="회원가입" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="300.0" text="TEAM -TALK" textAlignment="CENTER" textFill="OLIVEDRAB">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <TextField layoutX="139.0" layoutY="361.0" />
-      <TextField layoutX="139.0" layoutY="399.0" />
+      <TextField fx:id="Id" layoutX="139.0" layoutY="361.0" />
+      <TextField fx:id="Password" layoutX="139.0" layoutY="399.0" />
       <Label layoutX="102.0" layoutY="366.0" text="ID" />
       <Label layoutX="99.0" layoutY="404.0" text="PW" />
    </children>
