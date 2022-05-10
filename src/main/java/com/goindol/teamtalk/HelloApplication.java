@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
         stage.show();
 
         Stage secondStage = new Stage();
-        FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+        FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("views/Main.fxml"));
         Scene scene2 = new Scene(fxmlLoader2.load(), 600, 400);
         secondStage.setScene(scene2);
         secondStage.show();
