@@ -17,10 +17,15 @@ public class HelloApplication extends Application {
         stage.show();
 
         Stage secondStage = new Stage();
+        ss(secondStage);
+
+    }
+
+    public void ss(Stage stage) throws  IOException {
         FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("views/Main.fxml"));
         Scene scene2 = new Scene(fxmlLoader2.load(), 600, 400);
-        secondStage.setScene(scene2);
-        secondStage.show();
+        stage.setScene(scene2);
+        stage.show();
     }
 
     public static void main(String[] args) {
