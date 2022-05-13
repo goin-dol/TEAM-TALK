@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<?import javafx.scene.layout.AnchorPane?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" side="LEFT">
-          <tabs>
-              <Tab fx:id="userProfileTab" closable="false" text="User Profile">
-                  <content>
-                      <AnchorPane fx:id="userProfileContainer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-              </Tab>
-              <Tab fx:id="settingsTab" closable="false" text="Settings">
-                  <content>
-                      <AnchorPane fx:id="settingsContainer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-              </Tab>
-              <Tab fx:id="logoutTab" closable="false" text="Logout">
-                  <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-              </Tab>
-          </tabs>
-      </TabPane>
-   </children>
+<StackPane stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.HelloController">
+    <children>
+        <TabPane fx:id="tabContainer" prefHeight="600.0" prefWidth="400.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="50" tabMaxWidth="50" tabMinHeight="50" tabMinWidth="50">
+            <tabs>
+                <Tab fx:id="chatTab" closable="false" text="chat">
+                    <content>
+                        <AnchorPane fx:id="userProfileContainer" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="343.0" />
+                    </content>
+                </Tab>
+                <Tab fx:id="friendTab" closable="false" text="friend">
+                    <content>
+                        <AnchorPane fx:id="settingsContainer" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="343.0" />
+                    </content>
+                </Tab>
+<!--                <Tab fx:id="logoutTab" closable="false" text="Logout">-->
+<!--                    <content>-->
+<!--                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />-->
+<!--                    </content>-->
+<!--                </Tab>-->
+            </tabs>
+        </TabPane>
+    </children>
 </StackPane>
