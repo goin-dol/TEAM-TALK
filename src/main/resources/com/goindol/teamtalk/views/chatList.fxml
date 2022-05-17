@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="600.0" prefWidth="340.0">
+        <Pane prefHeight="37.0" prefWidth="340.0" style="-fx-background-color: white;">
+            <Button layoutX="296.0" layoutY="6.0" mnemonicParsing="false" text="대화방 생성" />
+        </Pane>
+        <ScrollPane prefHeight="570.0" prefWidth="340.0">
+            <ListView fx:id="chatList" prefHeight="575.0" prefWidth="343.0" />
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

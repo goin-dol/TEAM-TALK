@@ -1,0 +1,22 @@
+.root {
+    -fx-base: white;
+    -fx-color: -fx-base;
+
+    -fx-font-family: "Montserrat";
+    -fx-accent: rgb(246, 246, 246);
+    -fx-default-button: -fx-accent;
+    -fx-focus-color: rgb(222, 222, 222);
+
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * JFX Tab Pane                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.tab {
+    -fx-rotate: 90;
+}
+.tab-selected-line {
+    -fx-background-color: -fx-focus-color;
+}
