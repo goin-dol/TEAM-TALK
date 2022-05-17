@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class HelloApplication extends Application implements Initializable {
+public class HelloApplication extends Application {
 
     private static Stage primaryStage;
     @Override
@@ -29,8 +29,5 @@ public class HelloApplication extends Application implements Initializable {
         launch(args);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
 }
