@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class LoginController{
         if (isLoginSuccess) {
             try {
                 Stage stage = (Stage) Id.getScene().getWindow();
-                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/Main.fxml"));
+                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -36,8 +37,14 @@ public class LoginController{
                 e.printStackTrace();
             }
         } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("Log In Error");
+            alert.setContentText("Wrong Id or Password");
+            alert.show();
+
+
         }
-        return;
     }
 
     public void signupButtonAction() {

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,7 +21,7 @@ public class SignupController {
         String id = Id.getText();
         String password = Password.getText();
         String nickname = Nickname.getText();
-        boolean isSignupSuccess = true;
+        boolean isSignupSuccess = false;
 
         if (isSignupSuccess) {
             try {
@@ -35,7 +36,11 @@ public class SignupController {
                 e.printStackTrace();
             }
         } else {
-
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("Sign Up Error");
+            alert.setContentText("Already");
+            alert.show();
         }
     }
 }
