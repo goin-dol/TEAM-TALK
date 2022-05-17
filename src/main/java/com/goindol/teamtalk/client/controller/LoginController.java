@@ -11,8 +11,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginController{
 
@@ -23,6 +21,22 @@ public class LoginController{
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
+        boolean isLoginSuccess = true;
+
+        if (isLoginSuccess) {
+            try {
+                Stage stage = (Stage) Id.getScene().getWindow();
+                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/Main.fxml"));
+                stage.setScene(new Scene(root, 400, 600));
+                stage.setTitle("Team Talk");
+                stage.setOnCloseRequest(event -> {System.exit(0);});
+                stage.setResizable(false);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+        }
         return;
     }
 

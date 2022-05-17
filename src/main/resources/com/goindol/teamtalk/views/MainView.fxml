@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.HelloController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MainController">
    <left>
       <VBox prefHeight="400.0" prefWidth="183.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,7 +24,7 @@
             </Pane>
             <ScrollPane prefHeight="285.0" prefWidth="194.0">
                <content>
-                  <ListView fx:id="friendList" prefHeight="286.0" prefWidth="168.0"/>
+                  <ListView prefHeight="286.0" prefWidth="168.0"/>
                </content>
             </ScrollPane>
             <Pane prefHeight="39.0" prefWidth="183.0">
@@ -47,7 +47,7 @@
                            </image></ImageView>
                      </graphic>
                   </Label>
-                  <ImageView fitHeight="45.0" fitWidth="63.0" onMouseClicked="#createChat" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="45.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/createChat.png" />
                      </image>
