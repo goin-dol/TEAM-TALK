@@ -63,8 +63,8 @@ public class userDAO {
     }
 
 
-    public int login(String userId, String userPassword, String ip) {
-        int status = -1;
+    public boolean login(String userId, String userPassword, String ip) {
+        boolean status = false;
         String query =
                 "SELECT " +
                         "`user`.`userId`," +
@@ -81,9 +81,9 @@ public class userDAO {
                         "WHERE `userId` = ?";
 
         String login =
-                "UPDATE `DB_ppick`.`friendInfo`" +
-                        "SET" +
-                        "`frindStatus` = true" +
+                "UPDATE `DB_ppick`.`friendInfo` " +
+                        "SET " +
+                        "`friendStatus` = true " +
                         "WHERE `friendNickName` = ?";
         try {
             conn = DB.getConnection();
@@ -93,9 +93,9 @@ public class userDAO {
             rs = pstmt.executeQuery();
 
             if(rs.next())
-                status = 1;
+                status = true;
             else
-                status = 0;
+                status = false;
 
             pstmt = conn.prepareStatement(update);
             pstmt.setString(1, ip);
@@ -119,11 +119,13 @@ public class userDAO {
 
 
     public userDTO getUser(String userId, String userPassword) {
-        String query = "SELECT * FROM user";
+        String query = "SELECT * FROM user WHERE userId = ? AND userPassword = ?";
         userDTO userDTO = null;
         try {
             conn = DB.getConnection();
             pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, userPassword);
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 userDTO = new userDTO();
@@ -191,7 +193,7 @@ public class userDAO {
         String query =
                 "SELECT `friendInfo`.`f_id`," +
                         "`friendInfo`.`nickName`," +
-                        "`friendInfo`.`friendId`," +
+                        "`friendInfo`.`friendNickName`," +
                         "`friendInfo`.`friendStatus`" +
                         "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
         try {

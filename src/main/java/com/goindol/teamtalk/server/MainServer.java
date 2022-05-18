@@ -46,12 +46,3 @@ public class MainServer {
 
 
 }
-
-
-class Document {
-    Page[] p1;
-}
-
-class Page {
-
-}

@@ -1,6 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.chatRoomListDTO;
+import com.goindol.teamtalk.client.model.friendDTO;
+import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.chatRoomListDAO;
+import com.goindol.teamtalk.client.service.userDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -18,10 +23,14 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
+    public static userDAO userDAO;
+    public static userDTO userDTO;
+    public static Connection conn;
 
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
@@ -34,14 +43,17 @@ public class MainController {
 
     public void showFriendList(){
         List<String> strings = new ArrayList<>();
-        strings.add("ta");
-        strings.add("gs");
+        ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+        for(int i = 0; i < friends.size(); i++) {
+            strings.add(friends.get(i).getFriendNickName());
+        }
+
         ObservableList<String> fr = FXCollections.observableList(strings);
         friendList.setItems(fr);
     }
 
     public  void showChatRoomList(){
-        List<String> strings = new ArrayList<>();
+        /*List<String> strings = new ArrayList<>();
         strings.add("chaat1");
         strings.add("chaat2");
 
@@ -54,12 +66,12 @@ public class MainController {
 
         chatRoomObservableList.addAll(chatRoom);
 
-        chatRoomList.setItems(chatRoomObservableList);
+        chatRoomList.setItems(chatRoomObservableList);*/
     }
 
     public void test(){
-        ChatRoom cr = (ChatRoom) chatRoomList.getSelectionModel().getSelectedItem();
-        System.out.println("correct : "+cr.getId());
+        chatRoomListDTO chatRoomListDTO = (chatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
+        System.out.println("correct : "+chatRoomListDTO.getChatRoom_id());
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatView.fxml"));

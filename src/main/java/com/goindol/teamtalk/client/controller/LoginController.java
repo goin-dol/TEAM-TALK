@@ -1,6 +1,9 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.DB.DBDAO;
+import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.userDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,9 +15,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class LoginController{
-
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
     @FXML public Pane pane;
     @FXML public TextField Id;
     @FXML public TextField Password;
@@ -22,12 +26,15 @@ public class LoginController{
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
-        boolean isLoginSuccess = true;
 
         //TODO : 디비랑 아이디 비번 비교
 
-        if (isLoginSuccess) {
+        System.out.println("id = " + id);
+        System.out.println("pw = " + password);
+        if (userDAO.login(id, password, "127.0.0.1")) {
             try {
+                MainController.userDTO = userDAO.getUser(id, password);
+                MainController.userDAO = userDAO;
                 Stage stage = (Stage) Id.getScene().getWindow();
                 Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
                 stage.setScene(new Scene(root, 400, 600));
