@@ -1,14 +1,23 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.HelloApplication;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,14 +49,28 @@ public class MainController {
         chatRoom.add(new ChatRoom(1,"chat1"));
         chatRoom.add(new ChatRoom(2,"chat2"));
         chatRoom.add(new ChatRoom(3,"chat3"));
-        ObservableList<ChatRoom> li = FXCollections.observableList(chatRoom);
 
-        chatRoomList.setItems(li);
+        ObservableList<ChatRoom> chatRoomObservableList = FXCollections.observableArrayList();
+
+        chatRoomObservableList.addAll(chatRoom);
+
+        chatRoomList.setItems(chatRoomObservableList);
     }
 
     public void test(){
-        System.out.println("correct"+chatRoomList.getSelectionModel().getSelectedItem());
-
+        ChatRoom cr = (ChatRoom) chatRoomList.getSelectionModel().getSelectedItem();
+        System.out.println("correct : "+cr.getId());
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

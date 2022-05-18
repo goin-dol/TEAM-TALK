@@ -3,6 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import com.goindol.teamtalk.client.controller.ChatRoom?>
 <StackPane fx:id="stackPane" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MainController">
     <children>
         <TabPane fx:id="tabContainer" prefHeight="600.0" prefWidth="400.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="50" tabMaxWidth="50" tabMinHeight="50" tabMinWidth="50">

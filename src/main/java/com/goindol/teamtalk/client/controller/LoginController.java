@@ -22,7 +22,9 @@ public class LoginController{
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
-        boolean isLoginSuccess = true;
+        boolean isLoginSuccess = false;
+
+        //TODO : 디비랑 아이디 비번 비교
 
         if (isLoginSuccess) {
             try {
