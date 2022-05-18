@@ -28,7 +28,7 @@ public class MainController {
         strings.add("ta");
         strings.add("gs");
         ObservableList<String> fr = FXCollections.observableList(strings);
-        friendList.setItems(fr);
+       friendList.setItems(fr);
     }
 
     public  void showChatRoomList(){
@@ -37,16 +37,26 @@ public class MainController {
         strings.add("chaat2");
 
         List<ChatRoom> chatRoom = new ArrayList<>();
+
+
         chatRoom.add(new ChatRoom(1,"chat1"));
         chatRoom.add(new ChatRoom(2,"chat2"));
         chatRoom.add(new ChatRoom(3,"chat3"));
+
+        for(int i=0;i<3;++i){
+            System.out.println(chatRoom.get(i).title+chatRoom.get(i).id+'\n');
+        }
+
         ObservableList<ChatRoom> li = FXCollections.observableList(chatRoom);
 
+        chatRoomList.set();
+
         chatRoomList.setItems(li);
+
     }
 
     public void test(){
-        System.out.println("correct"+chatRoomList.getSelectionModel().getSelectedItem());
+        System.out.println("correct"+chatRoomList.getSelectionModel().);
 
     }
 

@@ -10,6 +10,7 @@ public class ChatRoom {
 
 
     }
+
     public String getTitle(){
         return this.title;
     }
