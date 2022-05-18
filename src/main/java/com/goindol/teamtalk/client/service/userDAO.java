@@ -23,6 +23,35 @@ public class userDAO {
         return instance;
     }
 
+    public boolean checkedId(String userId) {
+        boolean status = false;
+        String query =
+                "SELECT " +
+                        "`user`.`userId`," +
+                        "`user`.`userPassword`," +
+                        "`user`.`nickName`," +
+                        "`user`.`status`," +
+                        "`user`.`ip`" +
+                        "FROM `DB_ppick`.`user` WHERE userId = ?";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                status = false;
+            else
+                status = true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+        return status;
+    }
+
     public void signUp(String userId, String userPassword, String nickName) {
         String query =
                 "INSERT INTO `DB_ppick`.`user`" +

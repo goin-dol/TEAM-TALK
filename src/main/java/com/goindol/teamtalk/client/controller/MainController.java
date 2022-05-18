@@ -31,7 +31,7 @@ public class MainController {
     public static userDAO userDAO;
     public static userDTO userDTO;
     public static Connection conn;
-
+    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
     @FXML public AnchorPane friendAnchor;
@@ -43,9 +43,13 @@ public class MainController {
 
     public void showFriendList(){
         List<String> strings = new ArrayList<>();
-        ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
-        for(int i = 0; i < friends.size(); i++) {
-            strings.add(friends.get(i).getFriendNickName());
+        if(userDTO == null) {
+            strings.add("친구가 없습니다.");
+        }else {
+            ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+            for(int i = 0; i < friends.size(); i++) {
+                strings.add(friends.get(i).getFriendNickName());
+            }
         }
 
         ObservableList<String> fr = FXCollections.observableList(strings);
@@ -53,20 +57,21 @@ public class MainController {
     }
 
     public  void showChatRoomList(){
-        /*List<String> strings = new ArrayList<>();
-        strings.add("chaat1");
-        strings.add("chaat2");
+        List<chatRoomListDTO> strings = new ArrayList<>();
+        if(userDTO == null) {
+            strings.add(new chatRoomListDTO(0, "채팅방이 없습니다."));
+        }else {
+            ArrayList<chatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            for(int i = 0; i < chatRoom.size(); i++) {
+                strings.add(chatRoom.get(i));
+            }
+        }
 
-        List<ChatRoom> chatRoom = new ArrayList<>();
-        chatRoom.add(new ChatRoom(1,"chat1"));
-        chatRoom.add(new ChatRoom(2,"chat2"));
-        chatRoom.add(new ChatRoom(3,"chat3"));
+        ObservableList<chatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
 
-        ObservableList<ChatRoom> chatRoomObservableList = FXCollections.observableArrayList();
+        chatRoomObservableList.addAll(strings);
 
-        chatRoomObservableList.addAll(chatRoom);
-
-        chatRoomList.setItems(chatRoomObservableList);*/
+        chatRoomList.setItems(chatRoomObservableList);
     }
 
     public void test(){
