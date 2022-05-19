@@ -3,6 +3,7 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.HelloApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,9 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,16 +52,47 @@ public class ChatController implements Initializable {
 
     public void Chattting(){
 
+
+    }
+
+    public void initialChat() {
+        //TODO : DB에서 해당 채팅방 채팅 불러오기
     }
 
 
+    public void getChatRoomId(int id) {
+        System.out.println("ChatRoom ID : " + id);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<String> strings = new ArrayList<>();
-        strings.add("hi");
-        strings.add("hello");
-        ObservableList<String> li = FXCollections.observableList(strings);
-        chat.setItems(li);
+        initialChat();
+        noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
+
+        noticeCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
+
+        voteMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
+
+        voteCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
     }
 }
