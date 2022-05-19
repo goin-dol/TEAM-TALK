@@ -21,7 +21,9 @@ public class SignupController {
         String id = Id.getText();
         String password = Password.getText();
         String nickname = Nickname.getText();
-        boolean isSignupSuccess = false;
+        boolean isSignupSuccess = true;
+
+        //TODO : 중복 회원가입 여부 확인
 
         if (isSignupSuccess) {
             try {

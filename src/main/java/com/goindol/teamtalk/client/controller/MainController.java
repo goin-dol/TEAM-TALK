@@ -1,14 +1,23 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.HelloApplication;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +37,7 @@ public class MainController {
         strings.add("ta");
         strings.add("gs");
         ObservableList<String> fr = FXCollections.observableList(strings);
-       friendList.setItems(fr);
+        friendList.setItems(fr);
     }
 
     public  void showChatRoomList(){
@@ -37,28 +46,35 @@ public class MainController {
         strings.add("chaat2");
 
         List<ChatRoom> chatRoom = new ArrayList<>();
-
-
         chatRoom.add(new ChatRoom(1,"chat1"));
         chatRoom.add(new ChatRoom(2,"chat2"));
         chatRoom.add(new ChatRoom(3,"chat3"));
 
-        for(int i=0;i<3;++i){
-            System.out.println(chatRoom.get(i).title+chatRoom.get(i).id+'\n');
+        ObservableList<ChatRoom> chatRoomObservableList = FXCollections.observableArrayList();
+
+        chatRoomObservableList.addAll(chatRoom);
+
+        chatRoomList.setItems(chatRoomObservableList);
+    }
+
+    public void openChatRoom(){
+        ChatRoom cr = (ChatRoom) chatRoomList.getSelectionModel().getSelectedItem();
+        System.out.println("correct : "+cr.getId());
+        try {
+            Stage stage = (Stage) stackPane.getScene().getWindow();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        ObservableList<ChatRoom> li = FXCollections.observableList(chatRoom);
-
-        chatRoomList.set();
-
-        chatRoomList.setItems(li);
-
     }
 
-    public void test(){
-        System.out.println("correct"+chatRoomList.getSelectionModel().);
-
-    }
-
+    public void makeChatroom(){}
+    public void addFriend(){}
+    public void logOut(){}
 
 }

@@ -24,6 +24,8 @@ public class LoginController{
         String password = Password.getText();
         boolean isLoginSuccess = true;
 
+        //TODO : 디비랑 아이디 비번 비교
+
         if (isLoginSuccess) {
             try {
                 Stage stage = (Stage) Id.getScene().getWindow();
@@ -33,6 +35,9 @@ public class LoginController{
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
+
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

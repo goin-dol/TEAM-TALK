@@ -12,6 +12,11 @@ public class ChatRoom {
     }
 
     public String getTitle(){
-        return this.title;
+        return title;
     }
+    public int getId() { return id; }
+    public String toString() {
+        return "방제목 : " + title + "    방 번호 : " +id;
+    }
+
 }

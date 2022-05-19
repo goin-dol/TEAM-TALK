@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-
-<?import javafx.scene.control.TextField?>
-<BorderPane fx:id="chatRoomContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatController">
+<BorderPane fx:id="chatRoomContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatController">
     <top>
         <VBox prefHeight="120.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <Label fx:id="chatRoomTitle" layoutX="32.0" layoutY="22.0" text="Label" />
+                        <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
                         <Label fx:id="chatRoomInfo" layoutX="327.0" layoutY="32.0" text="채팅방 정보" />
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="-57.0" layoutY="-45.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#goToBack">
+                      <image>
+                          <Image url = "@../images/goToBack.png">
+                      </image>>
+                  </ImageView>>
+
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">
