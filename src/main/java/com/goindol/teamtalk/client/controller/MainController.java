@@ -36,7 +36,7 @@ public class MainController implements Initializable {
     @FXML public Tab friendTab;
     @FXML public ListView chatRoomList;
     @FXML public ListView friendList;
-    @FXML public TextArea searchFriend;
+    @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
     @FXML public Button makeChatRoomButton;
 
