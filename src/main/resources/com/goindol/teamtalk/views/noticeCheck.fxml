@@ -9,11 +9,11 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="noticeCheckContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.showNoticeController">
    <top>
       <Pane prefHeight="40.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="174.0" layoutY="12.0" text="공지제목" />
+            <Label fx:id="noticeTitle" layoutX="174.0" layoutY="12.0" text="공지제목" />
          </children>
       </Pane>
    </top>
@@ -22,7 +22,7 @@
          <children>
             <ScrollPane prefHeight="292.0" prefWidth="400.0">
                <content>
-                  <TextFlow prefHeight="290.0" prefWidth="382.0" />
+                  <TextFlow fx:id="noticeContent" prefHeight="290.0" prefWidth="382.0" />
                </content>
             </ScrollPane>
             <Pane prefHeight="28.0" prefWidth="400.0">
@@ -30,7 +30,7 @@
                   <Label layoutX="158.0" layoutY="6.0" text="읽은 사람 목록" />
                </children>
             </Pane>
-            <ListView prefHeight="242.0" prefWidth="400.0" />
+            <ListView fx:id="readUserList" prefHeight="242.0" prefWidth="400.0" />
          </children>
       </VBox>
    </center>
