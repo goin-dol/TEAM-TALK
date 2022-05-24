@@ -89,7 +89,7 @@ public class ChatController implements Initializable {
                     Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/makeVote.fxml"));
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> {System.exit(0);});
+                    stage.setOnCloseRequest(event -> {stage.close();});
                     stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
@@ -103,7 +103,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/showVoteResultView.fxml"));
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/doVoteView.fxml"));
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> {stage.close();});

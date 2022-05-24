@@ -28,7 +28,7 @@ public class voteDAO {
         return instance;
     }
 
-    //투표 리스트
+    //투표 리스트 - 지워도 될듯
     public List<String> createVoteVar(List<String> v,String content){
         if(content.equals("")){
             System.out.println("입력하지 않은 항목이 있습니다.");

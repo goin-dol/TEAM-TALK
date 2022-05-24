@@ -1,8 +1,10 @@
 package com.goindol.teamtalk.client.model;
 
 public class voteVarDTO {
+    int id;
     int vote_id;
     String content;
+
     public voteVarDTO(int vote_id, String content) {
         this.vote_id = vote_id;
         this.content = content;
