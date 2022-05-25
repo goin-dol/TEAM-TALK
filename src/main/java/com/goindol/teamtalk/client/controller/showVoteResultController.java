@@ -1,5 +1,6 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.model.voteVarDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,10 @@ public class showVoteResultController implements Initializable {
     public ListView voteResultList;
     private ToggleGroup group = new ToggleGroup();
 
+    public int chatid;
+    public userDTO userDTO;
+
+
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
@@ -48,6 +53,14 @@ public class showVoteResultController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialVoteList();
 
+    }
+
+    public void getChatRoomId(int chatid) {
+        this.chatid = chatid;
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     private class listCell extends ListCell<voteVarDTO> {
