@@ -35,9 +35,6 @@ public class LoginController{
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
