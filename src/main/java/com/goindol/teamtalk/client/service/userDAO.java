@@ -91,6 +91,37 @@ public class userDAO {
         }
     }
 
+    public boolean checkLogin(String userId, String userPassword) {
+        boolean status = false;
+        String query =
+                "SELECT " +
+                        "`user`.`userId`," +
+                        "`user`.`userPassword`," +
+                        "`user`.`nickName`," +
+                        "`user`.`status`," +
+                        "`user`.`ip`" +
+                        "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, userPassword);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                status = true;
+            else
+                status = false;
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+        return status;
+    }
+
+
 
     public boolean login(String userId, String userPassword, String ip) {
         boolean status = false;
@@ -157,10 +188,12 @@ public class userDAO {
             pstmt.setString(2, userPassword);
             rs = pstmt.executeQuery();
             if(rs.next()) {
+                System.out.println("rs.next!!");
                 userDTO = new userDTO();
                 userDTO.setUserId(rs.getString("userId"));
                 userDTO.setUserPassword(rs.getString("userPassword"));
                 userDTO.setNickName(rs.getString("nickName"));
+                userDTO.setStatus(rs.getBoolean("status"));
                 userDTO.setIp(rs.getString("ip"));
 
             }

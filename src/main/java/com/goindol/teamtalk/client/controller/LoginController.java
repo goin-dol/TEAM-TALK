@@ -4,6 +4,9 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.DB.DBDAO;
 import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.server.MainServer;
+import com.goindol.teamtalk.server.UserThread;
+import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,35 +17,64 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.Connection;
 
 public class LoginController{
+    public static LoginController instance = new LoginController();
+    BufferedReader br;
+    PrintWriter pw;
+    userDTO userDTO;
     userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    Socket socket;
+    MainController main;
+    public static MainServer mainServer;
     @FXML public Pane pane;
     @FXML public TextField Id;
     @FXML public TextField Password;
 
-    public void loginButtonAction() {
+    public LoginController() {
+
+    }
+
+    public LoginController LoginController() {
+        if(instance == null)
+            instance = new LoginController();
+        return instance;
+    }
+
+    public void loginButtonAction() throws IOException {
         String id = Id.getText();
         String password = Password.getText();
 
+        System.out.println("user info : " + id);
+        System.out.println("user info : " + password);
         //TODO : 디비랑 아이디 비번 비교
-
-        System.out.println("id = " + id);
-        System.out.println("pw = " + password);
-        if (userDAO.login(id, password, "127.0.0.1")) {
+        if (userDAO.checkLogin(id, password)) {
             try {
-                MainController.userDTO = userDAO.getUser(id, password);
-                MainController.userDAO = userDAO;
+                this.userDTO = userDAO.getUser(id, password);
+                mainServer = MainServer.getInstance();
+
                 Stage stage = (Stage) Id.getScene().getWindow();
-                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                Parent root = loader.load();
+                MainController main = loader.getController();
+                //mainServer.setMainController(main);
+                //main.setSocket(socket);
+                main.setuserDTO(userDTO);
+                main.showChatRoomList();
+
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
 
+                //socket = new Socket("192.168.0.52", 9500);
+                //main.setSocket(socket);
 
 
             } catch (IOException e) {
@@ -71,6 +103,10 @@ public class LoginController{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public userDTO getUserDTO() {
+        return userDTO;
     }
 
 }

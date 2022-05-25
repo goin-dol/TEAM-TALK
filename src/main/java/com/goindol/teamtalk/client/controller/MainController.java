@@ -4,8 +4,11 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.chatRoomListDTO;
 import com.goindol.teamtalk.client.model.friendDTO;
 import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.chatLogDAO;
 import com.goindol.teamtalk.client.service.chatRoomListDAO;
+import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
 import com.goindol.teamtalk.client.service.userDAO;
+import com.sun.tools.javac.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -22,16 +25,22 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainController {
-    public static userDAO userDAO;
-    public static userDTO userDTO;
-    public static Connection conn;
+public class MainController{
+    LoginController loginController;
+    userDTO userDTO;
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    chatRoomUserListDAO chatRoomUserListDAO = com.goindol.teamtalk.client.service.chatRoomUserListDAO.getInstance();
+    chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
+    Socket socket;
+    BufferedReader br;
+    PrintWriter pw;
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
     @FXML public AnchorPane friendAnchor;
@@ -40,6 +49,23 @@ public class MainController {
     @FXML public Tab friendTab;
     @FXML public ListView chatRoomList;
     @FXML public ListView friendList;
+
+
+    public MainController() {}
+
+
+    public void setSocket(Socket socket) throws IOException{
+        System.out.println("Main CTR Success!!");
+        this.socket = socket;
+
+        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+    }
+
+    public void setBrPw(BufferedReader br, PrintWriter pr) {
+        this.br = br;
+        this.pw = pw;
+    }
 
     public void showFriendList(){
         List<String> strings = new ArrayList<>();
@@ -90,5 +116,10 @@ public class MainController {
         }
     }
 
+    public void setuserDTO(userDTO userDTO) {
+        System.out.println("@$!$$$");
+        this.userDTO = userDTO;
+        userDAO.login(userDTO.getUserId(), userDTO.getUserPassword(), "127.0.0.1");
+    }
 
 }

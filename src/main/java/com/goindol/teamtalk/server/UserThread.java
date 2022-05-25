@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.server;
 
 
+import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.chatRoomListDTO;
 import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
 import com.goindol.teamtalk.client.model.friendDTO;
@@ -8,6 +9,10 @@ import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
 import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
 import com.goindol.teamtalk.client.service.userDAO;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,9 +20,8 @@ import java.util.ArrayList;
 
 public class UserThread extends Thread{
 
-    private BufferedReader br;
-    private PrintWriter pw;
-    private com.goindol.teamtalk.client.service.userDAO userDAO;
+
+    com.goindol.teamtalk.client.service.userDAO userDAO;
     com.goindol.teamtalk.client.service.chatRoomListDAO chatRoomListDAO;
     com.goindol.teamtalk.client.service.chatRoomUserListDAO chatRoomUserListDAO;
     com.goindol.teamtalk.client.service.chatLogDAO chatLogDAO;
@@ -28,22 +32,22 @@ public class UserThread extends Thread{
     private ArrayList<chatRoomUserListDTO> currentRoomUserList;
     private int chatRoom_id;
 
-    public UserThread(Socket socket, userDTO userDTO, String userId, String userPassword) throws IOException {
-        this.user = userDTO;
+    public UserThread(Socket socket) throws IOException {
+        System.out.println("HELLO");
         this.currentRoomUserList = new ArrayList<chatRoomUserListDTO>();
         this.socket = socket;
-        this.friendList = userDAO.getFriendList(user.getNickName());
-        this.chatRoomList = chatRoomListDAO.getChatRoomName(user.getNickName());
+        //this.friendList = userDAO.getFriendList(user.getNickName());
+        //this.chatRoomList = chatRoomListDAO.getChatRoomName(user.getNickName());
         chatRoomListDAO = chatRoomListDAO.getInstance();
         chatRoomUserListDAO = chatRoomUserListDAO.getInstance();
         chatLogDAO = chatLogDAO.getInstance();
-        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
     }
 
 
     @Override
     public void run() {
+
     }
 
     public void entryRoom(int chatRoom_id) {
