@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -36,6 +37,9 @@ public class ChatController implements Initializable {
     @FXML private TextArea userInput;
     @FXML private Label send;
 
+    public int chatid;
+    public userDTO userDTO;
+
     public void goToBack(){
         try {
             Stage stage = (Stage) chatRoomContainer.getScene().getWindow();
@@ -65,10 +69,6 @@ public class ChatController implements Initializable {
     }
 
 
-    public void getChatRoomId(int id) {
-        System.out.println("ChatRoom ID : " + id);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialChat();
@@ -78,7 +78,13 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/makeNotice.fxml"));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(HelloApplication.class.getResource("views/makeNotice.fxml"));
+                    Parent root = (Parent) loader.load();
+                    makeNoticeController makeNoticeController = (makeNoticeController) loader.getController();
+                    makeNoticeController.getChatRoomId(chatid);
+                    makeNoticeController.setuserDTO(userDTO);
+
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
@@ -95,7 +101,13 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/noticeCheck.fxml"));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(HelloApplication.class.getResource("views/noticeCheck.fxml"));
+                    Parent root = (Parent) loader.load();
+                    showNoticeController showNoticeController = (showNoticeController) loader.getController();
+                    showNoticeController.getChatRoomId(chatid);
+                    showNoticeController.setuserDTO(userDTO);
+
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
@@ -112,10 +124,16 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/makeVote.fxml"));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(HelloApplication.class.getResource("views/makeVote.fxml"));
+                    Parent root = (Parent) loader.load();
+                    makeVoteController makeVoteController = (makeVoteController) loader.getController();
+                    makeVoteController.getChatRoomId(chatid);
+                    makeVoteController.setuserDTO(userDTO);
+
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> {stage.close();});
+                    stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
@@ -127,19 +145,45 @@ public class ChatController implements Initializable {
         voteCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                try {
-                    Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/doVoteView.fxml"));
-                    stage.setScene(new Scene(root, 400, 600));
-                    stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> {stage.close();});
-                    stage.setResizable(false);
-                    stage.setX(0);
-                    stage.setY(0);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                boolean ifAlreadyVote = false;
+                if(ifAlreadyVote) {
+                    try {
+                        Stage stage = new Stage();
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(HelloApplication.class.getResource("views/showVoteResult.fxml"));
+                        Parent root = (Parent) loader.load();
+                        showVoteResultController showVoteResultController = (showVoteResultController) loader.getController();
+                        showVoteResultController.getChatRoomId(chatid);
+                        showVoteResultController.setuserDTO(userDTO);
+
+                        stage.setScene(new Scene(root, 400, 600));
+                        stage.setTitle("Team Talk");
+                        stage.setOnCloseRequest(event -> stage.close());
+                        stage.setResizable(false);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Stage stage = new Stage();
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(HelloApplication.class.getResource("views/doVoteView.fxml"));
+                        Parent root = (Parent) loader.load();
+                        doVoteController doVoteController = (doVoteController) loader.getController();
+                        doVoteController.getChatRoomId(chatid);
+                        doVoteController.setuserDTO(userDTO);
+
+                        stage.setScene(new Scene(root, 400, 600));
+                        stage.setTitle("Team Talk");
+                        stage.setOnCloseRequest(event -> stage.close());
+                        stage.setResizable(false);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 
@@ -148,13 +192,17 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
-                    stage.setScene(new Scene(root, 250, 400));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
+                    Parent root = (Parent) loader.load();
+                    ChatRoomInfoController chatRoomInfoController = (ChatRoomInfoController) loader.getController();
+                    chatRoomInfoController.getChatRoomId(chatid);
+                    chatRoomInfoController.setuserDTO(userDTO);
+
+                    stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
-                    stage.setX(1100);
-                    stage.setY(300);
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -162,5 +210,12 @@ public class ChatController implements Initializable {
             }
         });
 
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
+    }
+    public void getChatRoomId(int id) {
+        this.chatid = id;
     }
 }

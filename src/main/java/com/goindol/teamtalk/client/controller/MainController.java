@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -40,6 +41,8 @@ public class MainController implements Initializable {
     @FXML public Button addFriendButton;
     @FXML public Button makeChatRoomButton;
 
+    public userDTO userDTO;
+
     public void showFriendList(){
 
 //        List<String> strings = new ArrayList<>();
@@ -47,6 +50,7 @@ public class MainController implements Initializable {
 //        strings.add("gs");
 //        ObservableList<String> fr = FXCollections.observableList(strings);
 //        friendList.setItems(fr);
+//
     }
 
     public void showChatRoomList(){
@@ -71,6 +75,7 @@ public class MainController implements Initializable {
             Parent root = (Parent) loader.load();
             ChatController chatController = (ChatController) loader.getController();
             chatController.getChatRoomId(cr.getId());
+            chatController.setuserDTO(userDTO);
 
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
@@ -164,5 +169,9 @@ public class MainController implements Initializable {
                 openChatRoom();
             }
         });
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 }

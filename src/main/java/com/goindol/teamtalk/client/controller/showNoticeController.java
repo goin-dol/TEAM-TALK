@@ -1,5 +1,6 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -17,6 +18,9 @@ public class showNoticeController implements Initializable {
     @FXML private TextFlow noticeContent;
 
     @FXML private ListView readUserList;
+    public int chatid;
+    public userDTO userDTO;
+
 
     public void showNoticeContent(){
         Text t1 = new Text("공지내용");
@@ -31,5 +35,13 @@ public class showNoticeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showNoticeContent();
+    }
+
+    public void getChatRoomId(int chatid) {
+        this.chatid = chatid;
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 }
