@@ -136,5 +136,25 @@ public class ChatController implements Initializable {
                 }
             }
         });
+
+        chatRoomInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    Stage stage = new Stage();
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
+                    stage.setScene(new Scene(root, 250, 400));
+                    stage.setTitle("Team Talk");
+                    stage.setOnCloseRequest(event -> stage.close());
+                    stage.setResizable(false);
+                    stage.setX(1100);
+                    stage.setY(300);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }
