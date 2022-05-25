@@ -2,6 +2,7 @@ package com.goindol.teamtalk.server;
 
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.controller.MainController;
 import com.goindol.teamtalk.client.model.chatRoomListDTO;
 import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
 import com.goindol.teamtalk.client.model.friendDTO;
@@ -26,6 +27,7 @@ public class UserThread extends Thread{
     com.goindol.teamtalk.client.service.chatRoomUserListDAO chatRoomUserListDAO;
     com.goindol.teamtalk.client.service.chatLogDAO chatLogDAO;
     private Socket socket;
+    private MainController mainController;
     private userDTO user;
     private ArrayList<friendDTO> friendList;
     private ArrayList<chatRoomListDTO> chatRoomList;
@@ -47,7 +49,7 @@ public class UserThread extends Thread{
 
     @Override
     public void run() {
-
+        
     }
 
     public void entryRoom(int chatRoom_id) {

@@ -51,8 +51,12 @@ public class MainController{
     @FXML public ListView friendList;
 
 
-    public MainController() {}
+    public MainController() {
 
+
+
+
+    }
 
     public void setSocket(Socket socket) throws IOException{
         System.out.println("Main CTR Success!!");
@@ -116,10 +120,11 @@ public class MainController{
         }
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setuserDTO(userDTO userDTO) throws IOException {
         System.out.println("@$!$$$");
         this.userDTO = userDTO;
-        userDAO.login(userDTO.getUserId(), userDTO.getUserPassword(), "127.0.0.1");
+        socket = new Socket("192.168.0.52", 9500);
+        userDAO.login(userDTO.getUserId(), userDTO.getUserPassword(), socket.getInetAddress().toString());
     }
 
 }

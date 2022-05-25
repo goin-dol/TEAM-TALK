@@ -52,7 +52,7 @@ public class MainServer {
             while(true) {
                 socket = serverSocket.accept();
                 System.out.println("Succes!!");
-
+                UserThread userThread = new UserThread(socket);
                 //allUserList.add(userDTO.getNickName());
                 //여기에 모든 사용자한테 친구목록 새로고침하는 소스 부르기
                 System.out.println("입장 완료");

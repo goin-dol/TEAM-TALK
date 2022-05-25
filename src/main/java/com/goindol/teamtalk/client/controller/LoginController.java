@@ -56,7 +56,6 @@ public class LoginController{
         if (userDAO.checkLogin(id, password)) {
             try {
                 this.userDTO = userDAO.getUser(id, password);
-                mainServer = MainServer.getInstance();
 
                 Stage stage = (Stage) Id.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
@@ -73,8 +72,6 @@ public class LoginController{
                 stage.setResizable(false);
                 stage.show();
 
-                //socket = new Socket("192.168.0.52", 9500);
-                //main.setSocket(socket);
 
 
             } catch (IOException e) {
