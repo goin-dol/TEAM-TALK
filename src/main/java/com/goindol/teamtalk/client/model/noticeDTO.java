@@ -9,6 +9,11 @@ public class noticeDTO {
     private String title;
     private String content;
 
+    public noticeDTO(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public String getNickName() {
         return nickName;
     }

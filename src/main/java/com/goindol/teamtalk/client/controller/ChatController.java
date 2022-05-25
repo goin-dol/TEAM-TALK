@@ -25,16 +25,16 @@ import java.util.ResourceBundle;
 
 
 public class ChatController implements Initializable {
-    @FXML public BorderPane chatRoomContainer;
-    @FXML public Label chatRoomTitle;
-    @FXML public Label chatRoomInfo;
-    @FXML public Label noticeCheck;
-    @FXML public Label noticeMake;
-    @FXML public Label voteCheck;
+    @FXML private BorderPane chatRoomContainer;
+    @FXML private Label chatRoomTitle;
+    @FXML private Label chatRoomInfo;
+    @FXML private Label noticeCheck;
+    @FXML private Label noticeMake;
+    @FXML private Label voteCheck;
     @FXML public Label voteMake;
-    @FXML public ListView chat;
-    @FXML public TextArea userInput;
-    @FXML public Label send;
+    @FXML private ListView chat;
+    @FXML private TextArea userInput;
+    @FXML private Label send;
 
     public void goToBack(){
         try {
@@ -66,18 +66,38 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initialChat();
+        //initialChat();
         noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                try {
+                    Stage stage = new Stage();
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/makeNotice.fxml"));
+                    stage.setScene(new Scene(root, 400, 600));
+                    stage.setTitle("Team Talk");
+                    stage.setOnCloseRequest(event -> stage.close());
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         noticeCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                try {
+                    Stage stage = new Stage();
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/noticeCheck.fxml"));
+                    stage.setScene(new Scene(root, 400, 600));
+                    stage.setTitle("Team Talk");
+                    stage.setOnCloseRequest(event -> stage.close());
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -89,7 +109,7 @@ public class ChatController implements Initializable {
                     Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/makeVote.fxml"));
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> {System.exit(0);});
+                    stage.setOnCloseRequest(event -> {stage.close();});
                     stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
@@ -103,7 +123,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/showVoteResultView.fxml"));
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/doVoteView.fxml"));
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> {stage.close();});
@@ -116,5 +136,25 @@ public class ChatController implements Initializable {
                 }
             }
         });
+
+        chatRoomInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    Stage stage = new Stage();
+                    Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
+                    stage.setScene(new Scene(root, 250, 400));
+                    stage.setTitle("Team Talk");
+                    stage.setOnCloseRequest(event -> stage.close());
+                    stage.setResizable(false);
+                    stage.setX(1100);
+                    stage.setY(300);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }

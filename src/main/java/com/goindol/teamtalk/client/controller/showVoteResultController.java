@@ -1,14 +1,19 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.voteVarDTO;
+import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -25,6 +30,8 @@ public class showVoteResultController implements Initializable {
     public ListView voteResultList;
     private ToggleGroup group = new ToggleGroup();
 
+    private static voteDAO voteDAO;
+
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
@@ -37,6 +44,10 @@ public class showVoteResultController implements Initializable {
 
         voteResultList.setItems(names);
         voteResultList.setCellFactory(param -> new listCell());
+
+        //투표결과닉네임
+//        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
+
     }
 
     @Override
@@ -46,18 +57,34 @@ public class showVoteResultController implements Initializable {
     }
 
     private class listCell extends ListCell<voteVarDTO> {
+        HBox hbox = new HBox();
+        Label label = new Label("(empty)");
+        Pane pane = new Pane();
+        Button button = new Button("(>)");
+        String lastItem;
+
+        public listCell() {
+            super();
+            hbox.getChildren().addAll(label, pane, button);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    System.out.println(lastItem + " : " + actionEvent);
+                }
+            });
+        }
+
         @Override
         public void updateItem(voteVarDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
-                setText(null);
+                lastItem = null;
                 setGraphic(null);
             } else {
-                Label label = new Label(obj.getContent());
-                Button button = new Button("투표 인원");
-                setGraphic(button);
-                setText(obj.getContent());
-
+                lastItem=obj.getContent();
+                label.setText(obj.getContent()!=null ? obj.getContent() : "<null>");
+                setGraphic(hbox);
             }
         }
     }

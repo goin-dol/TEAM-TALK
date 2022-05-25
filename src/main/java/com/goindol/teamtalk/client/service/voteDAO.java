@@ -29,6 +29,15 @@ public class voteDAO {
         return instance;
     }
 
+    //투표 리스트 - 지워도 될듯
+    public List<String> createVoteVar(List<String> v,String content){
+        if(content.equals("")){
+            System.out.println("입력하지 않은 항목이 있습니다.");
+        }else
+            v.add(content);
+        return v;
+    }
+
     //투표 생성 (투표 리스트 다 담아서 만듦)
     public void creatVote(int chatRoom_id,String title,boolean isAnonymous,boolean isOverLap){
         String query =
@@ -177,6 +186,7 @@ public class voteDAO {
                 "INSERT INTO `DB_ppick`.`voteResult` (vote_id,voteVar_id,content,nickName) values (?,?,?,?)";
 
         try{
+
             conn = DB.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1,vote_id);
@@ -230,10 +240,11 @@ public class voteDAO {
         return false;
     }
 
-    //
+    // 중복 투표가 가능할때
     public boolean checkOverlapVoteVar1(int vote_id, String nickName){
         String query =
                 "SELECT count(*) as count FROM `DB_ppick`.`voteResult` FROM vote_id=? and nickName=? and voteVar_id=?";
+
 
         try{
             conn = DB.getConnection();
@@ -280,7 +291,6 @@ public class voteDAO {
         }
         return false;
     }
-
 
     //투표 인원 체크
     public void AllReadVote(int chatRoom_id,int vote_id){
