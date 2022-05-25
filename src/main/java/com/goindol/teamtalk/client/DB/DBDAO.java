@@ -21,8 +21,8 @@ public class DBDAO {
 
         ctx = new InitialContext();
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql:// 54.159.140.253:3306/DB_ppick", "ppick", "Ppick0420!");
-
+        conn = DriverManager.getConnection("jdbc:mysql://54.159.140.253:3306/DB_ppick?useSSL=false&allowMultiQueries=true", "ppick", "Ppick0420!");
+//        conn.setAutoCommit(false);
         System.out.println("알림 - DB연동이 정상적으로 되었습니다.");
 
         return conn;

@@ -6,6 +6,16 @@ public class voteResultDTO {
     private String content;
     private String nickName;
 
+    private int voteResult_id;
+
+    public int getVoteResult_id() {
+        return voteResult_id;
+    }
+
+    public void setVoteResult_id(int voteResult_id) {
+        this.voteResult_id = voteResult_id;
+    }
+
     public int getVote_id() {
         return vote_id;
     }
