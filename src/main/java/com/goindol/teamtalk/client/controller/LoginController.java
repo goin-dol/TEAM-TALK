@@ -33,7 +33,7 @@ public class LoginController{
 
         if (isLoginSuccess) {
             try {
-                this.userDTO = userDAO.getUser(id, password);
+//                this.userDTO = userDAO.getUser(id, password);
 
                 Stage stage = (Stage) Id.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
