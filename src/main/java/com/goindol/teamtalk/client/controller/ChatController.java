@@ -63,10 +63,16 @@ public class ChatController implements Initializable {
         //TODO : DB에서 해당 채팅방 채팅 불러오기
     }
 
+    public void setChatRoomTitle(){
+        String s = "채팅방1";
+        chatRoomTitle.setText(s);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialChat();
+        setChatRoomTitle();
         noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
