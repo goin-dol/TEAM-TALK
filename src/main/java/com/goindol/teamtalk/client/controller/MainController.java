@@ -47,6 +47,7 @@ public class MainController implements Initializable {
 //        strings.add("gs");
 //        ObservableList<String> fr = FXCollections.observableList(strings);
 //        friendList.setItems(fr);
+//
     }
 
     public void showChatRoomList(){
