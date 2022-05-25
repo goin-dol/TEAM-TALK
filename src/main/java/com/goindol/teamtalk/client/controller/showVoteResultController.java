@@ -2,6 +2,7 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.model.voteVarDTO;
+import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -35,6 +35,8 @@ public class showVoteResultController implements Initializable {
     public userDTO userDTO;
 
 
+    private static voteDAO voteDAO;
+
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
@@ -47,6 +49,10 @@ public class showVoteResultController implements Initializable {
 
         voteResultList.setItems(names);
         voteResultList.setCellFactory(param -> new listCell());
+
+        //투표결과닉네임
+//        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
+
     }
 
     @Override
