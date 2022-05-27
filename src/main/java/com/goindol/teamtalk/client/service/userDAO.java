@@ -123,7 +123,7 @@ public class userDAO {
 
 
 
-    public boolean login(String userId, String userPassword, String ip) {
+    public boolean login(String userId, String userPassword) {
         boolean status = false;
         String query =
                 "SELECT " +
@@ -135,9 +135,8 @@ public class userDAO {
                         "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
         String update =
                 "UPDATE `DB_ppick`.`user`" +
-                        "SET" +
-                        "`status` = true," +
-                        "`ip` = ?" +
+                        "SET " +
+                        "`status` = true " +
                         "WHERE `userId` = ?";
 
         String login =
@@ -158,8 +157,7 @@ public class userDAO {
                 status = false;
 
             pstmt = conn.prepareStatement(update);
-            pstmt.setString(1, ip);
-            pstmt.setString(2, userId);
+            pstmt.setString(1, userId);
             pstmt.executeUpdate();
 
             pstmt = conn.prepareStatement(login);
@@ -205,6 +203,34 @@ public class userDAO {
             if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return userDTO;
+    }
+
+    public ArrayList<userDTO> getUserList() {
+        ArrayList users = null;
+        String query = "SELECT * FROM user";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                userDTO userDTO = new userDTO();
+                do{
+                    userDTO.setUserId(rs.getString("userId"));
+                    userDTO.setUserPassword(rs.getString("userPassword"));
+                    userDTO.setStatus(rs.getBoolean("status"));
+                    userDTO.setNickName(rs.getString("nickname"));
+                    userDTO.setIp(rs.getString("ip"));
+                }while(rs.next());
+                users.add(userDTO);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+        return users;
     }
 
     public void logout(String userId) {

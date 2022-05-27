@@ -2,14 +2,19 @@ package com.goindol.teamtalk.server;
 
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.controller.ChatController;
+import com.goindol.teamtalk.client.controller.LoginController;
 import com.goindol.teamtalk.client.controller.MainController;
 import com.goindol.teamtalk.client.model.chatRoomListDTO;
 import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
 import com.goindol.teamtalk.client.model.friendDTO;
 import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
+import com.goindol.teamtalk.client.service.chatRoomListDAO;
 import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
 import com.goindol.teamtalk.client.service.userDAO;
+import com.sun.tools.javac.Main;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,60 +24,73 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class UserThread extends Thread{
+public class UserThread implements Runnable {
 
-
-    com.goindol.teamtalk.client.service.userDAO userDAO;
-    com.goindol.teamtalk.client.service.chatRoomListDAO chatRoomListDAO;
-    com.goindol.teamtalk.client.service.chatRoomUserListDAO chatRoomUserListDAO;
-    com.goindol.teamtalk.client.service.chatLogDAO chatLogDAO;
     private Socket socket;
     private MainController mainController;
-    private userDTO user;
-    private ArrayList<friendDTO> friendList;
-    private ArrayList<chatRoomListDTO> chatRoomList;
-    private ArrayList<chatRoomUserListDTO> currentRoomUserList;
-    private int chatRoom_id;
+    public static String nickname;
+    private static ObjectOutputStream oos;
+    private InputStream is;
+    private ObjectInputStream input;
+    private OutputStream outputStream;
 
-    public UserThread(Socket socket) throws IOException {
-        System.out.println("HELLO");
-        this.currentRoomUserList = new ArrayList<chatRoomUserListDTO>();
-        this.socket = socket;
-        //this.friendList = userDAO.getFriendList(user.getNickName());
-        //this.chatRoomList = chatRoomListDAO.getChatRoomName(user.getNickName());
-        chatRoomListDAO = chatRoomListDAO.getInstance();
-        chatRoomUserListDAO = chatRoomUserListDAO.getInstance();
-        chatLogDAO = chatLogDAO.getInstance();
-
-    }
 
 
     @Override
     public void run() {
-        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HelloApplication.class.getResource("views/ChatView.fxml"));
+        ChatController chatController = loader.getController();
+        System.out.println("name = " + chatController.getNickName());
     }
 
-    public void entryRoom(int chatRoom_id) {
-        this.chatRoom_id = chatRoom_id;
-        String nickName = user.getNickName();
 
-        for(int i = 0; i < chatRoomList.size(); i++) {
-            if(chatRoomList.get(i).getChatRoom_id() == chatRoom_id) {
-                currentRoomUserList = chatRoomUserListDAO.getChatRoomUser(chatRoom_id);
-            }
-        }
-    }
-
-    public void sendMessage(String content) {
-        for(int i = 0; i < currentRoomUserList.size(); i++) {
-            currentRoomUserList.get(i).getNickName(); //이 멤버에 대해 내용 전달
-            //채팅 전달은 gui에 따라 다름.
-        }
-        chatLogDAO.writeLog(user.getNickName(), chatRoom_id, content);
-
-        //https://github.com/jungsangsu/Java_CooProject/blob/master/src/Action/MainServer.java
-
-    }
+    /*public static void send(String msg) throws IOException {
+        Message createMessage = new Message();
+        createMessage.setName(nickname);
+        createMessage.setType(MessageType.CHAT);
+        createMessage.setMsg(msg);
+        oos.writeObject(createMessage);
+        oos.flush();
+    }*/
 
 
 }
+
+/*
+try {
+        LoginController.getInstance().showScene();
+        outputStream = socket.getOutputStream();
+        oos = new ObjectOutputStream(outputStream);
+        is = socket.getInputStream();
+        input = new ObjectInputStream(is);
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+
+        try {
+        while(socket.isConnected()) {
+        Message message = null;
+        message = (Message) input.readObject();
+        if(message != null) {
+        switch (message.getType()) {
+        case NOTICE :
+        //공지관련 행위
+        break;
+        case VOTE :
+        //투포 관련 행위
+        break;
+        case CHAT :
+        //채팅 입력 행위
+        break;
+        case EXIT :
+        //로그아웃 행위
+        break;
+
+        }
+        }
+        }
+        } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+        //강제 로그아웃시 logout 메소드 실행
+        }*/
