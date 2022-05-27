@@ -40,7 +40,6 @@ public class LoginController{
                 Parent root = loader.load();
                 MainController main = loader.getController();
                 main.setuserDTO(userDTO);
-                main.showChatRoomList();
 
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
