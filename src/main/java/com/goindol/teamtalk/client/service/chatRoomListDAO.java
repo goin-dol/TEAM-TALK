@@ -30,7 +30,7 @@ public class chatRoomListDAO {
         String query =
                 "INSERT INTO `DB_ppick`.`chatRoomList` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -40,7 +40,6 @@ public class chatRoomListDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -50,7 +49,7 @@ public class chatRoomListDAO {
                 "`chatRoomList`.`chatRoom_id`" +
                 "FROM `DB_ppick`.`chatRoomList` WHERE chatRoomName = ? and nickName = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -62,7 +61,6 @@ public class chatRoomListDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return cnt;
     }
@@ -87,7 +85,7 @@ public class chatRoomListDAO {
                         ")";
         try {
 
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(check_query);
             pstmt.setString(1, nickName);
             pstmt.setInt(2, chatRoom_id);
@@ -106,7 +104,6 @@ public class chatRoomListDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return 1;
     }
@@ -127,7 +124,7 @@ public class chatRoomListDAO {
                         "?" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -139,8 +136,24 @@ public class chatRoomListDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
+    }
+
+    public String getCurrentChatRoomName(int chatRoomId) {
+        String query = "SELECT chatRoomName FROM DB_ppick.chatRoomList WHERE chatRoom_id = ?";
+        String title = null;
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoomId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                title = rs.getString("chatRoomName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return title;
     }
 
     public ArrayList<chatRoomListDTO> getChatRoomName(String nickName) {
@@ -156,7 +169,7 @@ public class chatRoomListDAO {
                         "    where nickName = ?" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
@@ -173,9 +186,8 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return roomName;
     }

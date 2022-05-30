@@ -17,7 +17,7 @@ public class ServerSocketThread extends Thread{
     String name;
     String threadName;
 
-    public ServerSocketThread(MainServer server, Socket socket) {
+   /* public ServerSocketThread(MainServer server, Socket socket) {
         this.server = server;
         this.socket = socket;
         threadName = super.getName();
@@ -32,12 +32,14 @@ public class ServerSocketThread extends Thread{
 
     public void run() {
         try {
+            System.out.println("ServerSocketThread Start!!");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             //true : auto Flush
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
             while(true) {
                 String str_in = in.readLine();
+                System.out.println("@@@ : " + str_in);
                 server.broadCasting("[" + name + "] : " + str_in);
             }
         }catch(SocketException e) {
@@ -57,5 +59,5 @@ public class ServerSocketThread extends Thread{
             }
         }
     }
-
+*/
 }

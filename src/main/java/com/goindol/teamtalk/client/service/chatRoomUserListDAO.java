@@ -31,7 +31,7 @@ public class chatRoomUserListDAO {
         String query = "SELECT * FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();
@@ -52,7 +52,6 @@ public class chatRoomUserListDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return chatRoomUserList;
     }

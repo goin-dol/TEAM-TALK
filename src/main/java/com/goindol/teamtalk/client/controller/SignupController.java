@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SignupController {
-    com.goindol.teamtalk.client.service.userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
     @FXML private TextField Id;
     @FXML private TextField Password;
     @FXML private TextField Nickname;
@@ -25,7 +25,7 @@ public class SignupController {
 
         //TODO : 중복 회원가입 여부 확인
 
-        if (userDAO.checkedId(id)) {
+        if (userDAO.validSignUp(id, password, nickname)) {
             try {
                 userDAO.signUp(id, password, nickname);
 

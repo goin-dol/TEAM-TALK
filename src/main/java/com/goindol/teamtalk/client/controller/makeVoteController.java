@@ -1,5 +1,6 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -32,6 +33,10 @@ public class makeVoteController implements Initializable {
 
     public ObservableList voteVarItems = FXCollections.observableArrayList();
     public List<String> _voteVarList = new ArrayList<>();
+
+    public int chatid;
+    public userDTO userDTO;
+
 
     public void addVoteVar() {
         _voteVarList.add(voteVar.getText());
@@ -83,5 +88,13 @@ public class makeVoteController implements Initializable {
             }
         });
 
+    }
+
+    public void getChatRoomId(int chatid) {
+        this.chatid = chatid;
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 }

@@ -3,6 +3,8 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.userDAO;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,13 +21,14 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class LoginController{
-    MainController mainController;
-    Socket socket;
-    com.goindol.teamtalk.client.model.userDTO userDTO;
-    com.goindol.teamtalk.client.service.userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+
     @FXML public Pane pane;
     @FXML public TextField Id;
     @FXML public TextField Password;
+
+    Socket socket;
+    public userDTO userDTO;
+    public userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
 
     public void showScene() throws IOException {
         Platform.runLater(() -> {
@@ -54,18 +57,14 @@ public class LoginController{
                 Stage stage = (Stage) Id.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
-                mainController = loader.getController();
-                mainController.setuserDTO(userDTO);
-                mainController.showChatRoomList();
-
+                MainController main = loader.getController();
+                main.setuserDTO(userDTO);
+                main.showChatRoomList();
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

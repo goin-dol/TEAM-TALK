@@ -4,10 +4,8 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.chatRoomListDTO;
 import com.goindol.teamtalk.client.model.friendDTO;
 import com.goindol.teamtalk.client.model.userDTO;
-import com.goindol.teamtalk.client.service.chatLogDAO;
-import com.goindol.teamtalk.client.service.chatRoomListDAO;
-import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
-import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.client.service.*;
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -35,11 +33,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    com.goindol.teamtalk.client.service.chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
-    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
-    com.goindol.teamtalk.client.service.chatRoomUserListDAO chatRoomUserListDAO = com.goindol.teamtalk.client.service.chatRoomUserListDAO.getInstance();
-    com.goindol.teamtalk.client.service.chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
-    userDTO userDTO;
 
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
@@ -52,13 +45,19 @@ public class MainController implements Initializable {
     @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
     @FXML public Button makeChatRoomButton;
+    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
+    friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    public userDTO userDTO;
+
 
     public void showFriendList(){
         List<String> strings = new ArrayList<>();
-        if(userDTO == null) {
-            strings.add("친구가 없습니다.");
+        ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+        if(friends == null) {
+            strings.add("");
         }else {
-            ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+
             for(int i = 0; i < friends.size(); i++) {
                 strings.add(friends.get(i).getFriendNickName());
             }
@@ -71,13 +70,14 @@ public class MainController implements Initializable {
 
     public void showChatRoomList(){
         List<chatRoomListDTO> strings = new ArrayList<>();
-        if(userDTO == null) {
-            strings.add(new chatRoomListDTO(0, "채팅방이 없습니다."));
-        }else {
+        if(userDTO != null) {
             ArrayList<chatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
-            for(int i = 0; i < chatRoom.size(); i++) {
-                strings.add(chatRoom.get(i));
+            if(chatRoom != null) {
+                for(int i = 0; i < chatRoom.size(); i++) {
+                    strings.add(chatRoom.get(i));
+                }
             }
+            strings.add(new chatRoomListDTO(0, ""));
         }
 
         ObservableList<chatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
@@ -99,9 +99,12 @@ public class MainController implements Initializable {
             Parent root = (Parent) loader.load();
             ChatController chatController = loader.getController();
             chatController.setuserDTO(userDTO);
-            chatController.setChatRoomNum(cr.getChatRoom_id());
+            chatController.setChatRoomId(cr.getChatRoom_id());
+            chatController.setChatRoomTitle();
+            chatController.initialChat();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> chatController.stopClient());
             stage.setOnCloseRequest(event -> {System.exit(0);});
             stage.setResizable(false);
             stage.show();
@@ -134,19 +137,28 @@ public class MainController implements Initializable {
         가능하면 추가하고 true 불가능하면 false
 
         */
-        boolean addFriendCheck = true;
-
-        if(!addFriendCheck) {
+        int status =friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
+        if(status == 1) {
+            searchFriend.setText("");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("Friend Add Error");
+            alert.setContentText("Already friend");
+            alert.show();
+        }else if(status == 2){
+            searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("Friend Add Error");
             alert.setContentText("Wrong NickName");
             alert.show();
+        }else {
+            ObservableList<String> friendListItems = friendList.getItems();
+            friendListItems.add(searchFriend.getText());
+            friendList.setItems(friendListItems);
+            searchFriend.setText("");
         }
-        ObservableList<String> friendListItems = friendList.getItems();
-        friendListItems.add(searchFriend.getText());
-        friendList.setItems(friendListItems);
-        searchFriend.setText("");
+
 
     }
 
@@ -156,7 +168,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
+       /* searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 searchFriend.setText(keyEvent.getText());
@@ -170,7 +182,7 @@ public class MainController implements Initializable {
                     addFriend();
                 }
             }
-        });
+        });*/
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -194,9 +206,7 @@ public class MainController implements Initializable {
         });
     }
 
-    public void setuserDTO(userDTO userDTO) throws IOException {
+    public void setuserDTO(userDTO userDTO) {
         this.userDTO = userDTO;
-        userDAO.login(userDTO.getUserId(), userDTO.getUserPassword());
     }
-
 }

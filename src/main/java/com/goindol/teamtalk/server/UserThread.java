@@ -41,7 +41,6 @@ public class UserThread implements Runnable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HelloApplication.class.getResource("views/ChatView.fxml"));
         ChatController chatController = loader.getController();
-        System.out.println("name = " + chatController.getNickName());
     }
 
 
