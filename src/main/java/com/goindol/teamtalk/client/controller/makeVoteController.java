@@ -1,12 +1,16 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -15,7 +19,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +46,6 @@ public class makeVoteController implements Initializable {
     public int chatid;
     public userDTO userDTO;
 
-
     public void addVoteVar() {
         _voteVarList.add(voteVar.getText());
         voteVarItems.add(voteVar.getText());
@@ -49,6 +54,7 @@ public class makeVoteController implements Initializable {
     }
 
     public void addVote() {
+        System.out.println(chatid);
 //        voteDAO.creatVote(chatRoom_id,title,isAnonoymous,isOverLap);
 //        int vote_id=voteDAO.Read_Vote_id(chatRoom_id);
 //        for (String content : _voteVarList) {

@@ -41,6 +41,8 @@ public class MainController implements Initializable {
     @FXML public Button addFriendButton;
     @FXML public Button makeChatRoomButton;
 
+    @FXML public Button logOut;
+
     public userDTO userDTO;
 
     public void showFriendList(){
@@ -128,11 +130,29 @@ public class MainController implements Initializable {
     }
 
     public void logOut(){
-
+        //TODO DB에서 현재 사용자 상태 오프라인으로 바꾸고 나의 친구의 친구리스트에서 나를 오프라인으로 변경
+        try {
+            Stage stage = (Stage) stackPane.getScene().getWindow();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        logOut.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                logOut();
+            }
+        });
         searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

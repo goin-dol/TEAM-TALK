@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -40,6 +41,7 @@ public class ChatController implements Initializable {
     public int chatid;
     public userDTO userDTO;
 
+
     public void goToBack(){
         try {
             Stage stage = (Stage) chatRoomContainer.getScene().getWindow();
@@ -55,7 +57,10 @@ public class ChatController implements Initializable {
     }
 
     public void Chattting(){
-
+        ObservableList<String> friendListItems = chat.getItems();
+        friendListItems.add(userInput.getText());
+        chat.setItems(friendListItems);
+        userInput.setText("");
 
     }
 
@@ -73,6 +78,20 @@ public class ChatController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialChat();
         setChatRoomTitle();
+        send.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Chattting();
+                userInput.setText("");
+            }
+        });
+        userInput.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                userInput.setText(keyEvent.getText());
+            }
+        });
+
         noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -199,7 +218,7 @@ public class ChatController implements Initializable {
                     chatRoomInfoController.getChatRoomId(chatid);
                     chatRoomInfoController.setuserDTO(userDTO);
 
-                    stage.setScene(new Scene(root, 400, 600));
+                    stage.setScene(new Scene(root, 250, 400));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);

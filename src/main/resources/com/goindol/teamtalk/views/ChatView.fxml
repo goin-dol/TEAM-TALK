@@ -15,7 +15,6 @@
                         <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../images/goToBack.png" />
                         </ImageView>
-
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">

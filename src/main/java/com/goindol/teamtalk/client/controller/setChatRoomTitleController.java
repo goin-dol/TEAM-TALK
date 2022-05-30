@@ -18,11 +18,24 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class setChatRoomTitle implements Initializable {
+public class setChatRoomTitleController implements Initializable {
     @FXML private Pane pane;
     @FXML private TextField chatRoomTitle;
     @FXML private Button complete;
 
+    public void goToBack(){
+        try {
+            Stage stage = (Stage) pane.getScene().getWindow();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setChatRoomTitle(){
         String s = chatRoomTitle.getText();
         System.out.println(s);
@@ -49,6 +62,7 @@ public class setChatRoomTitle implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
+
                     e.printStackTrace();
                 }
             }
