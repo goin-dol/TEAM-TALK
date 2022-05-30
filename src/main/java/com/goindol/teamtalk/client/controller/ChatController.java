@@ -2,31 +2,27 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.userDTO;
-import com.goindol.teamtalk.client.ClientInfo;
-import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
 import com.goindol.teamtalk.client.service.chatRoomListDAO;
-import com.goindol.teamtalk.client.service.userDAO;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.io.*;
-import java.net.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
