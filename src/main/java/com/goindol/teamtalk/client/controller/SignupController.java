@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.service.userDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SignupController {
-
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
     @FXML private TextField Id;
     @FXML private TextField Password;
     @FXML private TextField Nickname;
@@ -21,12 +22,13 @@ public class SignupController {
         String id = Id.getText();
         String password = Password.getText();
         String nickname = Nickname.getText();
-        boolean isSignupSuccess = true;
 
         //TODO : 중복 회원가입 여부 확인
 
-        if (isSignupSuccess) {
+        if (userDAO.validSignUp(id, password, nickname)) {
             try {
+                userDAO.signUp(id, password, nickname);
+
                 Stage stage = (Stage) Id.getScene().getWindow();
                 Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
                 stage.setScene(new Scene(root, 400, 600));

@@ -26,37 +26,63 @@ public class friendDAO {
         return instance;
     }
 
-    public void addFriend(String userId, String nickName, String friendId){
+    public int addFriend(String nickName, String friendNickName){
+        int status = 0;
+        String friend =
+                "SELECT * FROM DB_ppick.friendInfo WHERE nickName = ? AND friendNickName = ?";
+        String valid =
+                "SELECT * FROM DB_ppick.user WHERE nickName = ?";
         String query =
                 "INSERT INTO `DB_ppick`.`friendInfo`" +
                         "(" +
-                        "`userId`," +
                         "`nickName`," +
-                        "`friendId`," +
+                        "`friendNickName`," +
                         "`friendStatus`" +
                         ")" +
                         "VALUES" +
                         "(" +
                         "?," +
                         "?," +
-                        "?," +
                         "?" +
                         ")";
         try {
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, nickName);
-            pstmt.setString(3, friendId);
-            pstmt.setBoolean(4, false);
-            pstmt.executeUpdate();
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(friend);
+            pstmt.setString(1, nickName);
+            pstmt.setString(2, friendNickName);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                status = 1; //이미 친구
+            }else {
+                pstmt = conn.prepareStatement(valid);
+                pstmt.setString(1, friendNickName);
+                rs = pstmt.executeQuery();
+                if(rs.next()) {
+                    pstmt = conn.prepareStatement(query);
+                    pstmt.setString(1, nickName);
+                    pstmt.setString(2, friendNickName);
+                    pstmt.setBoolean(3, false);
+                    pstmt.executeUpdate();
+
+                    pstmt = conn.prepareStatement(query);
+                    pstmt.setString(1, friendNickName);
+                    pstmt.setString(2, nickName);
+                    pstmt.setBoolean(3, true);
+                    pstmt.executeUpdate();
+
+                }else {
+                    status = 2; //없는 닉네임
+                }
+            }
+
+
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+           // if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
+        return status;
     }
 
 

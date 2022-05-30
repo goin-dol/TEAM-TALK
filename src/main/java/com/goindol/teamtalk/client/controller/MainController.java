@@ -1,6 +1,10 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.chatRoomListDTO;
+import com.goindol.teamtalk.client.model.friendDTO;
+import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.*;
 import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
@@ -22,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,44 +48,66 @@ public class MainController implements Initializable {
 
     @FXML public Button logOut;
 
+    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
+    friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
+    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
     public userDTO userDTO;
 
-    public void showFriendList(){
 
-//        List<String> strings = new ArrayList<>();
-//        strings.add("ta");
-//        strings.add("gs");
-//        ObservableList<String> fr = FXCollections.observableList(strings);
-//        friendList.setItems(fr);
+    public void showFriendList(){
+        List<String> strings = new ArrayList<>();
+        ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+        if(friends == null) {
+            strings.add("");
+        }else {
+
+            for(int i = 0; i < friends.size(); i++) {
+                strings.add(friends.get(i).getFriendNickName());
+            }
+        }
+
+        ObservableList<String> fr = FXCollections.observableList(strings);
+        friendList.setItems(fr);
 //
     }
 
     public void showChatRoomList(){
-        List<ChatRoom> chatRoom = new ArrayList<>();
-        chatRoom.add(new ChatRoom(1,"chat1"));
-        chatRoom.add(new ChatRoom(2,"chat2"));
-        chatRoom.add(new ChatRoom(3,"chat3"));
+        List<chatRoomListDTO> strings = new ArrayList<>();
+        if(userDTO != null) {
+            ArrayList<chatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            if(chatRoom != null) {
+                for(int i = 0; i < chatRoom.size(); i++) {
+                    strings.add(chatRoom.get(i));
+                }
+            }
+            strings.add(new chatRoomListDTO(0, ""));
+        }
 
-        ObservableList<ChatRoom> chatRoomObservableList = FXCollections.observableArrayList();
-        chatRoomObservableList.addAll(chatRoom);
+        ObservableList<chatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
+
+        chatRoomObservableList.addAll(strings);
+
         chatRoomList.setItems(chatRoomObservableList);
     }
 
     public void openChatRoom(){
-        ChatRoom cr = (ChatRoom) chatRoomList.getSelectionModel().getSelectedItem();
+        chatRoomListDTO  cr = (chatRoomListDTO ) chatRoomList.getSelectionModel().getSelectedItem();
         if(cr==null)
             return;
         try {
+
             Stage stage = (Stage) stackPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("views/ChatView.fxml"));
             Parent root = (Parent) loader.load();
-            ChatController chatController = (ChatController) loader.getController();
-            chatController.getChatRoomId(cr.getId());
+            ChatController chatController = loader.getController();
             chatController.setuserDTO(userDTO);
-
+            chatController.setChatRoomId(cr.getChatRoom_id());
+            chatController.setChatRoomTitle();
+            chatController.initialChat();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> chatController.stopClient());
             stage.setOnCloseRequest(event -> {System.exit(0);});
             stage.setResizable(false);
             stage.show();
@@ -90,7 +117,6 @@ public class MainController implements Initializable {
     }
 
     public void makeChatroom(){
-
         //TODO : DB에 채팅방 저장
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
@@ -113,19 +139,28 @@ public class MainController implements Initializable {
         가능하면 추가하고 true 불가능하면 false
 
         */
-        boolean addFriendCheck = true;
-
-        if(!addFriendCheck) {
+        int status =friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
+        if(status == 1) {
+            searchFriend.setText("");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("Friend Add Error");
+            alert.setContentText("Already friend");
+            alert.show();
+        }else if(status == 2){
+            searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("Friend Add Error");
             alert.setContentText("Wrong NickName");
             alert.show();
+        }else {
+            ObservableList<String> friendListItems = friendList.getItems();
+            friendListItems.add(searchFriend.getText());
+            friendList.setItems(friendListItems);
+            searchFriend.setText("");
         }
-        ObservableList<String> friendListItems = friendList.getItems();
-        friendListItems.add(searchFriend.getText());
-        friendList.setItems(friendListItems);
-        searchFriend.setText("");
+
 
     }
 
@@ -153,7 +188,8 @@ public class MainController implements Initializable {
                 logOut();
             }
         });
-        searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
+
+       /* searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 searchFriend.setText(keyEvent.getText());
@@ -167,7 +203,7 @@ public class MainController implements Initializable {
                     addFriend();
                 }
             }
-        });
+        });*/
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

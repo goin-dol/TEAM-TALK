@@ -23,35 +23,6 @@ public class userDAO {
         return instance;
     }
 
-    public boolean checkedId(String userId) {
-        boolean status = false;
-        String query =
-                "SELECT " +
-                        "`user`.`userId`," +
-                        "`user`.`userPassword`," +
-                        "`user`.`nickName`," +
-                        "`user`.`status`," +
-                        "`user`.`ip`" +
-                        "FROM `DB_ppick`.`user` WHERE userId = ?";
-        try {
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            rs = pstmt.executeQuery();
-            if(rs.next())
-                status = false;
-            else
-                status = true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
-        }
-        return status;
-    }
-
     public void signUp(String userId, String userPassword, String nickName) {
         String query =
                 "INSERT INTO `DB_ppick`.`user`" +
@@ -71,7 +42,7 @@ public class userDAO {
                         "'0.0.0.0'" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
@@ -87,8 +58,36 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
+    }
+
+    public boolean validSignUp(String userId, String userPassword, String nickName) {
+        boolean status = true;
+        String query =
+                "SELECT " +
+                        "`user`.`userId`," +
+                        "`user`.`userPassword`," +
+                        "`user`.`nickName`," +
+                        "`user`.`status`," +
+                        "`user`.`ip`" +
+                        "FROM `DB_ppick`.`user` WHERE userId = ? OR userPassword = ? OR nickName = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, userPassword);
+            pstmt.setString(3, nickName);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                status = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+        return status;
     }
 
     public boolean checkLogin(String userId, String userPassword) {
@@ -102,7 +101,7 @@ public class userDAO {
                         "`user`.`ip`" +
                         "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
@@ -116,7 +115,6 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
     }
@@ -135,9 +133,8 @@ public class userDAO {
                         "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
         String update =
                 "UPDATE `DB_ppick`.`user`" +
-                        "SET" +
-                        "`status` = true," +
-                        "`ip` = ?" +
+                        "SET " +
+                        "`status` = true " +
                         "WHERE `userId` = ?";
 
         String login =
@@ -146,7 +143,7 @@ public class userDAO {
                         "`friendStatus` = true " +
                         "WHERE `friendNickName` = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
@@ -158,8 +155,7 @@ public class userDAO {
                 status = false;
 
             pstmt = conn.prepareStatement(update);
-            pstmt.setString(1, ip);
-            pstmt.setString(2, userId);
+            pstmt.setString(1, userId);
             pstmt.executeUpdate();
 
             pstmt = conn.prepareStatement(login);
@@ -171,7 +167,6 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
     }
@@ -182,7 +177,7 @@ public class userDAO {
         String query = "SELECT * FROM user WHERE userId = ? AND userPassword = ?";
         userDTO userDTO = null;
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
@@ -202,9 +197,35 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return userDTO;
+    }
+
+    public ArrayList<userDTO> getUserList() {
+        ArrayList users = null;
+        String query = "SELECT * FROM user";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                userDTO userDTO = new userDTO();
+                do{
+                    userDTO.setUserId(rs.getString("userId"));
+                    userDTO.setUserPassword(rs.getString("userPassword"));
+                    userDTO.setStatus(rs.getBoolean("status"));
+                    userDTO.setNickName(rs.getString("nickname"));
+                    userDTO.setIp(rs.getString("ip"));
+                }while(rs.next());
+                users.add(userDTO);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+        return users;
     }
 
     public void logout(String userId) {
@@ -215,7 +236,7 @@ public class userDAO {
                         "`ip` = '0.0.0.0'" +
                         "WHERE `userId` = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.executeUpdate();
@@ -224,7 +245,6 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -234,7 +254,7 @@ public class userDAO {
         String query =
                 "SELECT count(*) FROM DB_ppick.friendInfo where userId = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             rs = pstmt.executeQuery();
@@ -243,7 +263,6 @@ public class userDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally{
-            if(conn != null) try{conn.close();}catch(SQLException ex){}
             if(pstmt != null) try{pstmt.close();}catch(SQLException ex){}
             if(rs != null) try{rs.close();}catch(SQLException ex){}
         }
@@ -259,7 +278,7 @@ public class userDAO {
                         "`friendInfo`.`friendStatus`" +
                         "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
@@ -279,7 +298,6 @@ public class userDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return friendList;
     }

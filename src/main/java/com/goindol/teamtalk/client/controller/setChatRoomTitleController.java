@@ -37,6 +37,7 @@ public class setChatRoomTitleController implements Initializable {
         }
     }
     public void setChatRoomTitle(){
+        //
         String s = chatRoomTitle.getText();
         System.out.println(s);
     }
