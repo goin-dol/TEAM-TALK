@@ -181,7 +181,7 @@ public class voteDAO {
     }
 
     //채팅방에서 해당 채팅 인원이 투표방에서 투표를 선택
-     public void choiceVote(int vote_id,String content,String nickName){
+     public void choiceVote(int vote_id,int voteVar_id,String content,String nickName){
         String query =
                 "INSERT INTO `DB_ppick`.`voteResult` (vote_id,voteVar_id,content,nickName) values (?,?,?,?)";
 
@@ -190,19 +190,20 @@ public class voteDAO {
             conn = DB.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1,vote_id);
-            pstmt.setInt(2,ReadVoteVarByContent(content));
+            pstmt.setInt(2,voteVar_id);
             pstmt.setString(3,content);
             pstmt.setString(4,nickName);
-            if(checkOverLap(vote_id)) {
+            pstmt.executeUpdate();
+//            if(checkOverLap(vote_id)) {
                 // 중복 투표가 될 때 같은 투표 질문에 투표 했는지 체크
 //                if()
 //                else System.out.println("이미 투표한 질문입니다.");
-            }
-            else{
+//            }
+//            else{
                 //중복 투표가 아닐때 투표 했는지 안했는지 체킹
 //                if(!checkOverlapVoteVar(vote_id,voteVar_id,nickName) && !checkOverlapVoteVar1(vote_id,nickName)) pstmt.executeUpdate();
 //                else System.out.println("이미 투표 했습니다 경고문");
-            }
+//            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -216,42 +217,16 @@ public class voteDAO {
     //같은 투표 중복 체킹
     public boolean checkOverlapVoteVar(int vote_id, int voteVar_id , String nickName){
         String query =
-                "SELECT count(*) as count FROM `DB_ppick`.`voteResult` FROM vote_id=? and nickName=? and voteVar_id=?";
+                "SELECT count(*) as count FROM `DB_ppick`.`voteResult`"+
+                        "WHERE vote_id=? and nickName=? and voteVar_id=?";
 
         try{
             conn = DB.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, vote_id);
-            pstmt.setString(2, nickName);
-            pstmt.setInt(3, voteVar_id);
-            ResultSet rs = pstmt.executeQuery(query);
-            if(rs.next()){
-                int cnt = rs.getInt("count");
-                if(cnt>=1) return true;
-                else return false;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
-        }
-        return false;
-    }
-
-    // 중복 투표가 가능할때
-    public boolean checkOverlapVoteVar1(int vote_id, String nickName){
-        String query =
-                "SELECT count(*) as count FROM `DB_ppick`.`voteResult` FROM vote_id=? and nickName=? and voteVar_id=?";
-
-
-        try{
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, vote_id);
-            pstmt.setString(2, nickName);
-            ResultSet rs = pstmt.executeQuery(query);
+            pstmt.setString(2,nickName);
+            pstmt.setInt(3,voteVar_id);
+            ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
                 int cnt = rs.getInt("count");
                 if(cnt>=1) return true;
@@ -269,14 +244,13 @@ public class voteDAO {
 
     //중복 투표 가능 여부 체킹
     public boolean checkOverLap(int vote_id){
-        String query =
-                "SELECT * FROM `DB_ppick`.`vote` FROM vote_id=?";
+        String query = "SELECT * FROM `DB_ppick`.`vote` WHERE vote_id=?";
 
         try{
             conn = DB.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, vote_id);
-            ResultSet rs = pstmt.executeQuery(query);
+            ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
                 boolean isOverLap = rs.getBoolean("isOverLap");
                 if(isOverLap) return true;
@@ -292,7 +266,7 @@ public class voteDAO {
         return false;
     }
 
-    //투표 인원 체크
+    //모두 투표 했는지 체크
     public void AllReadVote(int chatRoom_id,int vote_id){
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
@@ -356,9 +330,5 @@ public class voteDAO {
         return null;
     }
 
-    //중복 투표 체크
-
-
-    //채팅방 인원 체크
 
 }

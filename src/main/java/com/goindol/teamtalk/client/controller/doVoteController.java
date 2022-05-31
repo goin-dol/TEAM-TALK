@@ -32,6 +32,11 @@ public class doVoteController implements Initializable {
         String value = temp.substring(temp.indexOf("'")+1, temp.length()-1);
         //TODO temp
         System.out.println(value);
+//        content로 투표 리스트의 id 값인 voteVar_id를 구함
+//        int voteVar_id = voteDAO.ReadVoteVarByContent(content);
+//        투표 선택 (예외 처리 해줘야함 => 이미 투표한 리스트 선택,
+//        voteDAO.choiceVote(voteVar_id,voteVar_id,content,nickName);
+
     }
 
     public void initialVoteList() {
