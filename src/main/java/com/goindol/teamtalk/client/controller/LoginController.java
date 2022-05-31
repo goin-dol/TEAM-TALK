@@ -1,6 +1,8 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.service.userDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +21,9 @@ public class LoginController{
     @FXML public TextField Id;
     @FXML public TextField Password;
 
+    public userDTO userDTO;
+    public userDAO userDAO;
+
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
@@ -28,16 +33,20 @@ public class LoginController{
 
         if (isLoginSuccess) {
             try {
+//                this.userDTO = userDAO.getUser(id, password);
+
                 Stage stage = (Stage) Id.getScene().getWindow();
-                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                Parent root = loader.load();
+                MainController main = loader.getController();
+                main.setuserDTO(userDTO);
+                main.showChatRoomList();
+
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

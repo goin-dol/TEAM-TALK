@@ -1,5 +1,6 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.model.voteVarDTO;
 import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
@@ -30,6 +31,10 @@ public class showVoteResultController implements Initializable {
     public ListView voteResultList;
     private ToggleGroup group = new ToggleGroup();
 
+    public int chatid;
+    public userDTO userDTO;
+
+
     private static voteDAO voteDAO;
 
     public void initialVoteList() {
@@ -54,6 +59,14 @@ public class showVoteResultController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialVoteList();
 
+    }
+
+    public void getChatRoomId(int chatid) {
+        this.chatid = chatid;
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     private class listCell extends ListCell<voteVarDTO> {

@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -40,6 +41,10 @@ public class MainController implements Initializable {
     @FXML public Button addFriendButton;
     @FXML public Button makeChatRoomButton;
 
+    @FXML public Button logOut;
+
+    public userDTO userDTO;
+
     public void showFriendList(){
 
 //        List<String> strings = new ArrayList<>();
@@ -47,6 +52,7 @@ public class MainController implements Initializable {
 //        strings.add("gs");
 //        ObservableList<String> fr = FXCollections.observableList(strings);
 //        friendList.setItems(fr);
+//
     }
 
     public void showChatRoomList(){
@@ -71,6 +77,7 @@ public class MainController implements Initializable {
             Parent root = (Parent) loader.load();
             ChatController chatController = (ChatController) loader.getController();
             chatController.getChatRoomId(cr.getId());
+            chatController.setuserDTO(userDTO);
 
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
@@ -87,7 +94,7 @@ public class MainController implements Initializable {
         //TODO : DB에 채팅방 저장
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/ChatView.fxml"));
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/setChatRoomTitleView.fxml"));
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -123,11 +130,29 @@ public class MainController implements Initializable {
     }
 
     public void logOut(){
-
+        //TODO DB에서 현재 사용자 상태 오프라인으로 바꾸고 나의 친구의 친구리스트에서 나를 오프라인으로 변경
+        try {
+            Stage stage = (Stage) stackPane.getScene().getWindow();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        logOut.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                logOut();
+            }
+        });
         searchFriend.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -164,5 +189,9 @@ public class MainController implements Initializable {
                 openChatRoom();
             }
         });
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 }

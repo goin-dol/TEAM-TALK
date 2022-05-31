@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.noticeDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +26,9 @@ public class makeNoticeController implements Initializable {
     @FXML private TextArea noticeContent;
 
     @FXML private Button complete;
+    public int chatid;
+    public userDTO userDTO;
+
 
     private static noticeDAO noticeDAO;
 
@@ -67,6 +71,14 @@ public class makeNoticeController implements Initializable {
                 stage.close();
             }
         });
+    }
+
+    public void getChatRoomId(int chatid) {
+        this.chatid = chatid;
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 }
 

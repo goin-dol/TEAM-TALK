@@ -44,6 +44,10 @@ public class UserThread extends Thread{
 
     @Override
     public void run() {
+
+
+
+
     }
 
     public void entryRoom(int chatRoom_id) {
