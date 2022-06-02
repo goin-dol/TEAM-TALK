@@ -1,0 +1,20 @@
+.root {
+    -fx-background-color: #393351;
+}
+.label {
+    -fx-text-fill: #d7d6dc;
+    -fx-font-family: sans-serif;
+}
+
+.text-field {
+    -fx-background-color: #393351;
+    -fx-text-fill: #d7d6dc;
+    -fx-font-family: sans-serif;
+    -fx-border-color: #d7d6dc;
+    -fx-border-style: hidden hidden solid hidden;
+}
+.button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+}
