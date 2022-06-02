@@ -1,9 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.chatRoomListDTO;
-import com.goindol.teamtalk.client.model.friendDTO;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.*;
 import com.goindol.teamtalk.client.service.*;
 import com.goindol.teamtalk.client.model.userDTO;
 import javafx.collections.FXCollections;
@@ -22,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -68,6 +67,7 @@ public class MainController implements Initializable {
 
         ObservableList<String> fr = FXCollections.observableList(strings);
         friendList.setItems(fr);
+        friendList.setCellFactory(param -> new colorListCell());
 //
     }
 
@@ -229,7 +229,21 @@ public class MainController implements Initializable {
             }
         });
     }
-
+    private class colorListCell extends ListCell<String> {
+        @Override
+        public void updateItem(String obj, boolean empty) {
+            super.updateItem(obj, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                Label label = new Label(obj);
+                //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
+                label.setTextFill(Color.GREEN);
+                setGraphic(label);
+            }
+        }
+    }
     public void setuserDTO(userDTO userDTO) {
         this.userDTO = userDTO;
     }

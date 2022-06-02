@@ -291,6 +291,7 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     Stage stage = new Stage();
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
@@ -303,8 +304,8 @@ public class ChatController implements Initializable {
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
-                    stage.setX(1100);
-                    stage.setY(300);
+                    stage.setX(curStage.getX()+400);
+                    stage.setY(curStage.getY());
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
