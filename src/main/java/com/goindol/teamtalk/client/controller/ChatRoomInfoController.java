@@ -25,7 +25,5 @@ public class ChatRoomInfoController implements Initializable {
 
     public void setuserDTO(userDTO userDTO) {
         this.userDTO = userDTO;
-
-
     }
 }

@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
+import com.goindol.teamtalk.client.model.userDTO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +24,15 @@ public class setChatRoomTitleController implements Initializable {
     @FXML private TextField chatRoomTitle;
     @FXML private Button complete;
 
+    public userDTO userDTO;
     public void goToBack(){
         try {
             Stage stage = (Stage) pane.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+            Parent root = loader.load();
+            MainController main = loader.getController();
+            main.setuserDTO(userDTO);
+            main.showChatRoomList();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -40,6 +46,10 @@ public class setChatRoomTitleController implements Initializable {
         //
         String s = chatRoomTitle.getText();
         System.out.println(s);
+    }
+
+    public void setuserDTO(userDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     @Override

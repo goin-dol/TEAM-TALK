@@ -120,7 +120,10 @@ public class MainController implements Initializable {
         //TODO : DB에 채팅방 저장
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/setChatRoomTitleView.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/setChatRoomTitleView.fxml"));
+            Parent root = (Parent) loader.load();
+            setChatRoomTitleController chatRoomTitleController = loader.getController();
+            chatRoomTitleController.setuserDTO(userDTO);
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
