@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ public class LoginController{
 
     @FXML public Pane pane;
     @FXML public TextField Id;
-    @FXML public TextField Password;
+    @FXML public PasswordField Password;
 
     Socket socket;
     public userDTO userDTO;
