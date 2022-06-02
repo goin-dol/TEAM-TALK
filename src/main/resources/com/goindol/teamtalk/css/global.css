@@ -1,22 +1,40 @@
+/*.root {*/
+/*    -fx-font-family: "sans-serif";*/
+/*    -fx-accent: white;*/
+/*    -fx-focus-color: green;*/
+
+/*}*/
+/*.tab {*/
+/*    -fx-background-color: transparent;*/
+/*}*/
+/*.tab-selected-line {*/
+/*    -fx-background-color: -fx-focus-color;*/
+/*}*/
+/*.tab-selected-area {*/
+/*    -fx-background-color: -fx-focus-color;*/
+/*}*/
+
+/*.tab-pane .tab-header-background {*/
+/*    -fx-background-color: -fx-accent;*/
+/*}*/
 .root {
     -fx-base: white;
     -fx-color: -fx-base;
-
     -fx-font-family: "Montserrat";
     -fx-accent: rgb(246, 246, 246);
     -fx-default-button: -fx-accent;
+    -jfx-primary-color: -fx-accent;
+    -jfx-light-primary-color: -fx-accent;
+    -jfx-dark-primary-color: -fx-accent;
     -fx-focus-color: rgb(222, 222, 222);
-
+    -jfx-secondary-color: -fx-focus-color;
+    -jfx-light-secondary-color: -fx-focus-color;
+    -jfx-dark-secondary-color: -fx-focus-color;
 }
-
-/*******************************************************************************
- *                                                                             *
- * JFX Tab Pane                                                                *
- *                                                                             *
- ******************************************************************************/
-.tab {
-    -fx-rotate: 90;
+.tab-pane .tab-header-area{
+    -fx-padding: 35 0 0 0;
 }
-.tab-selected-line {
-    -fx-background-color: -fx-focus-color;
-}
+.jfx-tab-pane .headers-region {    -fx-background-color: -fx-accent;}
+.jfx-tab-pane .tab-header-background {    -fx-background-color: -fx-accent;}
+.jfx-tab-pane .tab-selected-line {    -fx-stroke: -fx-accent;}
+.tab-selected-line {    -fx-background-color: -fx-focus-color;}

@@ -22,12 +22,12 @@
       <PasswordField fx:id="Password" layoutX="140.0" layoutY="400.0" prefHeight="30.0" prefWidth="160.0" promptText="User Password" />
       <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="108.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/2203549_admin_avatar_human_login_user_icon.png" />
+            <Image url="@../images/userid.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="108.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/622405_lock_security_password_protect_safety_icon.png" />
+            <Image url="@../images/userpassword.png" />
          </image>
       </ImageView>
    </children>
