@@ -19,7 +19,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -166,6 +168,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
+                    Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(HelloApplication.class.getResource("views/makeNotice.fxml"));
                     Parent root = (Parent) loader.load();
@@ -176,8 +179,29 @@ public class ChatController implements Initializable {
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
+                    stage.setX(curStage.getX()+400);
+                    stage.setY(curStage.getY());
                     stage.setResizable(false);
                     stage.show();
+
+                    Stage alert = new Stage();
+                    FXMLLoader alertLoader = new FXMLLoader();
+                    alertLoader.setLocation(HelloApplication.class.getResource("views/TrayNotification.fxml"));
+                    Parent alertRoot = (Parent) alertLoader.load();
+                    TrayNotificationController trayNotificationController = (TrayNotificationController) alertLoader.getController();
+                    trayNotificationController.setAlert("채팅방1",true);
+
+                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                    double width = screenSize.getWidth();
+                    double height = screenSize.getHeight();
+//                    alert.initStyle(StageStyle.UNDECORATED);
+                    alert.setScene(new Scene(alertRoot,400,85));
+                    alert.setResizable(false);
+                    alert.setX(width);
+                    alert.setY(height);
+                    alert.show();
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -201,6 +225,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
+                    Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(HelloApplication.class.getResource("views/noticeCheck.fxml"));
                     Parent root = (Parent) loader.load();
@@ -210,6 +235,8 @@ public class ChatController implements Initializable {
 
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
+                    stage.setX(curStage.getX()+400);
+                    stage.setY(curStage.getY());
                     stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
                     stage.show();
@@ -224,6 +251,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     Stage stage = new Stage();
+                    Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(HelloApplication.class.getResource("views/makeVote.fxml"));
                     Parent root = (Parent) loader.load();
@@ -233,6 +261,8 @@ public class ChatController implements Initializable {
 
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
+                    stage.setX(curStage.getX()+400);
+                    stage.setY(curStage.getY());
                     stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
                     stage.show();
@@ -249,6 +279,7 @@ public class ChatController implements Initializable {
                 if(ifAlreadyVote) {
                     try {
                         Stage stage = new Stage();
+                        Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(HelloApplication.class.getResource("views/showVoteResult.fxml"));
                         Parent root = (Parent) loader.load();
@@ -258,6 +289,8 @@ public class ChatController implements Initializable {
 
                         stage.setScene(new Scene(root, 400, 600));
                         stage.setTitle("Team Talk");
+                        stage.setX(curStage.getX()+400);
+                        stage.setY(curStage.getY());
                         stage.setOnCloseRequest(event -> stage.close());
                         stage.setResizable(false);
                         stage.show();
@@ -267,6 +300,7 @@ public class ChatController implements Initializable {
                 } else {
                     try {
                         Stage stage = new Stage();
+                        Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(HelloApplication.class.getResource("views/doVoteView.fxml"));
                         Parent root = (Parent) loader.load();
@@ -276,6 +310,8 @@ public class ChatController implements Initializable {
 
                         stage.setScene(new Scene(root, 400, 600));
                         stage.setTitle("Team Talk");
+                        stage.setX(curStage.getX()+400);
+                        stage.setY(curStage.getY());
                         stage.setOnCloseRequest(event -> stage.close());
                         stage.setResizable(false);
                         stage.show();

@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("views/InitialView.fxml"));
-        stage.setTitle("Hello World");
+        stage.setTitle("Team Talk");
         stage.setScene(new Scene(root, 400, 600));
         stage.show();
     }
