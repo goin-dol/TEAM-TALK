@@ -1,8 +1,8 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.friendDTO;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -173,9 +173,9 @@ public class userDAO {
 
 
 
-    public userDTO getUser(String userId, String userPassword) {
+    public UserDTO getUser(String userId, String userPassword) {
         String query = "SELECT * FROM user WHERE userId = ? AND userPassword = ?";
-        userDTO userDTO = null;
+        UserDTO userDTO = null;
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -184,7 +184,7 @@ public class userDAO {
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 System.out.println("rs.next!!");
-                userDTO = new userDTO();
+                userDTO = new UserDTO();
                 userDTO.setUserId(rs.getString("userId"));
                 userDTO.setUserPassword(rs.getString("userPassword"));
                 userDTO.setNickName(rs.getString("nickName"));
@@ -201,7 +201,7 @@ public class userDAO {
         return userDTO;
     }
 
-    public ArrayList<userDTO> getUserList() {
+    public ArrayList<UserDTO> getUserList() {
         ArrayList users = null;
         String query = "SELECT * FROM user";
         try {
@@ -209,7 +209,7 @@ public class userDAO {
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                userDTO userDTO = new userDTO();
+                UserDTO userDTO = new UserDTO();
                 do{
                     userDTO.setUserId(rs.getString("userId"));
                     userDTO.setUserPassword(rs.getString("userPassword"));
@@ -269,8 +269,8 @@ public class userDAO {
         return Cnt;
     }
 
-    public ArrayList<friendDTO> getFriendList(String nickName) {
-        ArrayList<friendDTO> friendList = null;
+    public ArrayList<FriendDTO> getFriendList(String nickName) {
+        ArrayList<FriendDTO> friendList = null;
         String query =
                 "SELECT `friendInfo`.`f_id`," +
                         "`friendInfo`.`nickName`," +
@@ -283,9 +283,9 @@ public class userDAO {
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                friendList = new ArrayList<friendDTO>();
+                friendList = new ArrayList<FriendDTO>();
                 do {
-                    friendDTO friend = new friendDTO();
+                    FriendDTO friend = new FriendDTO();
                     friend.setF_id(rs.getInt("f_id"));
                     friend.setNickName(rs.getString("nickName"));
                     friend.setFriendNickName(rs.getString("friendNickname"));

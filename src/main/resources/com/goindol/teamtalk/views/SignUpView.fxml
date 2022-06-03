@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="pane2" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.SignupController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="pane2" stylesheets="@../css/Login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.SignupController">
     <children>
         <Button layoutX="182.0" layoutY="448.0" mnemonicParsing="false" onAction="#registerUserAction" text="회원가입" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="300.0" text="TEAM -TALK" textAlignment="CENTER" textFill="OLIVEDRAB">

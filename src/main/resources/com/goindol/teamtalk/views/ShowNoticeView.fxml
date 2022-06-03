@@ -10,7 +10,7 @@
 
 
 <?import javafx.scene.control.TextArea?>
-<BorderPane fx:id="noticeCheckContainer" stylesheets="@../css/Global.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.showNoticeController">
+<BorderPane fx:id="noticeCheckContainer" stylesheets="@../css/Global.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ShowNoticeController">
    <top>
       <Pane prefHeight="40.0" prefWidth="400.0" BorderPane.alignment="CENTER" styleClass="pane">
          <children>

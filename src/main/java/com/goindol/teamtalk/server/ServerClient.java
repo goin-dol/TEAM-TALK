@@ -1,7 +1,5 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.controller.ChatController;
-import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
 
 import java.io.IOException;
@@ -9,9 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class ServerClient {

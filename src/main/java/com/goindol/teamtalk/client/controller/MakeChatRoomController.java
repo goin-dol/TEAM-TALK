@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +19,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class setChatRoomTitleController implements Initializable {
+public class MakeChatRoomController implements Initializable {
     @FXML private Pane pane;
     @FXML private TextField chatRoomTitle;
     @FXML private Button complete;
 
-    public userDTO userDTO;
+    public UserDTO userDTO;
     public void goToBack(){
         try {
             Stage stage = (Stage) pane.getScene().getWindow();
@@ -48,7 +48,7 @@ public class setChatRoomTitleController implements Initializable {
         System.out.println(s);
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setuserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 

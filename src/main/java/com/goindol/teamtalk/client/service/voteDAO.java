@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.voteVarDTO;
+import com.goindol.teamtalk.client.model.VoteVarDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,9 +122,9 @@ public class voteDAO {
 
 
     //투표가 생성되고 투표 리스트들을 확인하는 메소드
-    public List<voteVarDTO> ReadVoteList(int vote_id){
+    public List<VoteVarDTO> ReadVoteList(int vote_id){
 
-        ArrayList<voteVarDTO> v = new ArrayList<>();
+        ArrayList<VoteVarDTO> v = new ArrayList<>();
 
         String query =
                 "SELECT * FROM `DB_ppick`.`voteVar` WHERE vote_id=?";
@@ -139,7 +139,7 @@ public class voteDAO {
                 int voteVar_id = rs.getInt("voteVar_id");
                 int vote_id1 = rs.getInt("vote_id");
                 String content = rs.getString("content");
-                voteVarDTO voteVarDTO = new voteVarDTO(voteVar_id, vote_id1, content);
+                VoteVarDTO voteVarDTO = new VoteVarDTO(voteVar_id, vote_id1, content);
                 v.add(voteVarDTO);
                 return v;
             }

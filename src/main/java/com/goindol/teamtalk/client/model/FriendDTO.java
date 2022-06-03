@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-public class friendDTO {
+public class FriendDTO {
 
     private int f_id;
     private String nickName;

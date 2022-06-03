@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
+import com.goindol.teamtalk.client.model.ChatRoomUserListDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,8 +26,8 @@ public class chatRoomUserListDAO {
         return instance;
     }
 
-    public ArrayList<chatRoomUserListDTO> getChatRoomUser(int chatRoom_id) {
-        ArrayList<chatRoomUserListDTO> chatRoomUserList = null;
+    public ArrayList<ChatRoomUserListDTO> getChatRoomUser(int chatRoom_id) {
+        ArrayList<ChatRoomUserListDTO> chatRoomUserList = null;
         String query = "SELECT * FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
 
         try {
@@ -36,9 +36,9 @@ public class chatRoomUserListDAO {
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                chatRoomUserList = new ArrayList<chatRoomUserListDTO>();
+                chatRoomUserList = new ArrayList<ChatRoomUserListDTO>();
                 do {
-                    chatRoomUserListDTO chatRoomUserListDTO = new chatRoomUserListDTO();
+                    ChatRoomUserListDTO chatRoomUserListDTO = new ChatRoomUserListDTO();
                     chatRoomUserListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
                     chatRoomUserListDTO.setNickName(rs.getString("nickName"));
                     chatRoomUserListDTO.setNoticeRead(rs.getBoolean("isNoticeRead"));

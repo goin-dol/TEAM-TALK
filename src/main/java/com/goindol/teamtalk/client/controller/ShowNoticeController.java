@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.service.noticeDAO;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,20 +9,18 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class showNoticeController implements Initializable {
+public class ShowNoticeController implements Initializable {
     @FXML private BorderPane noticeCheckContainer;
     @FXML private Label noticeTitle;
     @FXML private TextArea noticeContent;
 
     @FXML private ListView readUserList;
     public int chatid;
-    public userDTO userDTO;
+    public UserDTO userDTO;
 
 
     private static noticeDAO noticeDAO;
@@ -57,7 +55,7 @@ public class showNoticeController implements Initializable {
         this.chatid = chatid;
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setuserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 }

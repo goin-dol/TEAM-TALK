@@ -1,13 +1,13 @@
 package com.goindol.teamtalk.client.model;
 
 
-public class voteVarDTO {
+public class VoteVarDTO {
 
     int voteVar_id;
 
     int vote_id;
     String content;
-    public voteVarDTO(int voteVar_id, int vote_id, String content) {
+    public VoteVarDTO(int voteVar_id, int vote_id, String content) {
         this.voteVar_id = voteVar_id;
         this.vote_id = vote_id;
         this.content = content;
@@ -23,7 +23,7 @@ public class voteVarDTO {
 
 
 
-    public voteVarDTO(int vote_id, String content) {
+    public VoteVarDTO(int vote_id, String content) {
         this.vote_id = vote_id;
         this.content = content;
     }

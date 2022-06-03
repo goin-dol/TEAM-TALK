@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.noticeDTO;
+import com.goindol.teamtalk.client.model.NoticeDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -118,7 +118,7 @@ public class noticeDAO {
     }
 
     // 공지 보여줌
-    public noticeDTO showNotice(int chatRoom_id){
+    public NoticeDTO showNotice(int chatRoom_id){
         String query =
                 "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
         try {
@@ -129,7 +129,7 @@ public class noticeDAO {
             if(rs.next()){
                 String title = rs.getString("title");
                 String content = rs.getString("content");
-                noticeDTO noticeDTO = new noticeDTO(title, content);
+                NoticeDTO noticeDTO = new NoticeDTO(title, content);
                 return noticeDTO;
             }else{
                 System.out.println("공지 없음요");
