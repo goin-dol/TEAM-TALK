@@ -19,7 +19,6 @@
 /*}*/
 .root {
     -fx-font-family: "Montserrat";
-    -fx-font-style: #d7d6dc;
 }
 /*윗 공간*/
 .tab-pane .tab-header-area{-fx-padding: 35 0 0 0;}
