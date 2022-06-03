@@ -1,8 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-import java.util.Date;
-
-public class chatLogDTO {
+public class ChatLogDTO {
     private int chatLog_id;
     private String nickName;
     private int chatRoom_id;

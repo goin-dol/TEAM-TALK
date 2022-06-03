@@ -37,13 +37,13 @@ public class friendDAO {
                         "(" +
                         "`nickName`," +
                         "`friendNickName`," +
-                        "`friendStatus`" +
+                        "`friendStatus` " +
                         ")" +
                         "VALUES" +
                         "(" +
-                        "?," +
-                        "?," +
-                        "?" +
+                        "?, " +
+                        "?, " +
+                        "? " +
                         ")";
         try {
             conn = DBDAO.getConnection();
@@ -61,7 +61,7 @@ public class friendDAO {
                     pstmt = conn.prepareStatement(query);
                     pstmt.setString(1, nickName);
                     pstmt.setString(2, friendNickName);
-                    pstmt.setBoolean(3, rs.getBoolean(status));
+                    pstmt.setBoolean(3, rs.getBoolean("status"));
                     pstmt.executeUpdate();
 
                     pstmt = conn.prepareStatement(query);

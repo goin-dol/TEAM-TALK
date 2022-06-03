@@ -1,7 +1,8 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.userDTO;
-import com.goindol.teamtalk.client.model.voteVarDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteVarDTO;
+import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,20 +10,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class showVoteResultController implements Initializable {
+public class ShowVoteResultController implements Initializable {
 
     @FXML
     public BorderPane borderPane;
@@ -32,21 +31,27 @@ public class showVoteResultController implements Initializable {
     private ToggleGroup group = new ToggleGroup();
 
     public int chatid;
-    public userDTO userDTO;
+    public UserDTO userDTO;
 
+
+    private static voteDAO voteDAO;
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
-        List<voteVarDTO> voteVarDTOList = new ArrayList<>();
-        voteVarDTOList.add(new voteVarDTO(1,"에그드랍"));
-        voteVarDTOList.add(new voteVarDTO(1,"한솥"));
-        voteVarDTOList.add(new voteVarDTO(1,"남경"));
+        List<VoteVarDTO> voteVarDTOList = new ArrayList<>();
+        voteVarDTOList.add(new VoteVarDTO(1,"에그드랍"));
+        voteVarDTOList.add(new VoteVarDTO(1,"한솥"));
+        voteVarDTOList.add(new VoteVarDTO(1,"남경"));
         names.addAll(voteVarDTOList);
 
 
         voteResultList.setItems(names);
         voteResultList.setCellFactory(param -> new listCell());
+
+        //투표결과닉네임
+//        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
+
     }
 
     @Override
@@ -55,15 +60,15 @@ public class showVoteResultController implements Initializable {
 
     }
 
-    public void getChatRoomId(int chatid) {
+    public void setChatRoomId(int chatid) {
         this.chatid = chatid;
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 
-    private class listCell extends ListCell<voteVarDTO> {
+    private class listCell extends ListCell<VoteVarDTO> {
         HBox hbox = new HBox();
         Label label = new Label("(empty)");
         Pane pane = new Pane();
@@ -83,7 +88,7 @@ public class showVoteResultController implements Initializable {
         }
 
         @Override
-        public void updateItem(voteVarDTO obj, boolean empty) {
+        public void updateItem(VoteVarDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 lastItem = null;

@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-public class noticeDTO {
+public class NoticeDTO {
     private int notice_id;
     private String nickName;
 
@@ -8,6 +8,11 @@ public class noticeDTO {
     private int chatRoom_id;
     private String title;
     private String content;
+
+    public NoticeDTO(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     public String getNickName() {
         return nickName;

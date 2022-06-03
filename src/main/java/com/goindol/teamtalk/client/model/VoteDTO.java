@@ -1,12 +1,22 @@
 package com.goindol.teamtalk.client.model;
 
 
-public class voteDTO {
+public class VoteDTO {
 
+    int vote_id;
     private int chatRoom_id;
     private String title;
     private boolean isAnonoymous;
     private boolean isOverLap;
+
+
+    public int getVote_id() {
+        return vote_id;
+    }
+
+    public void setVote_id(int vote_id) {
+        this.vote_id = vote_id;
+    }
 
     public int getChatRoom_id() {
         return chatRoom_id;

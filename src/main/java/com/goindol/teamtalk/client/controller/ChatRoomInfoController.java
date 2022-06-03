@@ -1,8 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.chatRoomListDTO;
-import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.chatRoomListDAO;
 import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
 import javafx.application.Platform;
@@ -24,43 +23,49 @@ import java.util.ResourceBundle;
 
 public class ChatRoomInfoController implements Initializable {
 
+    public int chatid;
+    public UserDTO userDTO;
     public int chatId;
-    public userDTO userDTO;
     public MainController mainController;
     public chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     public chatRoomUserListDAO chatRoomUserListDAO = com.goindol.teamtalk.client.service.chatRoomUserListDAO.getInstance();
-    @FXML private TextArea chatRoomUserList;
+    @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
     @FXML private Button invite;
     @FXML private Button exitRoom;
 
 
     public void showChatRoomUserList() {
-        List<String> strings = new ArrayList<>();
+       List<String> strings = new ArrayList<>();
         ArrayList<String> chatRoomUsers = chatRoomUserListDAO.getChatRoomUser(chatId);
         for(String users : chatRoomUsers) {
-            chatRoomUserList.appendText(users + "\n");
+            strings.add(users);
         }
+        ObservableList<String> chatRoomObservableUserList = FXCollections.observableList(strings);
+
+        chatRoomUserList.setItems(chatRoomObservableUserList);
     }
 
     public void inviteFriend() {
         chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
-        Platform.runLater(()->{
-            chatRoomUserList.appendText(userInput.getText() + "\n");
-        });
-        userInput.setText("");
+        ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
+        chatRoomUserListItems.add(userInput.getText());
+        chatRoomUserList.setItems(chatRoomUserListItems);
     }
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        chatRoomUserList.setEditable(false);
+       chatRoomUserList.setEditable(false);
         invite.setOnMouseClicked(event-> {
-            chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
-            chatRoomUserList.appendText(userInput.getText() + "\n");
+            inviteFriend();
             mainController.send("chatRoom/"+ chatId + "/" + userInput.getText());
             userInput.setText("");
+        });
+
+        exitRoom.setOnMouseClicked(event-> {
+            //info 창 닫고 채팅방 페이지를 메인페이지로 이동
         });
     }
 
@@ -68,7 +73,7 @@ public class ChatRoomInfoController implements Initializable {
         this.chatId = chatId;
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 

@@ -1,17 +1,17 @@
 package com.goindol.teamtalk.client.model;
 
-public class friendDTO {
+public class FriendDTO {
 
     private int f_id;
     private String nickName;
     private String friendNickName;
     private boolean friendStatus;
 
-    public friendDTO() {
+    public FriendDTO() {
 
     }
 
-    public friendDTO(String friendNickName) {
+    public FriendDTO(String friendNickName) {
         this.friendNickName = friendNickName;
     }
     public int getF_id() {

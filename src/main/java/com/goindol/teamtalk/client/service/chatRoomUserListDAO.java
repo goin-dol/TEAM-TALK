@@ -1,7 +1,6 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.chatRoomUserListDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,10 +44,27 @@ public class chatRoomUserListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return nickName;
+    }
+
+    public void existRoom(int chatRoomId, String nickName) {
+        String query = "DELETE FROM `DB_ppick`.`chatRoomUserList` " +
+                "WHERE chatRoom_id = ? and nickName = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoomId);
+            pstmt.setString(2, nickName);
+            pstmt.executeUpdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
     }
 
 

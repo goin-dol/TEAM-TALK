@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.chatRoomListDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class setChatRoomTitle implements Initializable {
+public class MakeChatRoomController implements Initializable {
     public chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
-    public userDTO userDTO;
+    public UserDTO userDTO;
     @FXML private Pane pane;
     @FXML private TextField chatRoomTitle;
     @FXML private Button complete;
@@ -32,6 +32,9 @@ public class setChatRoomTitle implements Initializable {
         int chatId = chatRoomListDAO.getChatRoomId(chatRoomTitle.getText(), userDTO.getNickName());
         chatRoomListDAO.inviteChatRoom(chatId, userDTO.getNickName());
         chatRoomTitle.setText("");
+        //
+        String s = chatRoomTitle.getText();
+        System.out.println(s);
     }
     public void goToBack(){
         try {
@@ -39,7 +42,7 @@ public class setChatRoomTitle implements Initializable {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
             Parent root = loader.load();
             MainController main = loader.getController();
-            main.setuserDTO(userDTO);
+            main.setUserDTO(userDTO);
             main.showChatRoomList();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
@@ -50,6 +53,8 @@ public class setChatRoomTitle implements Initializable {
             e.printStackTrace();
         }
     }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -62,7 +67,7 @@ public class setChatRoomTitle implements Initializable {
                     FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
                     Parent root = loader.load();
                     MainController main = loader.getController();
-                    main.setuserDTO(userDTO);
+                    main.setUserDTO(userDTO);
                     main.showChatRoomList();
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
@@ -78,7 +83,7 @@ public class setChatRoomTitle implements Initializable {
 
     }
 
-    public void setUserDTO(userDTO userDTO) {
+    public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 }

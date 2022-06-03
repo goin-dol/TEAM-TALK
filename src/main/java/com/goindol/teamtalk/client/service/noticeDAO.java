@@ -1,11 +1,14 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
+import com.goindol.teamtalk.client.model.NoticeDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class noticeDAO {
 
@@ -62,9 +65,8 @@ public class noticeDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
     }
 
@@ -80,14 +82,13 @@ public class noticeDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
 
     }
 
-    //예외 흐름 1
+    //예외 흐름 1 공지 내용이 없을 때
     public boolean createNoticeEx1(int chatRoom_id){
         String query =
                 "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
@@ -107,10 +108,66 @@ public class noticeDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
+        return false;
+    }
+
+    // 공지 보여줌
+    public NoticeDTO showNotice(int chatRoom_id){
+        String query =
+                "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,chatRoom_id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                NoticeDTO noticeDTO = new NoticeDTO(title, content);
+                return noticeDTO;
+            }else{
+                System.out.println("공지 없음요");
+            }
+
+        }
+        catch(Exception e) {
+            //시스템이 오류 메시지 출력
+            e.printStackTrace();
+        } finally {
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+
+        return null;
+    }
+    // 해당 채팅 방에 공지가 있는지
+    public boolean checkNotice(int chatRoom_id){
+        String query =
+                "SELECT count(*) as count FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
+
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,chatRoom_id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                int cnt = rs.getInt("count");
+                if(cnt==1){
+                    return true;
+                } else return false;
+            }
+
+        }catch(Exception e) {
+            //시스템이 오류 메시지 출력
+            e.printStackTrace();
+        } finally {
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+
         return false;
     }
 
@@ -126,8 +183,8 @@ public class noticeDAO {
 
 
     }
-    //공지 확인
-    public void checkNotice(String nickName,int chatRoom_id){
+    //공지 읽기 (확인)
+    public void readNotice(String nickName, int chatRoom_id){
 
         //공지가 있는지 확인하기 위한 쿼리문
         String query =
@@ -161,10 +218,36 @@ public class noticeDAO {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
+    }
+    //공지 읽은 사람 리스트
+    public List<String> readNoticeList(int chatRoom_id){
+
+        ArrayList<String> chatPeople = new ArrayList<>();
+        String query =
+                "SELECT * FROM `DB_ppick`.`chatRoomUserList` WHERE chatRoom_id =? and isNoticeRead=?";
+
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,chatRoom_id);
+            pstmt.setBoolean(2,true);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                String nickName = rs.getString("nickName");
+                chatPeople.add(nickName);
+            }
+            return chatPeople;
+        }catch(Exception e) {
+            //시스템이 오류 메시지 출력
+            e.printStackTrace();
+        } finally {
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+        return null;
     }
 
     // 공지를 전부 읽었는지 확인
@@ -173,7 +256,7 @@ public class noticeDAO {
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
         String query1 =
-                "SELECT count(*) as count from `DB_ppick`.`chatRoomList` where isNoticeRead=?";
+                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where isNoticeRead=? and chatRoom_id=?";
 
         try {
             conn = DB.getConnection();
@@ -184,11 +267,12 @@ public class noticeDAO {
             if(rs.next()) {
                 pstmt = conn.prepareStatement(query1);
                 pstmt.setBoolean(1, true);
+                pstmt.setInt(2, chatRoom_id);
                 ResultSet rs1 = pstmt.executeQuery();
 
                 if(rs1.next()){
                     int cnt = rs.getInt("count");
-                    int cnt1 = rs1.getInt("count1");
+                    int cnt1 = rs1.getInt("count");
                     if(cnt==cnt1){
                         return true;
                     }else{
@@ -200,9 +284,8 @@ public class noticeDAO {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return false;
     }

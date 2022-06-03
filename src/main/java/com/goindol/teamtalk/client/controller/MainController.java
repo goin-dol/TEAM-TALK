@@ -1,13 +1,14 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.chatRoomListDTO;
-import com.goindol.teamtalk.client.model.friendDTO;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.*;
 import com.goindol.teamtalk.client.service.*;
 import javafx.application.Platform;
+import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -41,15 +46,21 @@ public class MainController implements Initializable {
     @FXML public TabPane tabContainer;
     @FXML public Tab chatTab;
     @FXML public Tab friendTab;
+    @FXML public Tab logoutTab;
     @FXML public ListView chatRoomList;
     @FXML public ListView friendList;
     @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
-    @FXML public Button makeChatRoomButton;
+    @FXML public ImageView makeChatRoomButton;
+    @FXML public ImageView chatRoomListTabImage;
+    @FXML public ImageView friendListTabImage;
+    @FXML public ImageView logoutTabImage;
+    DropShadow dropShadow = new DropShadow();
+
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
     userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
-    public userDTO userDTO;
+    public UserDTO userDTO;
 
     public void startClient(String IP, int port) {
 
@@ -122,36 +133,34 @@ public class MainController implements Initializable {
     }
 
     public void showFriendList(){
-        List<friendDTO> strings = new ArrayList<>();
+        List<FriendDTO> strings = new ArrayList<>();
 
         if(userDTO != null) {
-            ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+            ArrayList<FriendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
             if(friends != null) {
                 for(int i = 0; i < friends.size(); i++) {
                     strings.add(friends.get(i));
                 }
             }
-            strings.add(new friendDTO(""));
         }
-        ObservableList<friendDTO> friendObervableList = FXCollections.observableList(strings);
+        ObservableList<FriendDTO> friendObervableList = FXCollections.observableList(strings);
         Platform.runLater(()->{
             friendList.setItems(friendObervableList);
         });
     }
 
     public void showChatRoomList(){
-        List<chatRoomListDTO> strings = new ArrayList<>();
+        List<ChatRoomListDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<chatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));
                 }
             }
-            strings.add(new chatRoomListDTO(0, ""));
         }
 
-        ObservableList<chatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
+        ObservableList<ChatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
 
         chatRoomObservableList.addAll(strings);
 
@@ -161,7 +170,7 @@ public class MainController implements Initializable {
     }
 
     public void openChatRoom(){
-        chatRoomListDTO  cr = (chatRoomListDTO ) chatRoomList.getSelectionModel().getSelectedItem();
+        ChatRoomListDTO cr = (ChatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
         if(cr==null)
             return;
         try {
@@ -173,8 +182,8 @@ public class MainController implements Initializable {
             ChatController chatController = loader.getController();
             chatController.setuserDTO(userDTO);
             chatController.setChatRoomId(cr.getChatRoom_id());
-            chatController.setChatRoomTitle();
             chatController.setMainController(this);
+            chatController.setChatRoomTitle();
             chatController.initialChat();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
@@ -188,14 +197,14 @@ public class MainController implements Initializable {
     }
 
     public void makeChatroom(){
+        //TODO : DB에 채팅방 저장
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("views/setChatRoomTitleView.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MakeChatRoomView.fxml"));
             Parent root = (Parent) loader.load();
-            setChatRoomTitle setChatRoomTitle = loader.getController();
-            setChatRoomTitle.setUserDTO(userDTO);
+            MakeChatRoomController chatRoomTitleController = loader.getController();
+            chatRoomTitleController.setUserDTO(userDTO);
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -231,15 +240,45 @@ public class MainController implements Initializable {
             searchFriend.setText("");
         }
 
-
+        send("login/roomId/value");
     }
 
     public void logOut(){
+        userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+        send("login/roomId/value");
 
+        try {
+            Stage stage = (Stage) stackPane.getScene().getWindow();
+            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+            stage.setScene(new Scene(root, 400, 600));
+            stage.setTitle("Team Talk");
+            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setResizable(false);
+            stopClient();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        logoutTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                logOut();
+            }
+        });
+
+
+        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
+        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                makeChatRoomButton.setEffect(null);
+            }
+        });
+
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -254,7 +293,6 @@ public class MainController implements Initializable {
                 makeChatroom();
             }
         });
-
         chatRoomList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -271,8 +309,22 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    public void setuserDTO(userDTO userDTO) {
+    private class colorListCell extends ListCell<String> {
+        @Override
+        public void updateItem(String obj, boolean empty) {
+            super.updateItem(obj, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                Label label = new Label(obj);
+                //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
+                label.setTextFill(Color.GREEN);
+                setGraphic(label);
+            }
+        }
+    }
+    public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 }
