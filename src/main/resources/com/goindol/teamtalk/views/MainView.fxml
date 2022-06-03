@@ -22,7 +22,7 @@
                         <AnchorPane fx:id="chatAnchor" prefHeight="600.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
                             <VBox prefHeight="600.0" prefWidth="340.0">
                                 <Pane prefHeight="60.0" prefWidth="340.0" style="-fx-background-color: #3d4855;">
-                                    <ImageView fx:id="makeChatRoomButton" fitHeight="40.0" fitWidth="40.0" layoutX="276.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="makeChatRoomButton" styleClass="image-view"  fitHeight="40.0" fitWidth="40.0" layoutX="276.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
                                             <Image url="@../images/createChat.png" />
                                         </image>
@@ -34,7 +34,7 @@
                         </AnchorPane>
                     </content>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="chatRoomListTabImage" styleClass="image-view" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/chat2.png" />
                      </image>
@@ -48,14 +48,14 @@
                                 <Pane prefHeight="60.0" prefWidth="340.0" style="-fx-background-color: #3d4855;">
                                     <Label layoutX="14.0" layoutY="20.0" text="친구 추가" />
                                     <TextField fx:id="searchFriend" layoutX="72.0" layoutY="16.0" prefHeight="22.0" prefWidth="211.0" />
-                                    <Button fx:id="addFriendButton" layoutX="289.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #EBA576;" text="추가" />
+                                    <Button fx:id="addFriendButton" layoutX="289.0" layoutY="16.0" mnemonicParsing="false" text="추가" />
                                 </Pane>
                                  <ListView fx:id="friendList" fixedCellSize="40" prefHeight="540.0" prefWidth="323.5" style="-fx-background-color: #3d4855;" />
                             </VBox>
                         </AnchorPane>
                     </content>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="friendListTabImage" styleClass="image-view" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/friend2.png" />
                      </image>
@@ -64,7 +64,7 @@
                 </Tab>
                 <Tab fx:id="logoutTab" closable="false">
                <graphic>
-                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                   <ImageView fx:id="logoutTabImage" styleClass="image-view" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                        <image>
                            <Image url="@../images/logout.png" />
                        </image>

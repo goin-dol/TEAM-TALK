@@ -88,6 +88,7 @@
 }
 .button {
     -fx-background-color: #3d4855;
-    -fx-text-fill: black;
+    -fx-text-fill: #d7d6dc;
     -fx-font-family: sans-serif;
+    -fx-cursor: hand;
 }

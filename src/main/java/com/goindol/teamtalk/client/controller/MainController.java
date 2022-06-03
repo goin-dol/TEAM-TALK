@@ -42,6 +42,9 @@ public class MainController implements Initializable {
     @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
     @FXML public ImageView makeChatRoomButton;
+    @FXML public ImageView chatRoomListTabImage;
+    @FXML public ImageView friendListTabImage;
+    @FXML public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
@@ -203,6 +206,13 @@ public class MainController implements Initializable {
                 }
             }
         });*/
+        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
+        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                makeChatRoomButton.setEffect(null);
+            }
+        });
 
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

@@ -18,9 +18,6 @@
                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                     <children>
                         <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
-                        <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/goToBack.png" />
-                        </ImageView>
                   <Button fx:id="chatRoomInfo" layoutX="350.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -28,6 +25,13 @@
                               <Image url="@../images/menubar.png" />
                            </image>
                         </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="goBackButton" layoutX="8.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                  <Image url="@../images/goToBack.png" />
+                              </ImageView>
                      </graphic>
                   </Button>
                     </children>
@@ -38,22 +42,22 @@
                             <children>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Label fx:id="noticeCheck" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="공지" />
+                              <Button fx:id="noticeCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="공지" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Label fx:id="noticeMake" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="공지생성" />
+                              <Button fx:id="noticeMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="공지생성" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Label fx:id="voteCheck" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="투표" />
+                              <Button fx:id="voteCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="투표" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Label fx:id="voteMake" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="투표생성" />
+                              <Button fx:id="voteMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="투표생성" />
                                     </children>
                                 </Pane>
                             </children>
@@ -85,6 +89,6 @@
         </HBox>
     </bottom>
    <center>
-          <TextArea fx:id="chat" prefHeight="420.0" prefWidth="380.0" BorderPane.alignment="CENTER" wrapText="true"/>
+          <TextArea fx:id="chat" prefHeight="420.0" prefWidth="380.0" wrapText="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

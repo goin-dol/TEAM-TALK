@@ -17,6 +17,7 @@
     -fx-background-color: #eba576;
     -fx-text-fill: black;
     -fx-font-family: sans-serif;
+    -fx-cursor: hand;
 }
 /*.button {*/
 /*    -fx-background-color: #505a6c;*/
