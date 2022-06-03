@@ -3,9 +3,8 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.*;
 import com.goindol.teamtalk.client.service.*;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,19 +15,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +47,12 @@ public class MainController implements Initializable {
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
     userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
-    public userDTO userDTO;
+    public UserDTO userDTO;
 
 
     public void showFriendList(){
         List<String> strings = new ArrayList<>();
-        ArrayList<friendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+        ArrayList<FriendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
         if(friends == null) {
             strings.add("");
         }else {
@@ -75,18 +69,18 @@ public class MainController implements Initializable {
     }
 
     public void showChatRoomList(){
-        List<chatRoomListDTO> strings = new ArrayList<>();
+        List<ChatRoomListDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<chatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));
                 }
             }
-            strings.add(new chatRoomListDTO(0, ""));
+            strings.add(new ChatRoomListDTO(0, ""));
         }
 
-        ObservableList<chatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
+        ObservableList<ChatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
 
         chatRoomObservableList.addAll(strings);
 
@@ -94,7 +88,7 @@ public class MainController implements Initializable {
     }
 
     public void openChatRoom(){
-        chatRoomListDTO  cr = (chatRoomListDTO ) chatRoomList.getSelectionModel().getSelectedItem();
+        ChatRoomListDTO cr = (ChatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
         if(cr==null)
             return;
         try {
@@ -123,9 +117,9 @@ public class MainController implements Initializable {
         //TODO : DB에 채팅방 저장
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/setChatRoomTitleView.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MakeChatRoomView.fxml"));
             Parent root = (Parent) loader.load();
-            setChatRoomTitleController chatRoomTitleController = loader.getController();
+            MakeChatRoomController chatRoomTitleController = loader.getController();
             chatRoomTitleController.setuserDTO(userDTO);
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
@@ -246,7 +240,7 @@ public class MainController implements Initializable {
             }
         }
     }
-    public void setuserDTO(userDTO userDTO) {
+    public void setuserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 }

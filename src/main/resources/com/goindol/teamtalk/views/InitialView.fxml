@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.LoginController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../css/Login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.LoginController">
    <children>
       <Button fx:id="loginButton" layoutX="230.0" layoutY="460.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="70.0" text="Login" />
       <Button fx:id="signupButton" layoutX="138.0" layoutY="460.0" mnemonicParsing="false" onAction="#signupButtonAction" prefHeight="30.0" prefWidth="70.0" text="Signup" />

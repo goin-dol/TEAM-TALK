@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.chatRoomListDTO;
+import com.goindol.teamtalk.client.model.ChatRoomListDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -156,8 +156,8 @@ public class chatRoomListDAO {
         return title;
     }
 
-    public ArrayList<chatRoomListDTO> getChatRoomName(String nickName) {
-        ArrayList<chatRoomListDTO> roomName = null;
+    public ArrayList<ChatRoomListDTO> getChatRoomName(String nickName) {
+        ArrayList<ChatRoomListDTO> roomName = null;
         String query =
                 "select " +
                         "chatRoom_id, " +
@@ -174,9 +174,9 @@ public class chatRoomListDAO {
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                roomName = new ArrayList<chatRoomListDTO>();
+                roomName = new ArrayList<ChatRoomListDTO>();
                 do{
-                    chatRoomListDTO chatRoomListDTO = new chatRoomListDTO();
+                    ChatRoomListDTO chatRoomListDTO = new ChatRoomListDTO();
                     chatRoomListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
                     chatRoomListDTO.setChatRoomName(rs.getString("chatRoomName"));
 

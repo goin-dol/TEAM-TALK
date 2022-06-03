@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-public class userDTO {
+public class UserDTO {
     private String userId;
     private String userPassword;
     private String nickName;

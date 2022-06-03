@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-public class voteResultDTO {
+public class VoteResultDTO {
     private int vote_id;
     private int voteVar_id;
     private String content;

@@ -1,14 +1,10 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.noticeDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -20,14 +16,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class makeNoticeController implements Initializable {
+public class MakeNoticeController implements Initializable {
     @FXML private BorderPane makeNoticeContainer;
     @FXML private TextField noticeTitle;
     @FXML private TextArea noticeContent;
 
     @FXML private Button complete;
     public int chatid;
-    public userDTO userDTO;
+    public UserDTO userDTO;
 
 
     private static noticeDAO noticeDAO;
@@ -77,7 +73,7 @@ public class makeNoticeController implements Initializable {
         this.chatid = chatid;
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setuserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 }
