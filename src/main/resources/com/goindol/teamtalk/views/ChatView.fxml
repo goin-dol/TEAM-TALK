@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="chatRoomContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatController">
+<BorderPane fx:id="chatRoomContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" stylesheets="@../css/ChatView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatController">
     <top>
         <VBox prefHeight="120.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
-                <Pane prefHeight="200.0" prefWidth="200.0">
+                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                     <children>
                         <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
-                        <Label fx:id="chatRoomInfo" layoutX="318.0" layoutY="39.0" text="채팅방 정보" textFill="#2417dd" />
                         <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../images/goToBack.png" />
                         </ImageView>
+                  <Button fx:id="chatRoomInfo" layoutX="350.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/menubar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <HBox layoutX="1.0" prefHeight="60.0" prefWidth="400.0">
+                        <HBox prefHeight="60.0" prefWidth="400.0">
                             <children>
-                                <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
+                                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
                                         <Label fx:id="noticeCheck" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="공지" />
                                     </children>
                                 </Pane>
-                                <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
+                                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
                                         <Label fx:id="noticeMake" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="공지생성" />
                                     </children>
                                 </Pane>
-                                <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
+                                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
                                         <Label fx:id="voteCheck" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="투표" />
                                     </children>
                                 </Pane>
-                                <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
+                                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
                                         <Label fx:id="voteMake" alignment="CENTER" layoutX="10.0" prefHeight="60.0" prefWidth="80.0" text="투표생성" />
                                     </children>
@@ -48,28 +63,28 @@
             </children>
         </VBox>
     </top>
-    <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <content>
-                <TextArea fx:id="chat" prefHeight="420.0" prefWidth="398.0" />
-            </content>
-        </ScrollPane>
-    </center>
     <bottom>
         <HBox prefHeight="58.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
-                <Pane prefHeight="58.0" prefWidth="470.0">
+                <Pane prefHeight="58.0" prefWidth="470.0" styleClass="pane">
                     <children>
-                        <TextField
-                                fx:id="userInput" layoutX="1.0" layoutY="1.0" prefHeight="55.0" prefWidth="335.0" />
+                        <TextField fx:id="userInput" layoutX="1.0" layoutY="1.0" prefHeight="55.0" prefWidth="335.0" />
                     </children>
                 </Pane>
-                <Pane prefHeight="200.0" prefWidth="200.0">
-                    <children>
-                        <Button fx:id="send" layoutX="18.0" layoutY="21.0" text="전송" />
-                    </children>
+                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
+               <children>
+                  <Button fx:id="sendButton" layoutX="9.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="41.0">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../images/send.png" />
+                        </ImageView>
+                     </graphic></Button>
+               </children>
                 </Pane>
             </children>
         </HBox>
     </bottom>
+   <center>
+          <TextArea fx:id="chat" prefHeight="420.0" prefWidth="380.0" BorderPane.alignment="CENTER" wrapText="true"/>
+   </center>
 </BorderPane>

@@ -7,16 +7,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatRoomInfoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatRoomInfoController">
    <children>
-      <Pane prefHeight="200.0" prefWidth="250.0">
+      <Pane prefHeight="200.0" prefWidth="250.0" styleClass="pane2">
          <children>
             <Label layoutX="25.0" layoutY="14.0" text="대화상대" />
-            <ListView fx:id="chatRoomUserList" layoutX="25.0" layoutY="32.0" prefHeight="162.0" prefWidth="200.0" />
+            <ListView fx:id="chatRoomUserList" layoutX="25.0" layoutY="32.0" prefHeight="155.0" prefWidth="200.0" />
          </children>
       </Pane>
-      <Pane layoutY="193.0" prefHeight="207.0" prefWidth="250.0">
+      <Pane layoutY="193.0" prefHeight="207.0" prefWidth="250.0" styleClass="pane2">
          <children>
             <TextField layoutX="25.0" layoutY="54.0" prefHeight="26.0" prefWidth="149.0" />
             <Button layoutX="182.0" layoutY="54.0" mnemonicParsing="false" text="초대" />

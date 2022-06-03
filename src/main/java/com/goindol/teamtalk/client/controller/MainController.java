@@ -15,6 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -39,13 +42,13 @@ public class MainController implements Initializable {
     @FXML public TabPane tabContainer;
     @FXML public Tab chatTab;
     @FXML public Tab friendTab;
+    @FXML public Tab logoutTab;
     @FXML public ListView chatRoomList;
     @FXML public ListView friendList;
     @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
-    @FXML public Button makeChatRoomButton;
-
-    @FXML public Button logOut;
+    @FXML public ImageView makeChatRoomButton;
+    DropShadow dropShadow = new DropShadow();
 
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
@@ -184,10 +187,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        logOut.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        logoutTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(Event event) {
                 logOut();
             }
         });
@@ -208,6 +210,7 @@ public class MainController implements Initializable {
             }
         });*/
 
+
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -221,7 +224,6 @@ public class MainController implements Initializable {
                 makeChatroom();
             }
         });
-
         chatRoomList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
