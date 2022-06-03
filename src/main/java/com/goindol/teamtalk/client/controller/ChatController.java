@@ -39,14 +39,15 @@ public class ChatController implements Initializable {
     chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
     @FXML private BorderPane chatRoomContainer;
     @FXML private Label chatRoomTitle;
-    @FXML private Label noticeCheck;
-    @FXML private Label noticeMake;
-    @FXML private Label voteCheck;
-    @FXML public Label voteMake;
+    @FXML private Button noticeCheck;
+    @FXML private Button noticeMake;
+    @FXML private Button voteCheck;
+    @FXML private Button voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
     @FXML private Button sendButton;
     @FXML private Button chatRoomInfo;
+    @FXML private Button goBackButton;
 
     public int chatid;
     public UserDTO userDTO;
@@ -161,6 +162,12 @@ public class ChatController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         chat.setEditable(false);
+        goBackButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                goToBack();
+            }
+        });
         noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

@@ -38,18 +38,22 @@
     -fx-background-color: #3d4855;
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: #d7d6dc;
+    -fx-cursor: hand;
 }
 .tab:selected {
     -fx-background-color: #eba576;
 }
-
-
 .list-cell {
+    -fx-background-color: #3d4855;
+}
+
+.list-cell:filled {
     -fx-background-color: #3d4855;
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: #d7d6dc;
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 18;
+    -fx-cursor: hand;
 }
 
 .scroll-bar {
@@ -73,4 +77,12 @@
 .text-field {
     -fx-background-color: #505a6c;
     -fx-text-fill: #d7d6dc;
+}
+.image-view {
+    -fx-cursor: hand;
+}
+.button {
+    -fx-background-color: #eba576;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
 }
