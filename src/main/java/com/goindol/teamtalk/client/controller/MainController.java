@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -47,7 +48,7 @@ public class MainController implements Initializable {
     @FXML public TextField searchFriend;
     @FXML public Button addFriendButton;
     @FXML public ImageView makeChatRoomButton;
-
+    DropShadow dropShadow = new DropShadow();
 
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
@@ -186,7 +187,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         logoutTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -209,6 +209,7 @@ public class MainController implements Initializable {
                 }
             }
         });*/
+
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

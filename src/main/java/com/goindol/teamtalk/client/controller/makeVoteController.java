@@ -62,8 +62,10 @@ public class makeVoteController implements Initializable {
 //        }
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         voteTitle.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {

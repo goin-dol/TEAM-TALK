@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 public class showNoticeController implements Initializable {
     @FXML private BorderPane noticeCheckContainer;
     @FXML private Label noticeTitle;
-    @FXML private TextFlow noticeContent;
+    @FXML private TextArea noticeContent;
 
     @FXML private ListView readUserList;
     public int chatid;
@@ -39,7 +40,6 @@ public class showNoticeController implements Initializable {
 
         Text t1 = new Text("공지내용");
 //
-        noticeContent.getChildren().add(t1);
     }
 
     public void showReadUser(){
@@ -49,6 +49,7 @@ public class showNoticeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        noticeContent.setEditable(false);
         showNoticeContent();
     }
 

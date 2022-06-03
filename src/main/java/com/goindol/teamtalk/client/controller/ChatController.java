@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -41,14 +42,14 @@ public class ChatController implements Initializable {
     chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
     @FXML private BorderPane chatRoomContainer;
     @FXML private Label chatRoomTitle;
-    @FXML private Label chatRoomInfo;
     @FXML private Label noticeCheck;
     @FXML private Label noticeMake;
     @FXML private Label voteCheck;
     @FXML public Label voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
-    @FXML private Button send;
+    @FXML private Button sendButton;
+    @FXML private Button chatRoomInfo;
 
     public int chatid;
     public userDTO userDTO;
@@ -214,11 +215,20 @@ public class ChatController implements Initializable {
             userInput.setText("");
             userInput.requestFocus();
         });
-        send.setOnAction(event->{
-            send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
-            userInput.setText("");
-            userInput.requestFocus();
+
+        sendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+                userInput.setText("");
+                userInput.requestFocus();
+            }
         });
+//        send.setOnAction(event->{
+//            send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+//            userInput.setText("");
+//            userInput.requestFocus();
+//        });
 
         noticeCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

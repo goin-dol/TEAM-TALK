@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #393351;
+    -fx-background-color: #3d4855;
 }
 .label {
     -fx-text-fill: #d7d6dc;
@@ -7,14 +7,17 @@
 }
 
 .text-field {
-    -fx-background-color: #393351;
+    -fx-background-color: #3d4855;
     -fx-text-fill: #d7d6dc;
     -fx-font-family: sans-serif;
     -fx-border-color: #d7d6dc;
     -fx-border-style: hidden hidden solid hidden;
 }
 .button {
-    -fx-background-color: #2196f3;
-    -fx-text-fill: white;
+    -fx-background-color: #eba576;
+    -fx-text-fill: black;
     -fx-font-family: sans-serif;
 }
+/*.button {*/
+/*    -fx-background-color: #505a6c;*/
+/*}*/
