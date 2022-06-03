@@ -11,7 +11,7 @@
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
-                        <Label fx:id="chatRoomInfo" layoutX="327.0" layoutY="32.0" text="채팅방 정보" />
+                        <Label fx:id="chatRoomInfo" layoutX="327.0" layoutY="32.0" text="채팅방 정보"/>
                         <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../images/goToBack.png" />
                         </ImageView>

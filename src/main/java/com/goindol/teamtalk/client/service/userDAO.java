@@ -121,7 +121,7 @@ public class userDAO {
 
 
 
-    public boolean login(String userId, String userPassword, String ip) {
+    public boolean login(String userId, String userPassword) {
         boolean status = false;
         String query =
                 "SELECT " +
@@ -289,7 +289,7 @@ public class userDAO {
                     friend.setF_id(rs.getInt("f_id"));
                     friend.setNickName(rs.getString("nickName"));
                     friend.setFriendNickName(rs.getString("friendNickname"));
-
+                    friend.setFriendStatus(rs.getBoolean("friendStatus"));
                     friendList.add(friend);
                 }while(rs.next());
             }

@@ -7,6 +7,13 @@ public class friendDTO {
     private String friendNickName;
     private boolean friendStatus;
 
+    public friendDTO() {
+
+    }
+
+    public friendDTO(String friendNickName) {
+        this.friendNickName = friendNickName;
+    }
     public int getF_id() {
         return f_id;
     }
@@ -23,5 +30,10 @@ public class friendDTO {
     }
     public boolean isFriendStatus() {return friendStatus;}
     public void setFriendStatus(boolean friendStatus) {this.friendStatus = friendStatus;}
-
+    public String toString() {
+        if(friendStatus) {
+            return friendNickName + "(접속 중)";
+        }
+        return friendNickName;
+    }
 }

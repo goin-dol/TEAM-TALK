@@ -68,7 +68,7 @@ public class makeNoticeController implements Initializable {
         });
     }
 
-    public void getChatRoomId(int chatid) {
+    public void setChatRoomId(int chatid) {
         this.chatid = chatid;
     }
 

@@ -26,9 +26,9 @@ public class chatRoomUserListDAO {
         return instance;
     }
 
-    public ArrayList<chatRoomUserListDTO> getChatRoomUser(int chatRoom_id) {
-        ArrayList<chatRoomUserListDTO> chatRoomUserList = null;
-        String query = "SELECT * FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
+    public ArrayList<String> getChatRoomUser(int chatRoom_id) {
+        ArrayList<String> nickName = null;
+        String query = "SELECT nickName FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
 
         try {
             conn = DBDAO.getConnection();
@@ -36,14 +36,9 @@ public class chatRoomUserListDAO {
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                chatRoomUserList = new ArrayList<chatRoomUserListDTO>();
+                nickName = new ArrayList<String>();
                 do {
-                    chatRoomUserListDTO chatRoomUserListDTO = new chatRoomUserListDTO();
-                    chatRoomUserListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
-                    chatRoomUserListDTO.setNickName(rs.getString("nickName"));
-                    chatRoomUserListDTO.setNoticeRead(rs.getBoolean("isNoticeRead"));
-
-                    chatRoomUserList.add(chatRoomUserListDTO);
+                    nickName.add(rs.getString("nickName"));
 
                 }while(rs.next());
             }
@@ -53,7 +48,7 @@ public class chatRoomUserListDAO {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
-        return chatRoomUserList;
+        return nickName;
     }
 
 

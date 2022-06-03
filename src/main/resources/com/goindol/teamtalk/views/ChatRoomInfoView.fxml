@@ -8,20 +8,21 @@
 <?import javafx.scene.layout.Pane?>
 
 
+<?import javafx.scene.control.TextArea?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ChatRoomInfoController">
    <children>
       <Pane prefHeight="200.0" prefWidth="250.0">
          <children>
             <Label layoutX="25.0" layoutY="14.0" text="대화상대" />
-            <ListView fx:id="chatRoomUserList" layoutX="25.0" layoutY="32.0" prefHeight="162.0" prefWidth="200.0" />
+            <TextArea fx:id="chatRoomUserList" layoutX="25.0" layoutY="32.0" prefHeight="162.0" prefWidth="200.0" />
          </children>
       </Pane>
       <Pane layoutY="193.0" prefHeight="207.0" prefWidth="250.0">
          <children>
-            <TextField layoutX="25.0" layoutY="54.0" prefHeight="26.0" prefWidth="149.0" />
-            <Button layoutX="182.0" layoutY="54.0" mnemonicParsing="false" text="초대" />
+            <TextField fx:id="userInput" layoutX="25.0" layoutY="54.0" prefHeight="26.0" prefWidth="149.0" />
+            <Button fx:id="invite" layoutX="182.0" layoutY="54.0" mnemonicParsing="false" text="초대" />
             <Label layoutX="25.0" layoutY="31.0" text="친구초대" />
-            <Button layoutX="76.0" layoutY="159.0" mnemonicParsing="false" text="채팅방 나가기" />
+            <Button fx:id="exitRoom" layoutX="76.0" layoutY="159.0" mnemonicParsing="false" text="채팅방 나가기" />
          </children>
       </Pane>
    </children>

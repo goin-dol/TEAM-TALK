@@ -52,6 +52,7 @@ public class LoginController{
 
         if (userDAO.checkLogin(id, password)) {
             try {
+                userDAO.login(id, password);
                 this.userDTO = userDAO.getUser(id, password);
 
                 Stage stage = (Stage) Id.getScene().getWindow();

@@ -29,9 +29,6 @@ public class DBDAO {
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql:// goindoll.ca0cdywkoqkw.us-east-1.rds.amazonaws.com:3306/DB_ppick", "goindoll", "Goindoll0420!");
         //conn = DriverManager.getConnection("jdbc:mysql:// 127.0.0.1:3306/db_team?useUnicode=true&serverTimezone=Asia/Seoul", "root", "3249");
-
-        System.out.println("알림 - DB연동이 정상적으로 되었습니다.");
-
         return conn;
     }
 }

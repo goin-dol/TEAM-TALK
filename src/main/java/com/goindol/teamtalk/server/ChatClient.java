@@ -1,7 +1,5 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.controller.ChatController;
-import com.goindol.teamtalk.client.model.userDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
 
 import java.io.IOException;
@@ -9,25 +7,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-public class ServerClient {
+public class ChatClient {
     chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
 
 
-    public ServerClient(Socket socket) {
-
+    public ChatClient(Socket socket) {
         this.socket = socket;
-
-
         receive();
-
     }
 
     public void receiveData() {
@@ -57,7 +48,6 @@ public class ServerClient {
             @Override
             public void run() {
                 try {
-
                     while(true) {
                         InputStream in = socket.getInputStream();
                         byte[] buffer = new byte[512];
@@ -69,8 +59,7 @@ public class ServerClient {
                         int chatId = Integer.parseInt(data[0]);
                         String sendMessage = data[1];
 
-                        for(Map.Entry<String, ServerClient> entry : MainServer.clients.entrySet()) {
-                            System.out.println("chat Id = " + entry.getKey());
+                        for(Map.Entry<String, ChatClient> entry : ChatServer.clients.entrySet()) {
                             String[] keyValue = entry.getKey().split("/");
                             int sendToRoomId = Integer.parseInt(keyValue[0]);
                             if(sendToRoomId == chatId) {
@@ -90,7 +79,7 @@ public class ServerClient {
             }
         };
         //쓰레드 안전적으로 관리
-        MainServer.threadPool.submit(thread);
+        ChatServer.threadPool.submit(thread);
     }
 
     public void send(String message) {
@@ -111,7 +100,7 @@ public class ServerClient {
                 }
             }
         };
-        MainServer.threadPool.submit(thread);
+        ChatServer.threadPool.submit(thread);
     }
 
 }
