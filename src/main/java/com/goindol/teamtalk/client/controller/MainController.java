@@ -271,13 +271,13 @@ public class MainController implements Initializable {
         });
 
 
-        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
-        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                makeChatRoomButton.setEffect(null);
-            }
-        });
+//        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
+//        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                makeChatRoomButton.setEffect(null);
+//            }
+//        });
 
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

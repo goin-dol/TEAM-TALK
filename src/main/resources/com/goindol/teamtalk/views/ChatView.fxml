@@ -17,23 +17,15 @@
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                     <children>
+                          <ImageView fx:id="chatRoomInfo" fitHeight="25.0" fitWidth="25.0" layoutX="361.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
+                              <image>
+                                  <Image url="@../images/menubar.png" />
+                              </image>
+                          </ImageView>
                         <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
-                        <Button fx:id="chatRoomInfo" layoutX="350.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../images/menubar.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="goBackButton" layoutX="8.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
-                            <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../images/goToBack.png" />
-                                </ImageView>
-                            </graphic>
-                        </Button>
+                          <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
+                              <Image url="@../images/goToBack.png" />
+                          </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">
@@ -42,22 +34,22 @@
                             <children>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Button fx:id="noticeCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="공지" />
+                                        <Button fx:id="noticeCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" styleClass="button" text="공지" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Button fx:id="noticeMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="공지생성" />
+                                        <Button fx:id="noticeMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" styleClass="button" text="공지생성" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Button fx:id="voteCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="투표" />
+                                        <Button fx:id="voteCheck" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" styleClass="button" text="투표" />
                                     </children>
                                 </Pane>
                                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <Button fx:id="voteMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="투표생성" />
+                                        <Button fx:id="voteMake" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" styleClass="button" text="투표생성" />
                                     </children>
                                 </Pane>
                             </children>
@@ -77,12 +69,9 @@
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane">
                     <children>
-                        <Button fx:id="sendButton" layoutX="9.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="41.0">
-                            <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../images/send.png" />
-                                </ImageView>
-                            </graphic></Button>
+                          <ImageView fx:id="sendButton" fitHeight="30.0" fitWidth="30.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
+                              <Image url="@../images/send.png" />
+                          </ImageView>
                     </children>
                 </Pane>
             </children>

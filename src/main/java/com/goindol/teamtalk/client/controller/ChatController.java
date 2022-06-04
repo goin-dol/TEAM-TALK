@@ -17,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -49,12 +51,13 @@ public class ChatController implements Initializable {
     @FXML private Button voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
-    @FXML private Button sendButton;
-    @FXML private Button chatRoomInfo;
-    @FXML private Button goBackButton;
+    @FXML private ImageView sendButton;
+    @FXML private ImageView chatRoomInfo;
+    @FXML private ImageView goBackButton;
 
     public int chatid;
     public UserDTO userDTO;
+    DropShadow dropShadow = new DropShadow();
 
     public void startClient(String IP, int port) {
 
@@ -292,7 +295,7 @@ public class ChatController implements Initializable {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/showVoteResult.fxml"));
+                        loader.setLocation(HelloApplication.class.getResource("views/ShowVoteResultView.fxml"));
                         Parent root = (Parent) loader.load();
                         ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
                         showVoteResultController.setChatRoomId(chatid);

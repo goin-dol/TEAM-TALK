@@ -32,7 +32,6 @@ public class LoginController implements Initializable {
     @FXML public PasswordField Password;
     @FXML public Button loginButton;
     @FXML public Button signupButton;
-    DropShadow dropShadow = new DropShadow();
 
     Socket socket;
     public UserDTO userDTO;
@@ -104,30 +103,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        signupButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                signupButton.setEffect(dropShadow);
-            }
-        });
-        signupButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                signupButton.setEffect(null);
-            }
-        });
 
-        loginButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                loginButton.setEffect(dropShadow);
-            }
-        });
-        loginButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                loginButton.setEffect(null);
-            }
-        });
     }
 }
