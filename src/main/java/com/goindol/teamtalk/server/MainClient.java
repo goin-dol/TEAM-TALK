@@ -22,7 +22,7 @@ public class MainClient {
 
     public MainClient(Socket socket) {
         this.socket = socket;
-        receive();
+
     }
 
     public void receiveData() {
@@ -63,6 +63,7 @@ public class MainClient {
                         String code = data[0];
                         String roomId = data[1];
                         String value = data[2];
+
                         System.out.println("code : " + code);
                         if(code.equals("login")) {
                             for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
@@ -78,7 +79,14 @@ public class MainClient {
                                 }
                             }
                         }else if(code.equals("notice")) {
-
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
+                                for(String user : sendUser) {
+                                    if(entry.getKey().equals(user)) {
+                                        entry.getValue().send(code);
+                                    }
+                                }
+                            }
                         }else if(code.equals("vote")) {
 
                         }

@@ -37,7 +37,6 @@ public class MainController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-    //String IP = "192.168.219.106";
 
     int port = 9600;
     @FXML public StackPane stackPane;
@@ -66,19 +65,19 @@ public class MainController implements Initializable {
 
         Thread thread = new Thread() {
             public void run() {
-                try {
-                    socket = new Socket(IP, port);
-                    send(userDTO.getNickName());
-                    send("login/roomId/value");
-                    receive();
+                synchronized (this) {
+                    try {
+                        socket = new Socket(IP, port);
+                        send(userDTO.getNickName());
+                        receive();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        if (!socket.isClosed()) {
+                            stopClient();
+                            System.out.println("Server Failed");
+                        }
 
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    if(!socket.isClosed()) {
-                        stopClient();
-                        System.out.println("Server Failed");
                     }
-
                 }
             }
         };
@@ -96,6 +95,7 @@ public class MainController implements Initializable {
     }
 
     public void receive() {
+
         while(true) {
             try {
                 InputStream in = socket.getInputStream();
@@ -107,6 +107,9 @@ public class MainController implements Initializable {
                     showFriendList();
                 }else if(message.equals("chatRoom")) {
                     showChatRoomList();
+                }else if(message.equals("notice")) {
+                    showChatRoomList();
+
                 }
             }catch(Exception e) {
                 stopClient();

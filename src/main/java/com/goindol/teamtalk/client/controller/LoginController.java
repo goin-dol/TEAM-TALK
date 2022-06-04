@@ -68,7 +68,8 @@ public class LoginController implements Initializable {
                 MainController main = loader.getController();
                 main.setUserDTO(userDTO);
                 main.showChatRoomList();
-                stage.setScene(new Scene(root, 400, 600));
+                main.send("login/roomId/value");
+               stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
                 stage.setResizable(false);

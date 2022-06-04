@@ -44,8 +44,8 @@
    <bottom>
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="pane" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox fx:id="isAnonoymous" layoutX="173.0" layoutY="40.0" mnemonicParsing="false" text="익명투표" />
-            <CheckBox fx:id="isOverLap" layoutX="173.0" layoutY="70.0" mnemonicParsing="false" text="중복투표" />
+            <CheckBox fx:id="isAnonoymous" layoutX="173.0" layoutY="40.0" mnemonicParsing="false" text="익명투표" onAction="#selectAnonoymousCheckBox" />
+            <CheckBox fx:id="isOverLap" layoutX="173.0" layoutY="70.0" mnemonicParsing="false" text="중복투표" onAction="#selectOverLapCheckBox" />
             <Button fx:id="addVoteButton" layoutX="175.0" layoutY="117.0" mnemonicParsing="false" text="입력 완료" />
          </children>
       </Pane>

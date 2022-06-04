@@ -4,6 +4,7 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,13 +34,15 @@ public class MakeVoteController implements Initializable {
     @FXML public Button addVoteVarbutton;
     @FXML public Button addVoteButton;
 
-    private static voteDAO voteDAO;
-
+    private static voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    boolean annony = false;
+    boolean overLap = false;
     public ObservableList voteVarItems = FXCollections.observableArrayList();
     public List<String> _voteVarList = new ArrayList<>();
 
     public int chatid;
     public UserDTO userDTO;
+    public MainController mainController;
 
     public void addVoteVar() {
         _voteVarList.add(voteVar.getText());
@@ -49,18 +53,36 @@ public class MakeVoteController implements Initializable {
 
     public void addVote() {
         System.out.println(chatid);
-//        voteDAO.creatVote(chatRoom_id,title,isAnonoymous,isOverLap);
-//        int vote_id=voteDAO.Read_Vote_id(chatRoom_id);
-//        for (String content : _voteVarList) {
-//        voteDAO.createVoteVar(content,vote_id);
-//        }
+        voteDAO.creatVote(chatid,voteTitle.getText(),annony,overLap);
+        int vote_id=voteDAO.getVoteId(chatid);
+        for (String content : _voteVarList) {
+        voteDAO.createVoteVar(content,vote_id);
+        }
     }
 
+    @FXML
+    void selectAnonoymousCheckBox(ActionEvent event) {
+        if(isAnonoymous.isSelected()) {
+            annony = true;
+        }else {
+            annony = false;
+        }
+    }
+
+    @FXML
+    void selectOverLapCheckBox(ActionEvent event) {
+        if(isOverLap.isSelected()) {
+            overLap = true;
+        }else {
+            overLap = false;
+        }
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        voteTitle.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        /*voteTitle.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 voteTitle.setText(keyEvent.getText());
@@ -81,7 +103,7 @@ public class MakeVoteController implements Initializable {
                     addVoteVar();
                 }
             }
-        });
+        });*/
 
         addVoteVarbutton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -94,8 +116,12 @@ public class MakeVoteController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 addVote();
+                mainController.send("vote/"+ chatid + "/" + voteTitle.getText());
+                Stage stage = (Stage) borderPane.getScene().getWindow();
+                stage.close();
             }
         });
+
 
     }
 
@@ -106,4 +132,6 @@ public class MakeVoteController implements Initializable {
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
+
+    public void setMainController(MainController mainController) { this.mainController = mainController; }
 }
