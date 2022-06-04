@@ -7,6 +7,8 @@ public class VoteVarDTO {
 
     int vote_id;
     String content;
+
+    public VoteVarDTO() {}
     public VoteVarDTO(int voteVar_id, int vote_id, String content) {
         this.voteVar_id = voteVar_id;
         this.vote_id = vote_id;

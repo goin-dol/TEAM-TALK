@@ -1,7 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.client.model.NoticeDTO;
 import com.goindol.teamtalk.client.service.noticeDAO;
 import com.goindol.teamtalk.client.model.UserDTO;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -11,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowNoticeController implements Initializable {
@@ -21,34 +27,56 @@ public class ShowNoticeController implements Initializable {
     @FXML private ListView readUserList;
     public int chatid;
     public UserDTO userDTO;
+    public NoticeDTO noticeDTO;
 
 
-    private static noticeDAO noticeDAO;
+    private static noticeDAO noticeDAO = com.goindol.teamtalk.client.service.noticeDAO.getInstance();
+
+    public void showReadUser() {
+        List<String> strings = new ArrayList<String>();
+        ArrayList<String> readUser = noticeDAO.readNoticeList(chatid);
+        if(readUser != null) {
+            for(String users : readUser) {
+                strings.add(users);
+            }
+        }
+        ObservableList<String> readUserObservableList = FXCollections.observableArrayList();
+
+        readUserObservableList.addAll(strings);
+
+        Platform.runLater(()->{
+            readUserList.setItems(readUserObservableList);
+        });
+
+    }
 
     public void showNoticeContent(){
 //        만약 공지사항이 있다면 checkNotice에서 true값이 나옴
-//         if(noticeDAO.checkNotice(chatRoom_id))
-//        else  {공지사항 없다는 알림 ㄱㄱ }
+         if(noticeDAO.checkNotice(chatid)) {
+             noticeDTO = noticeDAO.showNoticeContent(chatid, userDTO.getNickName());
+             noticeTitle.setText(noticeDTO.getTitle());
+             noticeContent.setText(noticeDTO.getContent());
+         }else {
+             //공지사항 없다는 알림 ㄱㄱ
+         }
+//        else  {}
 //        공지 제목, 내용
-//        noticeDAO.showNotice(chatRoom_id);
+//        noticeDAO.showNotice(chatid);
 //        공지 눌렀을 때 그 사람 이름 체킹
-//        noticeDAO.checkNotice(nickName,chatRoom_id);
+//        noticeDAO.readNotice(userDTO.getNickName(), chatid);
 //        공지 읽은 유저 리스트들
-//        List<String> users = noticeDAO.readNoticeList(chatRoom_id);
+//        List<String> users = noticeDAO.readNoticeList(chatid);
 
         Text t1 = new Text("공지내용");
 //
     }
 
-    public void showReadUser(){
-//        List<String> users = noticeDAO.readNoticeList(chatRoom_id);
-    }
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         noticeContent.setEditable(false);
-        showNoticeContent();
     }
 
     public void setChatRoomId(int chatid) {

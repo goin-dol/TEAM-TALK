@@ -4,7 +4,7 @@ public class ChatRoomUserListDTO {
     private int chatRomUser_id;
     private int chatRoom_id;
     private String nickName;
-    private boolean isNoticeRead;
+    private int isNoticeRead;
 
     public int getChatRomUser_id() {
         return chatRomUser_id;
@@ -30,11 +30,11 @@ public class ChatRoomUserListDTO {
         this.nickName = nickName;
     }
 
-    public boolean isNoticeRead() {
+    public int isNoticeRead() {
         return isNoticeRead;
     }
 
-    public void setNoticeRead(boolean noticeRead) {
+    public void setNoticeRead(int noticeRead) {
         isNoticeRead = noticeRead;
     }
 }

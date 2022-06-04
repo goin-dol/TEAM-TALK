@@ -9,6 +9,8 @@ public class NoticeDTO {
     private String title;
     private String content;
 
+    public NoticeDTO() {}
+
     public NoticeDTO(String title, String content) {
         this.title = title;
         this.content = content;

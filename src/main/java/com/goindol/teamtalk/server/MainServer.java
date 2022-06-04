@@ -45,10 +45,15 @@ public class MainServer extends Application {
                     try {
                         System.out.println("MAINSERVER START");
                         Socket socket = serverSocket.accept();
+
                         System.out.println("Connect Complete");
                         MainClient client = new MainClient(socket);
                         client.receiveData();
                         MainServer.clients.put(client.key, client);
+                        synchronized (this) {
+                            client.receive();
+                        }
+                        System.out.println("Enrty User --> " + client.key);
                         System.out.println("accept Client : " + socket.getRemoteSocketAddress() + " - " + Thread.currentThread().getName());
                     } catch (Exception e) {
                         if(!serverSocket.isClosed()) {
