@@ -1,14 +1,14 @@
 package com.goindol.teamtalk.client;
 
-import com.goindol.teamtalk.client.service.noticeDAO;
-import com.goindol.teamtalk.client.service.userDAO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.NoticeDAO;
+import com.goindol.teamtalk.client.service.UserDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 
 public class Test {
     public static void main(String[] args) {
-        voteDAO voteDAO = new voteDAO();
-        userDAO userDAO = new userDAO();
-        noticeDAO noticeDAO = new noticeDAO();
+        VoteDAO voteDAO = new VoteDAO();
+        UserDAO userDAO = new UserDAO();
+        NoticeDAO noticeDAO = new NoticeDAO();
 //        noticeDAO.createNotice("김대현",1,"공지","이것은 공지입니다.");
 //        noticeDAO.checkNotice("sup",1);
         noticeDAO.readNotice("sup",1);

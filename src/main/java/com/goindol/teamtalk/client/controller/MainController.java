@@ -22,7 +22,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,9 +56,9 @@ public class MainController implements Initializable {
     @FXML public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
-    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
-    friendDAO friendDAO = com.goindol.teamtalk.client.service.friendDAO.getInstance();
-    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    FriendDAO friendDAO = FriendDAO.getInstance();
+    UserDAO userDAO = UserDAO.getInstance();
     public UserDTO userDTO;
 
     public void startClient(String IP, int port) {
@@ -322,9 +321,13 @@ public class MainController implements Initializable {
                 setText(null);
                 setGraphic(null);
             } else {
-                Label label = new Label(obj.getNickName());
+                Label label = new Label(obj.getFriendNickName());
                 //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
-                label.setTextFill(Color.GREEN);
+                if(obj.isFriendStatus()){
+                    label.setTextFill(Color.valueOf("#33ff33"));
+                } else {
+                    label.setTextFill(Color.valueOf("#d7d6dc"));
+                }
                 setGraphic(label);
             }
         }

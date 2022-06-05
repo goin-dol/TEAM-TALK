@@ -2,10 +2,9 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.chatLogDAO;
-import com.goindol.teamtalk.client.service.chatRoomListDAO;
-import com.goindol.teamtalk.client.service.voteDAO;
-import com.sun.tools.javac.Main;
+import com.goindol.teamtalk.client.service.ChatLogDAO;
+import com.goindol.teamtalk.client.service.ChatRoomListDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -26,7 +24,6 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.*;
-import java.net.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -41,9 +38,9 @@ public class ChatController implements Initializable {
     //String IP = "192.168.219.106";
 
     int port = 9500;
-    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
-    chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
-    voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
+    VoteDAO voteDAO = VoteDAO.getInstance();
     public MainController mainController;
     @FXML private BorderPane chatRoomContainer;
     @FXML private Label chatRoomTitle;
@@ -295,7 +292,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
-                if(!ifAlreadyVote) {
+                if(ifAlreadyVote) {
                     try {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();

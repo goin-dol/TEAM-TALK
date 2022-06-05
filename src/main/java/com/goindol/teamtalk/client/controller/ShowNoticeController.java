@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.NoticeDTO;
-import com.goindol.teamtalk.client.service.noticeDAO;
+import com.goindol.teamtalk.client.service.NoticeDAO;
 import com.goindol.teamtalk.client.model.UserDTO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -30,7 +30,7 @@ public class ShowNoticeController implements Initializable {
     public NoticeDTO noticeDTO;
 
 
-    private static noticeDAO noticeDAO = com.goindol.teamtalk.client.service.noticeDAO.getInstance();
+    private static NoticeDAO noticeDAO = NoticeDAO.getInstance();
 
     public void showReadUser() {
         List<String> strings = new ArrayList<String>();

@@ -1,9 +1,6 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.chatLogDAO;
-import com.goindol.teamtalk.client.service.chatRoomUserListDAO;
-import com.mysql.cj.xdevapi.Client;
-import com.sun.tools.javac.Main;
+import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainClient {
-    chatRoomUserListDAO chatRoomUserListDAO = com.goindol.teamtalk.client.service.chatRoomUserListDAO.getInstance();
+    ChatRoomUserListDAO chatRoomUserListDAO = ChatRoomUserListDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
