@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -34,7 +32,7 @@ public class MakeVoteController implements Initializable {
     @FXML public Button addVoteVarbutton;
     @FXML public Button addVoteButton;
 
-    private static voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    private static VoteDAO voteDAO = VoteDAO.getInstance();
     boolean annony = false;
     boolean overLap = false;
     public ObservableList voteVarItems = FXCollections.observableArrayList();

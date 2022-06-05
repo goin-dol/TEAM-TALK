@@ -2,7 +2,7 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
 
     Socket socket;
     public UserDTO userDTO;
-    public userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    public UserDAO userDAO = UserDAO.getInstance();
 
     public void showScene() throws IOException {
         Platform.runLater(() -> {

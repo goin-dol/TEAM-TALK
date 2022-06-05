@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.chatLogDAO;
+import com.goindol.teamtalk.client.service.ChatLogDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Map;
 
 public class ChatClient {
-    chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
+    ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;

@@ -3,7 +3,7 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,7 +32,7 @@ public class ShowVoteResultController implements Initializable {
 
     public int chatid;
     public int voteId;
-    public voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    public VoteDAO voteDAO = VoteDAO.getInstance();
     public UserDTO userDTO;
 
     public void initialVoteList() {

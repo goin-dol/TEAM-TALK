@@ -2,18 +2,15 @@ package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
 import com.goindol.teamtalk.client.model.NoticeDTO;
-import com.goindol.teamtalk.client.model.UserDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class noticeDAO {
+public class NoticeDAO {
 
-    private static noticeDAO instance = null;
+    private static NoticeDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -23,9 +20,9 @@ public class noticeDAO {
 
     private ResultSet rs = null;
 
-    public static noticeDAO getInstance(){
+    public static NoticeDAO getInstance(){
         if(instance==null){
-            instance = new noticeDAO();
+            instance = new NoticeDAO();
         }
         return instance;
     }

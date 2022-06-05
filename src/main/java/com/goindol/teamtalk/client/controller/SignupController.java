@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SignupController {
-    userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    UserDAO userDAO = UserDAO.getInstance();
     @FXML private TextField Id;
     @FXML private TextField Password;
     @FXML private TextField Nickname;
