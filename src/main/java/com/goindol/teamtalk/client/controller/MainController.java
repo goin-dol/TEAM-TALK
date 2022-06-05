@@ -8,6 +8,7 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,14 +17,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.*;
 import java.net.Socket;
@@ -169,6 +173,7 @@ public class MainController implements Initializable {
 
         Platform.runLater(()->{
             chatRoomList.setItems(chatRoomObservableList);
+            chatRoomList.setCellFactory(param -> new chatRoomListCell());
         });
     }
 
@@ -190,8 +195,10 @@ public class MainController implements Initializable {
             chatController.initialChat();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
-            stage.setOnCloseRequest(event -> chatController.stopClient());
-            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setOnCloseRequest(event -> {
+                userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+                send("login/roomId/value");
+                System.exit(0);});
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
@@ -268,6 +275,8 @@ public class MainController implements Initializable {
         }
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logoutTab.setOnSelectionChanged(new EventHandler<Event>() {
@@ -276,16 +285,6 @@ public class MainController implements Initializable {
                 logOut();
             }
         });
-
-
-//        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
-//        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                makeChatRoomButton.setEffect(null);
-//            }
-//        });
-
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -308,6 +307,47 @@ public class MainController implements Initializable {
         });
 
         startClient(IP, port);
+    }
+
+    private class chatRoomListCell extends ListCell<ChatRoomListDTO> {
+        HBox hbox = new HBox();
+        Label label1 = new Label("label1");
+        Label label2 = new Label("새 공지");
+        Label label3 = new Label("새 투표");
+        Pane pane = new Pane();
+        public chatRoomListCell() {
+            super();
+            hbox.getChildren().addAll(label1,label2,label3);
+            label1.setTextFill(Color.valueOf("#d7d6dc"));
+            label1.setPrefWidth(190);
+            label2.setTextFill(Color.valueOf("#eba576"));
+            label3.setTextFill(Color.valueOf("#eba576"));
+            label2.setPrefWidth(70);
+            label2.setVisible(false);
+            label3.setPrefWidth(70);
+            label3.setVisible(false);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+
+        }
+        @Override
+        public void updateItem(ChatRoomListDTO obj, boolean empty) {
+            super.updateItem(obj, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                label1.setText(obj.getChatRoomName());
+                if(obj.isNoticeRead()==1)
+                    label2.setVisible(true);
+                VoteDAO voteDAO = VoteDAO.getInstance();
+                int voteid = voteDAO.getVoteId(obj.getChatRoom_id());
+                boolean isVoted = voteDAO.checkOverLap(voteid, userDTO.getNickName());
+                if(!isVoted) {
+                    label3.setVisible(true);
+                }
+                setGraphic(hbox);
+            }
+        }
     }
     private class colorListCell extends ListCell<FriendDTO> {
         @Override
