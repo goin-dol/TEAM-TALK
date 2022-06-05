@@ -328,6 +328,7 @@ public class voteDAO {
             if(rs.next()){
                 arr.add(rs.getString("nickName"));
             }
+            return arr;
         }catch (Exception e){
             e.printStackTrace();
         }finally {
