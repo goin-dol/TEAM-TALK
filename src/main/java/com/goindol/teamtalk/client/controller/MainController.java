@@ -237,8 +237,9 @@ public class MainController implements Initializable {
             alert.setContentText("Wrong NickName");
             alert.show();
         }else {
-            ObservableList<String> friendListItems = friendList.getItems();
-            friendListItems.add(searchFriend.getText());
+            ObservableList<FriendDTO> friendListItems = friendList.getItems();
+            FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
+            friendListItems.add(friend);
             Platform.runLater(()-> {
                 friendList.setItems(friendListItems);
                 friendList.setCellFactory(param -> new colorListCell());
