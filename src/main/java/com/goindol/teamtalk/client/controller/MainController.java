@@ -239,7 +239,10 @@ public class MainController implements Initializable {
         }else {
             ObservableList<String> friendListItems = friendList.getItems();
             friendListItems.add(searchFriend.getText());
-            friendList.setItems(friendListItems);
+            Platform.runLater(()-> {
+                friendList.setItems(friendListItems);
+                friendList.setCellFactory(param -> new colorListCell());
+            });
             searchFriend.setText("");
         }
 
