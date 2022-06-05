@@ -5,6 +5,7 @@ public class ChatRoomListDTO {
     private String chatRoomName;
     private String nickName;
     private int isNoticeRead;
+    private int isVoted;
 
     public ChatRoomListDTO() {
 
@@ -13,7 +14,7 @@ public class ChatRoomListDTO {
         this.chatRoom_id = chatRoom_id;
         this.chatRoomName = chatRoomName;
     }
-    
+
     public int getChatRoom_id() {
         return chatRoom_id;
     }
@@ -31,10 +32,12 @@ public class ChatRoomListDTO {
     public int isNoticeRead() {
         return isNoticeRead;
     }
+    public int isVoted() { return isVoted; }
 
     public void setNoticeRead(int noticeRead) {
         isNoticeRead = noticeRead;
     }
+    public void setVoted(int voted) { isVoted = voted;}
     public String toString() {
         if(isNoticeRead == 0 || isNoticeRead == 2)
             return chatRoomName;

@@ -77,16 +77,20 @@ public class ChatRoomListDAO {
                         "(" +
                         "`chatRoom_id`," +
                         "`nickName`," +
-                        "`isNoticeRead`" +
+                        "`isNoticeRead`," +
+                        "`isVoted`" +
                         ")" +
                         "VALUES" +
                         "(" +
+                        "?," +
                         "?," +
                         "?," +
                         "?" +
                         ")";
         String notice =
                 "SELECT * FROM DB_ppick.notice WHERE chatRoom_id = ?";
+        String vote =
+                "SELECT * FROM vote WHERE nickName = ?";
         try {
 
             conn = DBDAO.getConnection();
@@ -102,6 +106,10 @@ public class ChatRoomListDAO {
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();
 
+            pstmt = conn.prepareStatement(vote);
+            pstmt.setString(1, nickName);
+            ResultSet rs1 = pstmt.executeQuery();
+
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, chatRoom_id);
             pstmt.setString(2, nickName);
@@ -109,6 +117,10 @@ public class ChatRoomListDAO {
                 pstmt.setInt(3, 1);
             else
                 pstmt.setInt(3, 0);
+            if(rs1.next())
+                pstmt.setInt(4, 1);
+            else
+                pstmt.setInt(4, 0);
             pstmt.executeUpdate();
 
         } catch(Exception e) {
@@ -146,9 +158,10 @@ public class ChatRoomListDAO {
     public ArrayList<ChatRoomListDTO> getChatRoomName(String nickName) {
         ArrayList<ChatRoomListDTO> roomName = null;
         String query =
-                "select p.chatRoom_id," +
+                "select p.chatRoom_id, " +
                         "   p.chatRoomName, " +
-                        "   q.isNoticeRead " +
+                        "   q.isNoticeRead, " +
+                        "       q.isVoted "  +
                         "from chatRoomList as p " +
                         "join chatRoomUserList as q " +
                         "on p.chatRoom_id = q.chatRoom_id " +
@@ -165,6 +178,7 @@ public class ChatRoomListDAO {
                     chatRoomListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
                     chatRoomListDTO.setChatRoomName(rs.getString("chatRoomName"));
                     chatRoomListDTO.setNoticeRead(rs.getInt("isNoticeRead"));
+                    chatRoomListDTO.setVoted(rs.getInt("isVoted"));
                     roomName.add(chatRoomListDTO);
                 }while(rs.next());
             }

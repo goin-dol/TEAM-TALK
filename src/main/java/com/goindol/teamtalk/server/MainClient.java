@@ -53,7 +53,7 @@ public class MainClient {
                         InputStream in = socket.getInputStream();
                         byte[] buffer = new byte[512];
                         int length = in.read(buffer);
-                        while(length == -1) throw new IOException();
+                        while(length == -1) throw new NullPointerException();
                         System.out.println("Success!! : " + socket.getRemoteSocketAddress() + " - " + Thread.currentThread().getName());
                         String message = new String(buffer, 0, length, "UTF-8");
                         String[] data = message.split("/");
