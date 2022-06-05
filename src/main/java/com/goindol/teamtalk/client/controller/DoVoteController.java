@@ -39,6 +39,8 @@ public class DoVoteController implements Initializable {
             if(voteDAO.checkOverlapVote(voteId)) {
                 for(String temp : tempList) {
                     voteDAO.choiceVote(voteId, chatid, temp, userDTO.getNickName());
+                    Stage stage = (Stage) borderPane.getScene().getWindow();
+                    stage.close();
                 }
             }else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
