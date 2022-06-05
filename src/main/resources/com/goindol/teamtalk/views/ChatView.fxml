@@ -22,10 +22,10 @@
                                   <Image url="@../images/menubar.png" />
                               </image>
                           </ImageView>
-                        <Label fx:id="chatRoomTitle" layoutX="185.0" layoutY="24.0" text="Label" />
                           <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
                               <Image url="@../images/goToBack.png" />
                           </ImageView>
+                  <Label fx:id="chatRoomTitle" alignment="CENTER" layoutX="49.0" layoutY="16.0" prefHeight="26.0" prefWidth="298.0" text="Label" />
                     </children>
                 </Pane>
                 <Pane prefHeight="200.0" prefWidth="200.0">

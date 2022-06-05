@@ -11,11 +11,11 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../css/LoginView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.LoginController">
    <children>
-      <Button fx:id="loginButton" styleClass="loginbutton" layoutX="219.0" layoutY="460.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="70.0" text="Login" />
-      <Button fx:id="signupButton" styleClass="signupbutton" layoutX="127.0" layoutY="460.0" mnemonicParsing="false" onAction="#signupButtonAction" prefHeight="30.0" prefWidth="70.0" text="Signup" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="300.0" text="TEAM - TALK" textAlignment="CENTER">
+      <Button fx:id="loginButton" layoutX="219.0" layoutY="460.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="70.0" styleClass="loginbutton" text="Login" />
+      <Button fx:id="signupButton" layoutX="127.0" layoutY="460.0" mnemonicParsing="false" onAction="#signupButtonAction" prefHeight="30.0" prefWidth="70.0" styleClass="signupbutton" text="Signup" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="119.0" prefHeight="100.0" prefWidth="400.0" text="TEAM - TALK" textAlignment="CENTER">
          <font>
-            <Font size="35.0" />
+            <Font size="40.0" />
          </font>
       </Label>
       <TextField fx:id="Id" layoutX="139.0" layoutY="341.0" prefHeight="30.0" prefWidth="160.0" promptText="User Id" />
