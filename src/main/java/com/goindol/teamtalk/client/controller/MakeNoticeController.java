@@ -30,26 +30,10 @@ public class MakeNoticeController implements Initializable {
         // TODO : DB에 공지 제목과 내용 추가
         if (!noticeTitle.getText().isBlank() && !noticeContent.getText().isBlank()) {
             if (noticeDAO.checkNotice(chatid)) {
-                if (noticeDAO.AllReadNotice(chatid)) {// -> 다읽었으면 true, 안읽은 인원 있으면 false
-                    noticeDAO.deleteNotice(chatid);
-                    noticeDAO.createNotice(userDTO.getNickName(), chatid, noticeTitle.getText(), noticeContent.getText());
-                } else {
-
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("warning");
-                    alert.setHeaderText("공지 에러");
-                    alert.setContentText("아직 공지를 확인하지 않은 인원이 있습니다\n공지 생성을 진행하시겠습니까?");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        noticeDAO.deleteNotice(chatid);
-                        noticeDAO.createNotice(userDTO.getNickName(), chatid, noticeTitle.getText(), noticeContent.getText());
-                    }
-                }
+                noticeDAO.deleteNotice(chatid);
             }
-            else {
             noticeDAO.createNotice(userDTO.getNickName(), chatid, noticeTitle.getText(), noticeContent.getText());
-            }
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("공지 에러");

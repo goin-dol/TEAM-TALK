@@ -42,6 +42,8 @@ public class DoVoteController implements Initializable {
                     Stage stage = (Stage) borderPane.getScene().getWindow();
                     stage.close();
                 }
+                Stage stage = (Stage) borderPane.getScene().getWindow();
+                stage.close();
             }else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");

@@ -1,17 +1,23 @@
 package com.goindol.teamtalk.client.controller;
 
+import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.ChatRoomListDAO;
 import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +88,22 @@ public class ChatRoomInfoController implements Initializable {
 
         exitRoom.setOnMouseClicked(event-> {
             existRoom();
-            //info 창 닫고 채팅방 페이지를 메인페이지로 이동
+            //TO DO 현재 화면 닫아주기
+            try {
+                Stage stage = (Stage) userInput.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                Parent root = loader.load();
+                MainController main = loader.getController();
+                main.setUserDTO(userDTO);
+                main.showChatRoomList();
+                stage.setScene(new Scene(root, 400, 600));
+                stage.setTitle("Team Talk");
+                stage.setOnCloseRequest(event1 -> {System.exit(0);});
+                stage.setResizable(false);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         });
     }
