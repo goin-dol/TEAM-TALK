@@ -8,6 +8,7 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,8 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -42,21 +42,36 @@ public class MainController implements Initializable {
     Socket socket;
     String IP = "192.168.0.16";
     int port = 9600;
-    @FXML public StackPane stackPane;
-    @FXML public AnchorPane chatAnchor;
-    @FXML public AnchorPane friendAnchor;
-    @FXML public TabPane tabContainer;
-    @FXML public Tab chatTab;
-    @FXML public Tab friendTab;
-    @FXML public Tab logoutTab;
-    @FXML public ListView chatRoomList;
-    @FXML public ListView friendList;
-    @FXML public TextField searchFriend;
-    @FXML public Button addFriendButton;
-    @FXML public ImageView makeChatRoomButton;
-    @FXML public ImageView chatRoomListTabImage;
-    @FXML public ImageView friendListTabImage;
-    @FXML public ImageView logoutTabImage;
+    @FXML
+    public StackPane stackPane;
+    @FXML
+    public AnchorPane chatAnchor;
+    @FXML
+    public AnchorPane friendAnchor;
+    @FXML
+    public TabPane tabContainer;
+    @FXML
+    public Tab chatTab;
+    @FXML
+    public Tab friendTab;
+    @FXML
+    public Tab logoutTab;
+    @FXML
+    public ListView chatRoomList;
+    @FXML
+    public ListView friendList;
+    @FXML
+    public TextField searchFriend;
+    @FXML
+    public Button addFriendButton;
+    @FXML
+    public ImageView makeChatRoomButton;
+    @FXML
+    public ImageView chatRoomListTabImage;
+    @FXML
+    public ImageView friendListTabImage;
+    @FXML
+    public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
     ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
@@ -89,7 +104,7 @@ public class MainController implements Initializable {
 
     public void stopClient() {
         try {
-            if(socket != null && !socket.isClosed()) {
+            if (socket != null && !socket.isClosed()) {
                 socket.close();
             }
         } catch (Exception e) {
@@ -99,23 +114,23 @@ public class MainController implements Initializable {
 
     public void receive() {
 
-        while(true) {
+        while (true) {
             try {
                 InputStream in = socket.getInputStream();
                 System.out.println("receiving");
                 byte[] buffer = new byte[512];
                 int length = in.read(buffer);
                 String message = new String(buffer, 0, length, "UTF-8");
-                if(message.equals("login")) {
+                if (message.equals("login")) {
                     showFriendList();
-                }else if(message.equals("chatRoom")) {
+                } else if (message.equals("chatRoom")) {
                     showChatRoomList();
-                }else if(message.equals("notice")) {
-                    showAlert(true);
+                } else if (message.equals("notice")) {
+                    System.out.println("receive test");
                     showChatRoomList();
 
                 }
-            }catch(Exception e) {
+            } catch (Exception e) {
                 stopClient();
                 break;
             }
@@ -131,7 +146,7 @@ public class MainController implements Initializable {
                     byte[] buffer = message.getBytes("UTF-8");
                     out.write(buffer);
                     out.flush();
-                }catch(Exception e) {
+                } catch (Exception e) {
                     stopClient();
                 }
             }
@@ -139,30 +154,30 @@ public class MainController implements Initializable {
         thread.start();
     }
 
-    public void showFriendList(){
+    public void showFriendList() {
         List<FriendDTO> strings = new ArrayList<>();
 
-        if(userDTO != null) {
+        if (userDTO != null) {
             ArrayList<FriendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
-            if(friends != null) {
-                for(int i = 0; i < friends.size(); i++) {
+            if (friends != null) {
+                for (int i = 0; i < friends.size(); i++) {
                     strings.add(friends.get(i));
                 }
             }
         }
         ObservableList<FriendDTO> friendObervableList = FXCollections.observableList(strings);
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             friendList.setItems(friendObervableList);
             friendList.setCellFactory(param -> new colorListCell());
         });
     }
 
-    public void showChatRoomList(){
+    public void showChatRoomList() {
         List<ChatRoomListDTO> strings = new ArrayList<>();
-        if(userDTO != null) {
+        if (userDTO != null) {
             ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
-            if(chatRoom != null) {
-                for(int i = 0; i < chatRoom.size(); i++) {
+            if (chatRoom != null) {
+                for (int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));
                 }
             }
@@ -172,14 +187,15 @@ public class MainController implements Initializable {
 
         chatRoomObservableList.addAll(strings);
 
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             chatRoomList.setItems(chatRoomObservableList);
+            chatRoomList.setCellFactory(param -> new chatRoomListCell());
         });
     }
 
-    public void openChatRoom(){
+    public void openChatRoom() {
         ChatRoomListDTO cr = (ChatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
-        if(cr==null)
+        if (cr == null)
             return;
         try {
 
@@ -198,7 +214,8 @@ public class MainController implements Initializable {
             stage.setOnCloseRequest(event -> {
                 userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
                 send("login/roomId/value");
-                System.exit(0);});
+                System.exit(0);
+            });
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
@@ -206,7 +223,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void makeChatroom(){
+    public void makeChatroom() {
         //TODO : DB에 채팅방 저장
 
         try {
@@ -217,7 +234,9 @@ public class MainController implements Initializable {
             chatRoomTitleController.setUserDTO(userDTO);
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
-            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setOnCloseRequest(event -> {
+                System.exit(0);
+            });
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
@@ -225,29 +244,29 @@ public class MainController implements Initializable {
         }
     }
 
-    public void addFriend(){
+    public void addFriend() {
 
 
         int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
-        if(status == 1) {
+        if (status == 1) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("Friend Add Error");
             alert.setContentText("Already friend");
             alert.show();
-        }else if(status == 2){
+        } else if (status == 2) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("Friend Add Error");
             alert.setContentText("Wrong NickName");
             alert.show();
-        }else {
+        } else {
             ObservableList<FriendDTO> friendListItems = friendList.getItems();
             FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
             friendListItems.add(friend);
-            Platform.runLater(()-> {
+            Platform.runLater(() -> {
                 friendList.setItems(friendListItems);
                 friendList.setCellFactory(param -> new colorListCell());
             });
@@ -257,7 +276,7 @@ public class MainController implements Initializable {
         send("login/roomId/value");
     }
 
-    public void logOut(){
+    public void logOut() {
         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
         send("login/roomId/value");
 
@@ -266,7 +285,9 @@ public class MainController implements Initializable {
             Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
-            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setOnCloseRequest(event -> {
+                System.exit(0);
+            });
             stage.setResizable(false);
             stopClient();
             stage.show();
@@ -275,27 +296,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void showAlert(boolean type) {
-        try {
-            Stage alert = new Stage();
-            FXMLLoader alertLoader = new FXMLLoader();
-            alertLoader.setLocation(HelloApplication.class.getResource("views/AlertView.fxml"));
-            Parent alertRoot = (Parent) alertLoader.load();
-            AlertController alertController = (AlertController) alertLoader.getController();
-            alertController.setAlert("채팅방1",type);
 
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            double width = screenSize.getWidth();
-            double height = screenSize.getHeight();
-            alert.setScene(new Scene(alertRoot,400,85));
-            alert.setResizable(false);
-            alert.setX(width);
-            alert.setY(height);
-            alert.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -327,6 +328,47 @@ public class MainController implements Initializable {
         });
 
         startClient(IP, port);
+    }
+
+    private class chatRoomListCell extends ListCell<ChatRoomListDTO> {
+        HBox hbox = new HBox();
+        Label label1 = new Label("label1");
+        Label label2 = new Label("새 공지");
+        Label label3 = new Label("새 투표");
+        Pane pane = new Pane();
+        public chatRoomListCell() {
+            super();
+            hbox.getChildren().addAll(label1,label2,label3);
+            label1.setTextFill(Color.valueOf("#d7d6dc"));
+            label1.setPrefWidth(190);
+            label2.setTextFill(Color.valueOf("#eba576"));
+            label3.setTextFill(Color.valueOf("#eba576"));
+            label2.setPrefWidth(70);
+            label2.setVisible(false);
+            label3.setPrefWidth(70);
+            label3.setVisible(false);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+
+        }
+        @Override
+        public void updateItem(ChatRoomListDTO obj, boolean empty) {
+            super.updateItem(obj, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                label1.setText(obj.getChatRoomName());
+                if(obj.isNoticeRead()==1)
+                    label2.setVisible(true);
+                VoteDAO voteDAO = VoteDAO.getInstance();
+                int voteid = voteDAO.getVoteId(obj.getChatRoom_id());
+                boolean isVoted = voteDAO.checkOverLap(voteid, userDTO.getNickName());
+                if(!isVoted) {
+                    label3.setVisible(true);
+                }
+                setGraphic(hbox);
+            }
+        }
     }
     private class colorListCell extends ListCell<FriendDTO> {
         @Override
