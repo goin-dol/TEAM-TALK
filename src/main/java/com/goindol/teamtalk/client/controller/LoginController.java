@@ -51,38 +51,53 @@ public class LoginController implements Initializable {
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
-
+        System.out.println("id = " + id);
+        System.out.println("password = " + password);
         //TODO : 디비랑 아이디 비번 비교
+        if(!id.equals("") && !password.equals("")) {
+            int status = userDAO.login(id, password);
+            if (status == 3) {
+                try {
 
-        if (userDAO.login(id, password)) {
-            try {
-                ;
-                this.userDTO = userDAO.getUser(id, password);
+                    this.userDTO = userDAO.getUser(id, password);
 
-                Stage stage = (Stage) Id.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
-                Parent root = loader.load();
-                MainController main = loader.getController();
-                main.setUserDTO(userDTO);
-                main.showChatRoomList();
-                main.send("login/roomId/value");
-               stage.setScene(new Scene(root, 400, 600));
-                stage.setTitle("Team Talk");
-                stage.setOnCloseRequest(event -> {System.exit(0);});
-                stage.setResizable(false);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    Stage stage = (Stage) Id.getScene().getWindow();
+                    FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                    Parent root = loader.load();
+                    MainController main = loader.getController();
+                    main.setUserDTO(userDTO);
+                    main.showChatRoomList();
+                    main.send("login/roomId/value");
+                    stage.setScene(new Scene(root, 400, 600));
+                    stage.setTitle("Team Talk");
+                    stage.setOnCloseRequest(event -> {System.exit(0);});
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(status == 1){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("로그인 에러");
+                alert.setContentText("잘못된 아이디나 비밀번호를 입력했습니다.");
+                alert.show();
+            } else if(status == 2) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("로그인 에러");
+                alert.setContentText("이미 로그인 되어 있는 계정입니다.");
+                alert.show();
             }
-        } else {
+        }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Log In Error");
-            alert.setContentText("Wrong Id or Password");
+            alert.setHeaderText("로그인 에러");
+            alert.setContentText("입력하지 않은 항목이 있습니다.");
             alert.show();
-
-
         }
+
+
     }
 
     public void signupButtonAction() {

@@ -25,7 +25,7 @@ public class SignupController {
 
         //TODO : 중복 회원가입 여부 확인
 
-        if (userDAO.validSignUp(id, password, nickname)) {
+        if (userDAO.validSignUp(id,  nickname)) {
             try {
                 userDAO.signUp(id, password, nickname);
 

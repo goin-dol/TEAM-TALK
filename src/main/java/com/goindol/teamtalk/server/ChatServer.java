@@ -43,8 +43,10 @@ public class ChatServer extends Application {
                 while(true) {
                     try {
                         Socket socket = serverSocket.accept();
+
                         ChatClient client = new ChatClient(socket);
                         client.receiveData();
+                        System.out.println("name = " + client.key);
                         ChatServer.clients.put(client.key, client);
                         System.out.println("accept Client : " + socket.getRemoteSocketAddress() + " - " + Thread.currentThread().getName());
                     } catch (Exception e) {

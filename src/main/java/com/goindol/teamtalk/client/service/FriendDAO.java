@@ -25,6 +25,8 @@ public class FriendDAO {
         return instance;
     }
 
+
+
     public int addFriend(String nickName, String friendNickName){
         int status = 0;
         String friend =

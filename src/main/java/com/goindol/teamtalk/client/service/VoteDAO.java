@@ -174,7 +174,35 @@ public class VoteDAO {
 
     //
 
+    public void deleteVote(int vote_id){
+        String query =
+                "DELETE FROM `DB_ppick`.`vote` WHERE vote_id =?";
+        String query1 =
+                "DELETE FROM `DB_ppick`.`voteVar` WHERE vote_id =?";
+        String query2 =
+                "DELETE FROM `DB_ppick`.`voteResult` WHERE vote_id =?";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
 
+            pstmt = conn.prepareStatement(query1);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(query2);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+
+    }
 
 
     //채팅방에서 해당 채팅 인원이 투표방에서 투표를 선택
@@ -219,6 +247,27 @@ public class VoteDAO {
         }
     }
 
+    //투표가 있는지 체크
+    public boolean checkVote(int chatRoom_id){
+        boolean status=false;
+        String query = "SELECT * FROM DB_ppick.vote WHERE chatRoom_id=?";
+
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoom_id);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                status = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+
     public boolean checkAnnony(int voteId) {
         boolean status = false;
         String query =
@@ -243,7 +292,7 @@ public class VoteDAO {
         return status;
     }
 
-    public boolean checkVote(int voteId) {
+    public boolean checkOverlapVote(int voteId) {
         boolean status = false;
         String query =
                 "SELECT isOverLap FROM DB_ppick.vote where vote_id = ?";
@@ -375,7 +424,8 @@ public class VoteDAO {
     }
 
     //투표 인원 체크
-    public void AllReadVote(int chatRoom_id,int vote_id){
+    public boolean AllReadVote(int chatRoom_id,int vote_id){
+        boolean status=false;
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
@@ -386,7 +436,7 @@ public class VoteDAO {
             conn = DB.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
             if(rs.next()){
                 int chatCnt = rs.getInt("count");
 
@@ -396,9 +446,8 @@ public class VoteDAO {
                 if(rs1.next()){
                     int votedCnt = rs1.getInt("count");
                     if(chatCnt==votedCnt){
-                        //다시 투표 생성 창 ㄱㄱ
-                    }else{
-                        System.out.println("아직 투표하지 않은 인원이 있습니다. 투표 생성을 진행하시겠습니까 라는 오류 메시지");
+                        status = true;
+                        return status;
                     }
                 }
             }
@@ -410,6 +459,7 @@ public class VoteDAO {
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
             if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
+        return status;
     }
 
     //각 투표 리스트 별로 투표한 사람들 리스트
@@ -427,9 +477,13 @@ public class VoteDAO {
             pstmt.setString(2,content);
             rs=pstmt.executeQuery();
 
-            while (rs.next()){
-                String nickName = rs.getString("nickName");
-                result.add(nickName);
+            if (rs.next()){
+                result = new ArrayList<String>();
+                do {
+                    String nickName = rs.getString("nickName");
+                    result.add(nickName);
+                }while(rs.next());
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -468,7 +522,6 @@ public class VoteDAO {
                     VoteResultDTO voteResultDTO = new VoteResultDTO();
                     voteResultDTO.setCount(rs.getInt("count"));
                     voteResultDTO.setContent(rs.getString("content"));
-                    voteResultDTO.setNickName(rs.getString("nickName"));
                     arr.add(voteResultDTO);
                 }while(rs.next());
             }

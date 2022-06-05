@@ -50,7 +50,7 @@ public class ChatClient {
                 try {
                     while(true) {
                         InputStream in = socket.getInputStream();
-                        byte[] buffer = new byte[512];
+                        byte[] buffer = new byte[2048];
                         int length = in.read(buffer);
                         while(length == -1) throw new IOException();
                         System.out.println("Success!! : " + socket.getRemoteSocketAddress() + " - " + Thread.currentThread().getName());

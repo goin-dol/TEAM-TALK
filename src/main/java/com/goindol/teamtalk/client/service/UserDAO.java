@@ -60,7 +60,9 @@ public class UserDAO {
         }
     }
 
-    public boolean validSignUp(String userId, String userPassword, String nickName) {
+
+
+    public boolean validSignUp(String userId, String nickName) {
         boolean status = true;
         String query =
                 "SELECT " +
@@ -68,13 +70,12 @@ public class UserDAO {
                         "`user`.`userPassword`," +
                         "`user`.`nickName`," +
                         "`user`.`status`" +
-                        "FROM `DB_ppick`.`user` WHERE userId = ? OR userPassword = ? OR nickName = ?";
+                        "FROM `DB_ppick`.`user` WHERE userId = ?  OR nickName = ?";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
-            pstmt.setString(2, userPassword);
-            pstmt.setString(3, nickName);
+            pstmt.setString(2, nickName);
             rs = pstmt.executeQuery();
             if(rs.next())
                 status = false;
@@ -120,8 +121,9 @@ public class UserDAO {
 
 
 
-    public boolean login(String userId, String userPassword) {
-        boolean status = false;
+    public int login(String userId, String userPassword) {
+        int status = 0;
+        String overLap = "SELECT * FROM `DB_ppick`.`user` WHERE userId=?";
         String query =
                 "SELECT " +
                         "`user`.`userId`," +
@@ -142,23 +144,38 @@ public class UserDAO {
                         "WHERE `friendNickName` = ?";
         try {
             conn = DBDAO.getConnection();
+
+
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
             rs = pstmt.executeQuery();
 
-            if(rs.next())
-                status = true;
-            else
-                return false;
+            if(rs.next()) {
+                pstmt = conn.prepareStatement(overLap);
+                pstmt.setString(1, userId);
+                rs = pstmt.executeQuery();
+                if(rs.next()) {
+                    if (!rs.getBoolean("status")) {
+                        pstmt = conn.prepareStatement(update);
+                        pstmt.setString(1, userId);
+                        pstmt.executeUpdate();
 
-            pstmt = conn.prepareStatement(update);
-            pstmt.setString(1, userId);
-            pstmt.executeUpdate();
+                        pstmt = conn.prepareStatement(login);
+                        pstmt.setString(1, rs.getString("nickName"));
+                        pstmt.executeUpdate();
 
-            pstmt = conn.prepareStatement(login);
-            pstmt.setString(1, rs.getString("nickName"));
-            pstmt.executeUpdate();
+                        status = 3;
+                    } else {
+                        status = 2;
+                    }
+                }
+            } else
+                return 1;
+
+
+
+
 
         } catch(Exception e) {
             e.printStackTrace();

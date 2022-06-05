@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -94,7 +95,7 @@ public class ChatController implements Initializable {
             try {
                 InputStream in = socket.getInputStream();
                 System.out.println("receiving");
-                byte[] buffer = new byte[512];
+                byte[] buffer = new byte[2048];
                 int length = in.read(buffer);
                 String message = new String(buffer, 0, length, "UTF-8");
                 Platform.runLater(()->{
@@ -218,17 +219,46 @@ public class ChatController implements Initializable {
 
 
         userInput.setOnAction(event-> {
-            send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
-            userInput.setText("");
-            userInput.requestFocus();
+            if(userInput.getText().isBlank()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("채팅 에러");
+                alert.setContentText("내용을 입력하시오.");
+                alert.show();
+            }else if(userInput.getText().length()>500){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("채팅 에러");
+                alert.setContentText("최대 메시지 길이는 500자 입니다.");
+                alert.show();
+            }
+            else {
+                send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+                userInput.setText("");
+                userInput.requestFocus();
+            }
         });
 
         sendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
-                userInput.setText("");
-                userInput.requestFocus();
+                if(userInput.getText().isBlank()){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("채팅 에러");
+                    alert.setContentText("내용을 입력하시오.");
+                    alert.show();
+                }else if(userInput.getText().length()>500){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("채팅 에러");
+                    alert.setContentText("최대 메시지 길이는 500자 입니다.");
+                    alert.show();
+                }else {
+                    send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+                    userInput.setText("");
+                    userInput.requestFocus();
+                }
             }
         });
 
@@ -245,16 +275,24 @@ public class ChatController implements Initializable {
                     ShowNoticeController showNoticeController = (ShowNoticeController) loader.getController();
                     showNoticeController.setChatRoomId(chatid);
                     showNoticeController.setUserDTO(userDTO);
-                    showNoticeController.showNoticeContent();
-                    showNoticeController.showReadUser();
+                    if(!showNoticeController.showNoticeContent()){
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("warning");
+                        alert.setHeaderText("공지 에러");
+                        alert.setContentText("공지가 없습니다.");
+                        alert.show();
+                    }
+                    else {
+                        showNoticeController.showReadUser();
 
-                    stage.setScene(new Scene(root, 400, 600));
-                    stage.setTitle("Team Talk");
-                    stage.setX(curStage.getX()+400);
-                    stage.setY(curStage.getY());
-                    stage.setOnCloseRequest(event -> stage.close());
-                    stage.setResizable(false);
-                    stage.show();
+                        stage.setScene(new Scene(root, 400, 600));
+                        stage.setTitle("Team Talk");
+                        stage.setX(curStage.getX() + 400);
+                        stage.setY(curStage.getY());
+                        stage.setOnCloseRequest(event -> stage.close());
+                        stage.setResizable(false);
+                        stage.show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -273,14 +311,15 @@ public class ChatController implements Initializable {
                     MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
                     makeVoteController.setChatRoomId(chatid);
                     makeVoteController.setUserDTO(userDTO);
-                    makeVoteController.setMainController(mainController);
-                    stage.setScene(new Scene(root, 400, 600));
-                    stage.setTitle("Team Talk");
-                    stage.setX(curStage.getX()+400);
-                    stage.setY(curStage.getY());
-                    stage.setOnCloseRequest(event -> stage.close());
-                    stage.setResizable(false);
-                    stage.show();
+                        makeVoteController.setMainController(mainController);
+                        stage.setScene(new Scene(root, 400, 600));
+                        stage.setTitle("Team Talk");
+                        stage.setX(curStage.getX() + 400);
+                        stage.setY(curStage.getY());
+                        stage.setOnCloseRequest(event -> stage.close());
+                        stage.setResizable(false);
+                        stage.show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -292,51 +331,61 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
-                if(ifAlreadyVote) {
-                    try {
-                        Stage stage = new Stage();
-                        Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/ShowVoteResultView.fxml"));
-                        Parent root = (Parent) loader.load();
-                        ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
-                        showVoteResultController.setChatRoomId(chatid);
-                        showVoteResultController.setUserDTO(userDTO);
-                        showVoteResultController.setVoteId(voteid);
-                        showVoteResultController.initialVoteList();
-                        stage.setScene(new Scene(root, 400, 600));
-                        stage.setTitle("Team Talk");
-                        stage.setX(curStage.getX()+400);
-                        stage.setY(curStage.getY());
-                        stage.setOnCloseRequest(event -> stage.close());
-                        stage.setResizable(false);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        Stage stage = new Stage();
-                        Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/DoVoteView.fxml"));
-                        Parent root = (Parent) loader.load();
-                        DoVoteController doVoteController = (DoVoteController) loader.getController();
-                        doVoteController.setChatRoomId(chatid);
-                        doVoteController.setUserDTO(userDTO);
-                        doVoteController.initialVoteList();
+                if(voteDAO.checkVote(chatid)) {
+                    if (ifAlreadyVote) {
+                        try {
+                            Stage stage = new Stage();
+                            Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(HelloApplication.class.getResource("views/ShowVoteResultView.fxml"));
+                            Parent root = (Parent) loader.load();
+                            ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
+                            showVoteResultController.setChatRoomId(chatid);
+                            showVoteResultController.setUserDTO(userDTO);
+                            showVoteResultController.setVoteId(voteid);
+                            showVoteResultController.initialVoteList();
+                            stage.setScene(new Scene(root, 400, 600));
+                            stage.setTitle("Team Talk");
+                            stage.setX(curStage.getX() + 400);
+                            stage.setY(curStage.getY());
+                            stage.setOnCloseRequest(event -> stage.close());
+                            stage.setResizable(false);
+                            stage.show();
 
-                        stage.setScene(new Scene(root, 400, 600));
-                        stage.setTitle("Team Talk");
-                        stage.setX(curStage.getX()+400);
-                        stage.setY(curStage.getY());
-                        stage.setOnCloseRequest(event -> stage.close());
-                        stage.setResizable(false);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            Stage stage = new Stage();
+                            Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(HelloApplication.class.getResource("views/DoVoteView.fxml"));
+                            Parent root = (Parent) loader.load();
+                            DoVoteController doVoteController = (DoVoteController) loader.getController();
+                            doVoteController.setChatRoomId(chatid);
+                            doVoteController.setUserDTO(userDTO);
+                            doVoteController.initialVoteList();
+
+                            stage.setScene(new Scene(root, 400, 600));
+                            stage.setTitle("Team Talk");
+                            stage.setX(curStage.getX() + 400);
+                            stage.setY(curStage.getY());
+                            stage.setOnCloseRequest(event -> stage.close());
+                            stage.setResizable(false);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+                    else{
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("warning");
+                        alert.setHeaderText("투표 에러");
+                        alert.setContentText("투표가 없습니다.");
+                        alert.show();
+                    }
 
             }
         });
@@ -370,14 +419,9 @@ public class ChatController implements Initializable {
                 }
             }
         });
-        try {
-            InetAddress ia = InetAddress.getLocalHost();
-            String ip_str = ia.toString();
-            String IP = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        startClient(IP, port);
+
 
 
 

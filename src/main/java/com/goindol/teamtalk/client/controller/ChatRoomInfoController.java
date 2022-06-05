@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -18,7 +19,6 @@ import java.util.ResourceBundle;
 
 public class ChatRoomInfoController implements Initializable {
 
-    public int chatid;
     public UserDTO userDTO;
     public int chatId;
     public MainController mainController;
@@ -42,10 +42,19 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void inviteFriend() {
-        chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
-        ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
-        chatRoomUserListItems.add(userInput.getText());
-        chatRoomUserList.setItems(chatRoomUserListItems);
+        System.out.println("chatId = " + chatId);
+        if(chatRoomUserListDAO.overlapUser(chatId,userInput.getText())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("채팅방 친구 오류");
+            alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
+            alert.show();
+        }else {
+            chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
+            ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
+            chatRoomUserListItems.add(userInput.getText());
+            chatRoomUserList.setItems(chatRoomUserListItems);
+        }
     }
 
 

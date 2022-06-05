@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -27,13 +28,21 @@ public class MakeChatRoomController implements Initializable {
     @FXML private Button complete;
 
     public void setChatRoomTitle(){
-        chatRoomListDAO.createChatRoom(chatRoomTitle.getText(), userDTO.getNickName());
-        int chatId = chatRoomListDAO.getChatRoomId(chatRoomTitle.getText(), userDTO.getNickName());
-        chatRoomListDAO.inviteChatRoom(chatId, userDTO.getNickName());
-        chatRoomTitle.setText("");
-        //
-        String s = chatRoomTitle.getText();
-        System.out.println(s);
+        if(chatRoomTitle.getText().length()>10){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("Title Length Error");
+            alert.setContentText("채팅창 제목은 10글자 이내로 입력해주세요.");
+            alert.show();
+        }else {
+            chatRoomListDAO.createChatRoom(chatRoomTitle.getText(), userDTO.getNickName());
+            int chatId = chatRoomListDAO.getChatRoomId(chatRoomTitle.getText(), userDTO.getNickName());
+            chatRoomListDAO.inviteChatRoom(chatId, userDTO.getNickName());
+            chatRoomTitle.setText("");
+            //
+            String s = chatRoomTitle.getText();
+            System.out.println(s);
+        }
     }
     public void goToBack(){
         try {

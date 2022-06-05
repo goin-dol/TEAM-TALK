@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -50,14 +51,15 @@ public class ShowNoticeController implements Initializable {
 
     }
 
-    public void showNoticeContent(){
+    public boolean showNoticeContent(){
 //        만약 공지사항이 있다면 checkNotice에서 true값이 나옴
          if(noticeDAO.checkNotice(chatid)) {
              noticeDTO = noticeDAO.showNoticeContent(chatid, userDTO.getNickName());
              noticeTitle.setText(noticeDTO.getTitle());
              noticeContent.setText(noticeDTO.getContent());
+             return true;
          }else {
-             //공지사항 없다는 알림 ㄱㄱ
+           return false;
          }
 //        else  {}
 //        공지 제목, 내용
@@ -67,7 +69,7 @@ public class ShowNoticeController implements Initializable {
 //        공지 읽은 유저 리스트들
 //        List<String> users = noticeDAO.readNoticeList(chatid);
 
-        Text t1 = new Text("공지내용");
+//        Text t1 = new Text("공지내용");
 //
     }
 
