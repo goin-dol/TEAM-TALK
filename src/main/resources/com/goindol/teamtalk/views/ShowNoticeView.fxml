@@ -2,19 +2,20 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Font?>
 
-
-<?import javafx.scene.control.TextArea?>
-<BorderPane fx:id="noticeCheckContainer" stylesheets="@../css/ShowNoticeView.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ShowNoticeController">
+<BorderPane fx:id="noticeCheckContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@../css/ShowNoticeView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ShowNoticeController">
    <top>
-      <Pane prefHeight="40.0" prefWidth="400.0" BorderPane.alignment="CENTER" styleClass="pane">
+      <Pane prefHeight="40.0" prefWidth="400.0" styleClass="pane" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="noticeTitle" layoutX="174.0" layoutY="12.0" text="공지제목" />
+            <Label fx:id="noticeTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="12.0" prefHeight="17.0" prefWidth="400.0" text="공지제목" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
          </children>
       </Pane>
    </top>
@@ -22,9 +23,12 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
                   <TextArea fx:id="noticeContent" prefHeight="290.0" prefWidth="382.0" />
-            <Pane prefHeight="28.0" prefWidth="400.0" styleClass="pane">
+            <Pane prefHeight="52.0" prefWidth="400.0" styleClass="pane">
                <children>
-                  <Label layoutX="158.0" layoutY="6.0" text="읽은 사람 목록" />
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="17.0" prefWidth="400.0" text="&lt;읽은 사람 목록&gt;">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </Pane>
             <ListView fx:id="readUserList" prefHeight="242.0" prefWidth="400.0" />

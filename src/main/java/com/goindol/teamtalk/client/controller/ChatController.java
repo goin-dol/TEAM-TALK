@@ -73,7 +73,6 @@ public class ChatController implements Initializable {
                         stopClient();
                         System.out.println("Server Failed");
                     }
-
                 }
             }
         };
@@ -164,7 +163,6 @@ public class ChatController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         chat.setEditable(false);
         goBackButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -192,24 +190,6 @@ public class ChatController implements Initializable {
                     stage.setY(curStage.getY());
                     stage.setResizable(false);
                     stage.show();
-
-                    Stage alert = new Stage();
-                    FXMLLoader alertLoader = new FXMLLoader();
-                    alertLoader.setLocation(HelloApplication.class.getResource("views/AlertView.fxml"));
-                    Parent alertRoot = (Parent) alertLoader.load();
-                    AlertController alertController = (AlertController) alertLoader.getController();
-                    alertController.setAlert("채팅방1",true);
-
-                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                    double width = screenSize.getWidth();
-                    double height = screenSize.getHeight();
-//                    alert.initStyle(StageStyle.UNDECORATED);
-                    alert.setScene(new Scene(alertRoot,400,85));
-                    alert.setResizable(false);
-                    alert.setX(width);
-                    alert.setY(height);
-                    alert.show();
-
 
                 } catch (IOException e) {
                     e.printStackTrace();

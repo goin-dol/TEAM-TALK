@@ -22,3 +22,7 @@
 .label{
     -fx-text-fill: #d7d6dc;
 }
+.image-view:hover {
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.7) , 15,0,0,1 );
+    -fx-cursor: hand;
+}
