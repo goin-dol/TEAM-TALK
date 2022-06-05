@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -149,6 +150,7 @@ public class MainController implements Initializable {
         ObservableList<FriendDTO> friendObervableList = FXCollections.observableList(strings);
         Platform.runLater(()->{
             friendList.setItems(friendObervableList);
+            friendList.setCellFactory(param -> new colorListCell());
         });
     }
 
@@ -312,15 +314,15 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-    private class colorListCell extends ListCell<String> {
+    private class colorListCell extends ListCell<FriendDTO> {
         @Override
-        public void updateItem(String obj, boolean empty) {
+        public void updateItem(FriendDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);
                 setGraphic(null);
             } else {
-                Label label = new Label(obj);
+                Label label = new Label(obj.getNickName());
                 //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
                 label.setTextFill(Color.GREEN);
                 setGraphic(label);

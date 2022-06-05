@@ -295,7 +295,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
-                if(ifAlreadyVote) {
+                if(!ifAlreadyVote) {
                     try {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
