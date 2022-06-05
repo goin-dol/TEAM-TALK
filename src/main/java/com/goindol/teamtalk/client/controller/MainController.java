@@ -339,10 +339,10 @@ public class MainController implements Initializable {
                 label1.setText(obj.getChatRoomName());
                 if(obj.isNoticeRead()==1)
                     label2.setVisible(true);
-                VoteDAO voteDAO = VoteDAO.getInstance();
+/*                VoteDAO voteDAO = VoteDAO.getInstance();
                 int voteid = voteDAO.getVoteId(obj.getChatRoom_id());
-                boolean isVoted = voteDAO.checkOverLap(voteid, userDTO.getNickName());
-                if(!isVoted) {
+                boolean isVoted = voteDAO.checkOverLap(voteid, userDTO.getNickName());*/
+                if(obj.isVoted()==1) {
                     label3.setVisible(true);
                 }
                 setGraphic(hbox);

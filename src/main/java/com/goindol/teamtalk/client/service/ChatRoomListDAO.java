@@ -90,7 +90,7 @@ public class ChatRoomListDAO {
         String notice =
                 "SELECT * FROM DB_ppick.notice WHERE chatRoom_id = ?";
         String vote =
-                "SELECT * FROM vote WHERE nickName = ?";
+                "SELECT * FROM vote WHERE chatRoom_id = ?";
         try {
 
             conn = DBDAO.getConnection();
@@ -107,7 +107,7 @@ public class ChatRoomListDAO {
             rs = pstmt.executeQuery();
 
             pstmt = conn.prepareStatement(vote);
-            pstmt.setString(1, nickName);
+            pstmt.setInt(1, chatRoom_id);
             ResultSet rs1 = pstmt.executeQuery();
 
             pstmt = conn.prepareStatement(query);
