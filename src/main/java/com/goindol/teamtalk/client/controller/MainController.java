@@ -16,6 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +27,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.*;
 import java.net.Socket;
@@ -107,6 +111,7 @@ public class MainController implements Initializable {
                 }else if(message.equals("chatRoom")) {
                     showChatRoomList();
                 }else if(message.equals("notice")) {
+                    showAlert(true);
                     showChatRoomList();
 
                 }
@@ -270,6 +275,28 @@ public class MainController implements Initializable {
         }
     }
 
+    public void showAlert(boolean type) {
+        try {
+            Stage alert = new Stage();
+            FXMLLoader alertLoader = new FXMLLoader();
+            alertLoader.setLocation(HelloApplication.class.getResource("views/AlertView.fxml"));
+            Parent alertRoot = (Parent) alertLoader.load();
+            AlertController alertController = (AlertController) alertLoader.getController();
+            alertController.setAlert("채팅방1",type);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            double width = screenSize.getWidth();
+            double height = screenSize.getHeight();
+            alert.setScene(new Scene(alertRoot,400,85));
+            alert.setResizable(false);
+            alert.setX(width);
+            alert.setY(height);
+            alert.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logoutTab.setOnSelectionChanged(new EventHandler<Event>() {
@@ -278,16 +305,6 @@ public class MainController implements Initializable {
                 logOut();
             }
         });
-
-
-//        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
-//        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                makeChatRoomButton.setEffect(null);
-//            }
-//        });
-
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
