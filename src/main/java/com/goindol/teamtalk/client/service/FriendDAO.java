@@ -2,10 +2,12 @@ package com.goindol.teamtalk.client.service;
 
 
 import com.goindol.teamtalk.client.DB.DBDAO;
+import com.goindol.teamtalk.client.model.FriendDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class FriendDAO {
 
@@ -75,11 +77,39 @@ public class FriendDAO {
 
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-           // if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
+    }
+
+    public FriendDTO getFriend(String nickName, String friendNickName) {
+        FriendDTO friendDTO = null;
+        String query =
+                "SELECT * FROM `DB_ppick`.`friendInfo` WHERE friendNickName = ? and nickName = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, nickName);
+            pstmt.setString(2, friendNickName);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                friendDTO = new FriendDTO();
+                friendDTO.setF_id(rs.getInt("f_id"));
+                friendDTO.setNickName(rs.getString("nickName"));
+                friendDTO.setFriendNickName(rs.getString("friendNickName"));
+                friendDTO.setFriendStatus(rs.getBoolean("friendStatus"));
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+        return friendDTO;
     }
 
 

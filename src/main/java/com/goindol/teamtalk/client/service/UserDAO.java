@@ -54,8 +54,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -81,8 +82,9 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
     }
@@ -109,8 +111,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
     }
@@ -160,8 +163,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return status;
     }
@@ -190,8 +194,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return userDTO;
     }
@@ -216,8 +221,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return users;
     }
@@ -245,8 +251,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -265,8 +272,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally{
-            if(pstmt != null) try{pstmt.close();}catch(SQLException ex){}
-            if(rs != null) try{rs.close();}catch(SQLException ex){}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return Cnt;
     }
@@ -298,8 +306,9 @@ public class UserDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return friendList;
     }
