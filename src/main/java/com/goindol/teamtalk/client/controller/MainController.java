@@ -322,9 +322,13 @@ public class MainController implements Initializable {
                 setText(null);
                 setGraphic(null);
             } else {
-                Label label = new Label(obj.getNickName());
+                Label label = new Label(obj.getFriendNickName());
                 //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
-                label.setTextFill(Color.GREEN);
+                if(obj.isFriendStatus()) {
+                    label.setTextFill(Color.valueOf("#33ff33"));
+                } else {
+                    label.setTextFill(Color.valueOf("#d7d6dc"));
+                }
                 setGraphic(label);
             }
         }
