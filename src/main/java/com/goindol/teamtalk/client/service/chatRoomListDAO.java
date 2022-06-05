@@ -81,8 +81,10 @@ public class chatRoomListDAO {
                         "(" +
                         "?," +
                         "?," +
-                        false +
+                        "?" +
                         ")";
+        String notice =
+                "SELECT * FROM DB_ppick.notice WHERE chatRoom_id = ?";
         try {
 
             conn = DBDAO.getConnection();
@@ -94,9 +96,17 @@ public class chatRoomListDAO {
                 //이미 있는 사람
                 return 2;
             }
+            pstmt = conn.prepareStatement(notice);
+            pstmt.setInt(1, chatRoom_id);
+            rs = pstmt.executeQuery();
+
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, chatRoom_id);
             pstmt.setString(2, nickName);
+            if(rs.next())
+                pstmt.setInt(3, 1);
+            else
+                pstmt.setInt(3, 0);
             pstmt.executeUpdate();
 
         } catch(Exception e) {
@@ -108,36 +118,6 @@ public class chatRoomListDAO {
         return 1;
     }
 
-    //이 메소드는 전에 테이블 1개로 했을떄 썻던 메소드
-    public void inviteFriend(String chatRoomName, String nickName) {
-        String query =
-                "INSERT INTO `DB_ppick`.`chatRoom`" +
-                        "(" +
-                        "`chatRoomName`," +
-                        "`nickName`," +
-                        "`isNoticeRead`" +
-                        ")" +
-                        "VALUES" +
-                        "(" +
-                        "?," +
-                        "?," +
-                        "?" +
-                        ")";
-        try {
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, chatRoomName);
-            pstmt.setString(2, nickName);
-            pstmt.setBoolean(3, false);
-
-            pstmt.executeUpdate();
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-    }
 
     public String getCurrentChatRoomName(int chatRoomId) {
         String query = "SELECT chatRoomName FROM DB_ppick.chatRoomList WHERE chatRoom_id = ?";
@@ -159,15 +139,13 @@ public class chatRoomListDAO {
     public ArrayList<ChatRoomListDTO> getChatRoomName(String nickName) {
         ArrayList<ChatRoomListDTO> roomName = null;
         String query =
-                "select " +
-                        "chatRoom_id, " +
-                        "chatRoomName " +
-                        "from chatRoomList " +
-                        "where chatRoom_id in (" +
-                        "select chatRoom_id" +
-                        "    from chatRoomUserList " +
-                        "    where nickName = ?" +
-                        ")";
+                "select p.chatRoom_id," +
+                        "   p.chatRoomName, " +
+                        "   q.isNoticeRead " +
+                        "from chatRoomList as p " +
+                        "join chatRoomUserList as q " +
+                        "on p.chatRoom_id = q.chatRoom_id " +
+                        "where q.nickName = ?";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -179,7 +157,7 @@ public class chatRoomListDAO {
                     ChatRoomListDTO chatRoomListDTO = new ChatRoomListDTO();
                     chatRoomListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
                     chatRoomListDTO.setChatRoomName(rs.getString("chatRoomName"));
-
+                    chatRoomListDTO.setNoticeRead(rs.getInt("isNoticeRead"));
                     roomName.add(chatRoomListDTO);
                 }while(rs.next());
             }

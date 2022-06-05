@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
 import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
@@ -31,23 +32,23 @@ public class ShowVoteResultController implements Initializable {
     private ToggleGroup group = new ToggleGroup();
 
     public int chatid;
+    public int voteId;
+    public voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
     public UserDTO userDTO;
-
-
-    private static voteDAO voteDAO;
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
-        List<VoteVarDTO> voteVarDTOList = new ArrayList<>();
-        voteVarDTOList.add(new VoteVarDTO(1,"에그드랍"));
-        voteVarDTOList.add(new VoteVarDTO(1,"한솥"));
-        voteVarDTOList.add(new VoteVarDTO(1,"남경"));
-        names.addAll(voteVarDTOList);
+        List<VoteResultDTO> voteVarDTOList = voteDAO.ShowVoteList(voteId);
+
+        for(VoteResultDTO voteResult : voteVarDTOList) {
+            names.add(voteResult);
+        }
 
 
         voteResultList.setItems(names);
-        voteResultList.setCellFactory(param -> new listCell());
+        //voteDAO.checkAnnony(voteId);  <-- 이용해서 익명 여부 확인 후 닉네임 안띄워주기
+        //voteResultList.setCellFactory(param -> new listCell());
 
         //투표결과닉네임
 //        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
@@ -56,14 +57,14 @@ public class ShowVoteResultController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initialVoteList();
+
 
     }
 
     public void setChatRoomId(int chatid) {
         this.chatid = chatid;
     }
-
+    public void setVoteId(int voteId) { this.voteId = voteId; }
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }

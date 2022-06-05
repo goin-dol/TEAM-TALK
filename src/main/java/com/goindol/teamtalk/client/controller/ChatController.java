@@ -4,6 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.chatLogDAO;
 import com.goindol.teamtalk.client.service.chatRoomListDAO;
+import com.goindol.teamtalk.client.service.voteDAO;
 import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -40,6 +41,7 @@ public class ChatController implements Initializable {
     int port = 9500;
     chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
     chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
+    voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
     public MainController mainController;
     @FXML private BorderPane chatRoomContainer;
     @FXML private Label chatRoomTitle;
@@ -181,7 +183,7 @@ public class ChatController implements Initializable {
                     MakeNoticeController makeNoticeController = (MakeNoticeController) loader.getController();
                     makeNoticeController.setChatRoomId(chatid);
                     makeNoticeController.setUserDTO(userDTO);
-
+                    makeNoticeController.setMainController(mainController);
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> stage.close());
@@ -243,6 +245,8 @@ public class ChatController implements Initializable {
                     ShowNoticeController showNoticeController = (ShowNoticeController) loader.getController();
                     showNoticeController.setChatRoomId(chatid);
                     showNoticeController.setUserDTO(userDTO);
+                    showNoticeController.showNoticeContent();
+                    showNoticeController.showReadUser();
 
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
@@ -269,7 +273,7 @@ public class ChatController implements Initializable {
                     MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
                     makeVoteController.setChatRoomId(chatid);
                     makeVoteController.setUserDTO(userDTO);
-
+                    makeVoteController.setMainController(mainController);
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setX(curStage.getX()+400);
@@ -286,18 +290,20 @@ public class ChatController implements Initializable {
         voteCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                boolean ifAlreadyVote = false;
+                int voteid = voteDAO.getVoteId(chatid);
+                boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
                 if(ifAlreadyVote) {
                     try {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/showVoteResult.fxml"));
+                        loader.setLocation(HelloApplication.class.getResource("views/ShowVoteResultView.fxml"));
                         Parent root = (Parent) loader.load();
                         ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
                         showVoteResultController.setChatRoomId(chatid);
                         showVoteResultController.setUserDTO(userDTO);
-
+                        showVoteResultController.setVoteId(voteid);
+                        showVoteResultController.initialVoteList();
                         stage.setScene(new Scene(root, 400, 600));
                         stage.setTitle("Team Talk");
                         stage.setX(curStage.getX()+400);
@@ -318,6 +324,7 @@ public class ChatController implements Initializable {
                         DoVoteController doVoteController = (DoVoteController) loader.getController();
                         doVoteController.setChatRoomId(chatid);
                         doVoteController.setUserDTO(userDTO);
+                        doVoteController.initialVoteList();
 
                         stage.setScene(new Scene(root, 400, 600));
                         stage.setTitle("Team Talk");

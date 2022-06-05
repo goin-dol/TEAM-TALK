@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
+import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
 
 import java.sql.Connection;
@@ -61,7 +62,7 @@ public class voteDAO {
         }
     }
 
-    public void createVoteVar(String content,int chatRoom_id){
+    public void createVoteVar(String content,int vote_id){
         String query1 =
                 "INSERT INTO `DB_ppick`.`voteVar` (vote_id,content) VALUES" +
                         "(?,?)";
@@ -70,7 +71,7 @@ public class voteDAO {
 
 
             pstmt = conn.prepareStatement(query1);
-            pstmt.setInt(1, chatRoom_id);
+            pstmt.setInt(1, vote_id);
             pstmt.setString(2, content);
             pstmt.executeUpdate();
 
@@ -84,6 +85,26 @@ public class voteDAO {
             }
         }
 
+    //투표를 생성할 때 먼저 Vote 테이블에 투표를 만들고 Vote_Var에 투표 리스트들을 다 넣어주기 위해서 Vote테이블에서
+    // Vote_id를 가져오는 메소드
+    public int getVoteId(int chatRoomId) {
+        int voteId = 0;
+        String query =
+                "SELECT vote_id FROM DB_ppick.vote WHERE chatRoom_id = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoomId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                voteId = rs.getInt("vote_id");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return voteId;
+    }
 
     //content -> voteVar_id
     public int ReadVoteVarByContent(String content){
@@ -112,7 +133,7 @@ public class voteDAO {
     //투표가 생성되고 투표 리스트들을 확인하는 메소드
     public List<VoteVarDTO> ReadVoteList(int vote_id){
 
-        ArrayList<VoteVarDTO> v = new ArrayList<>();
+        ArrayList<VoteVarDTO> v = null;
 
         String query =
                 "SELECT * FROM `DB_ppick`.`voteVar` WHERE vote_id=?";
@@ -123,13 +144,15 @@ public class voteDAO {
             pstmt.setInt(1, vote_id);
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()){
-                int voteVar_id = rs.getInt("voteVar_id");
-                int vote_id1 = rs.getInt("vote_id");
-                String content = rs.getString("content");
-                VoteVarDTO voteVarDTO = new VoteVarDTO(voteVar_id, vote_id1, content);
-                v.add(voteVarDTO);
-                return v;
+            if (rs.next()){
+                v = new ArrayList<VoteVarDTO>();
+                do {
+                    VoteVarDTO voteVarDTO = new VoteVarDTO();
+                    voteVarDTO.setVoteVar_id(rs.getInt("voteVar_id"));
+                    voteVarDTO.setVote_id(rs.getInt("vote_id"));
+                    voteVarDTO.setContent(rs.getString("content"));
+                    v.add(voteVarDTO);
+                }while(rs.next());
             }
 
         }catch (Exception e){
@@ -138,56 +161,45 @@ public class voteDAO {
             //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
-        return null;
+        return v;
     }
 
     //
 
-    //투표를 생성할 때 먼저 Vote 테이블에 투표를 만들고 Vote_Var에 투표 리스트들을 다 넣어주기 위해서 Vote테이블에서
-    // Vote_id를 가져오는 메소드
-    public int Read_Vote_id(int chatRoom_id){
-        String query =
-                "SELECT * FROM `DB_ppick`.`vote` WHERE chatRoom_id=?";
 
-        try{
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1,chatRoom_id);
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()){
-                return rs.getInt("vote_id");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return chatRoom_id;
-    }
+
 
     //채팅방에서 해당 채팅 인원이 투표방에서 투표를 선택
-     public void choiceVote(int vote_id,String content,String nickName){
+     public void choiceVote(int vote_id, String content,String nickName){
         String query =
-                "INSERT INTO `DB_ppick`.`voteResult` (vote_id,voteVar_id,content,nickName) values (?,?,?,?)";
-
+                "INSERT INTO `DB_ppick`.`voteResult` (vote_id,content,nickName) values (?,?,?)";
+         String over =
+                 "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
         try{
 
             conn = DB.getConnection();
-            pstmt= conn.prepareStatement(query);
-            pstmt.setInt(1,vote_id);
-            pstmt.setInt(2,ReadVoteVarByContent(content));
-            pstmt.setString(3,content);
-            pstmt.setString(4,nickName);
-            if(checkOverLap(vote_id)) {
-                // 중복 투표가 될 때 같은 투표 질문에 투표 했는지 체크
+
+            pstmt = conn.prepareStatement(over);
+            pstmt.setInt(1, vote_id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                boolean isOverLap = rs.getBoolean("isOverLap");
+                pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1,vote_id);
+                pstmt.setString(2,content);
+                pstmt.setString(3,nickName);
+                /*if(isOverLap) {
+                    // 중복 투표가 될 때 같은 투표 질문에 투표 했는지 체크
 //                if()
 //                else System.out.println("이미 투표한 질문입니다.");
-            }
-            else{
-                //중복 투표가 아닐때 투표 했는지 안했는지 체킹
+
+                }
+                else {*/
+                    //중복 투표가 아닐때 투표 했는지 안했는지 체킹
 //                if(!checkOverlapVoteVar(vote_id,voteVar_id,nickName) && !checkOverlapVoteVar1(vote_id,nickName)) pstmt.executeUpdate();
 //                else System.out.println("이미 투표 했습니다 경고문");
+                    pstmt.executeUpdate();
+                //}
             }
 
         }catch (Exception e){
@@ -196,24 +208,90 @@ public class voteDAO {
             //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
+    }
+
+    public boolean checkAnnony(int voteId) {
+        boolean status = false;
+        String query =
+                "SELECT isAnonymous FROM DB_ppick.vote where vote_id = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, voteId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                if(rs.getBoolean("isAnonymous")) {
+                    status = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public boolean checkVote(int voteId) {
+        boolean status = false;
+        String query =
+                "SELECT isOverLap FROM DB_ppick.vote where vote_id = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, voteId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                if(rs.getBoolean("isOverLap"))
+                    status = true;
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public boolean checkOverLap(int voteId, String nickName) {
+        boolean status = false;
+        String query =
+                "SELECT" +
+                        "`voteResult`.`voteResult_id`," +
+                        "`voteResult`.`vote_id`," +
+                        "`voteResult`.`voteVar_id`," +
+                        "`voteResult`.`content`," +
+                        "`voteResult`.`nickName`" +
+                        "FROM `DB_ppick`.`voteResult` WHERE vote_id = ? and nickName = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, voteId);
+            pstmt.setString(2, nickName);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                status = true;
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 
     //같은 투표 중복 체킹
-    public boolean checkOverlapVoteVar(int vote_id, int voteVar_id , String nickName){
-        String query =
-                "SELECT count(*) as count FROM `DB_ppick`.`voteResult` FROM vote_id=? and nickName=? and voteVar_id=?";
-
+    public boolean checkOverlapVoteVar(int voteid, String nickName){
+        boolean status = false;
+        String select =
+                "SELECT" +
+                        "`voteResult`.`voteResult_id`," +
+                        "`voteResult`.`vote_id`," +
+                        "`voteResult`.`voteVar_id`," +
+                        "`voteResult`.`content`," +
+                        "`voteResult`.`nickName`" +
+                        "FROM `DB_ppick`.`voteResult` WHERE vote_id = ? and nickName = ?";
         try{
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, vote_id);
-            pstmt.setString(2, nickName);
-            pstmt.setInt(3, voteVar_id);
-            ResultSet rs = pstmt.executeQuery(query);
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(select);
+            pstmt.setInt(1, voteid);
+            pstmt.setString(1, nickName);
+            rs = pstmt.executeQuery(select);
             if(rs.next()){
-                int cnt = rs.getInt("count");
-                if(cnt>=1) return true;
-                else return false;
+                status = true;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -221,7 +299,7 @@ public class voteDAO {
             //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
-        return false;
+        return status;
     }
 
     // 중복 투표가 가능할때
@@ -253,13 +331,13 @@ public class voteDAO {
     //중복 투표 가능 여부 체킹
     public boolean checkOverLap(int vote_id){
         String query =
-                "SELECT * FROM `DB_ppick`.`vote` FROM vote_id=?";
+                "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
 
         try{
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, vote_id);
-            ResultSet rs = pstmt.executeQuery(query);
+            rs = pstmt.executeQuery(query);
             if(rs.next()){
                 boolean isOverLap = rs.getBoolean("isOverLap");
                 if(isOverLap) return true;
@@ -313,20 +391,27 @@ public class voteDAO {
     }
 
     //투표한 투표 리스트 보여주기
-    public List<String> ShowVoteList(int vote_id){
+    public List<VoteResultDTO> ShowVoteList(int vote_id){
 
-        ArrayList<String> arr = new ArrayList<>();
+        ArrayList<VoteResultDTO> arr = null;
         String query =
-                "SELECT * FROM `DB_ppick`.`voteResult` WHERE vote_id=?";
+                "SELECT count(content) as count, content, nickName FROM `DB_ppick`.`voteResult` where vote_id=? group by content";
 
         try{
             conn = DB.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1,vote_id);
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             if(rs.next()){
-                arr.add(rs.getString("nickName"));
+                arr = new ArrayList<>();
+                do{
+                    VoteResultDTO voteResultDTO = new VoteResultDTO();
+                    voteResultDTO.setCount(rs.getInt("count"));
+                    voteResultDTO.setContent(rs.getString("content"));
+                    voteResultDTO.setNickName(rs.getString("nickName"));
+                    arr.add(voteResultDTO);
+                }while(rs.next());
             }
             return arr;
         }catch (Exception e){
@@ -335,7 +420,7 @@ public class voteDAO {
             //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
-        return null;
+        return arr;
     }
 
     //중복 투표 체크

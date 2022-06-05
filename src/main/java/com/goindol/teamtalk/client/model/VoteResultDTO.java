@@ -5,8 +5,16 @@ public class VoteResultDTO {
     private int voteVar_id;
     private String content;
     private String nickName;
-
+    private int count;
     private int voteResult_id;
+
+    public VoteResultDTO() {
+
+    }
+
+    public String toString() {
+        return content + " (" +count + ")";
+    }
 
     public int getVoteResult_id() {
         return voteResult_id;
@@ -46,5 +54,13 @@ public class VoteResultDTO {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
