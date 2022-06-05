@@ -49,16 +49,9 @@ public class MakeVoteController implements Initializable {
 
     public void addVote() {
         System.out.println(chatid);
+
         if(!voteTitle.getText().isBlank() && !_voteVarList.isEmpty()) {
-            if(!voteDAO.checkVote(chatid)) { // 투표가 없을 떄
-                voteDAO.creatVote(chatid, voteTitle.getText(), annony, overLap);
-                int vote_id = voteDAO.getVoteId(chatid);
-                    for (String content : _voteVarList) {
-                        voteDAO.createVoteVar(content, vote_id);
-                        Stage stage = (Stage) borderPane.getScene().getWindow();
-                        stage.close();
-                }
-            }else{ // 투표가 원래 있을 때
+            if(voteDAO.checkVote(chatid)) {
                 int vote_id = voteDAO.getVoteId(chatid);
                 if (voteDAO.AllReadVote(chatid, vote_id)) {
                     voteDAO.deleteVote(vote_id);
@@ -85,6 +78,16 @@ public class MakeVoteController implements Initializable {
                             stage.close();
                         }
                     }
+                }
+
+            }else{ // 투표가 원래 있을 때
+
+                voteDAO.creatVote(chatid, voteTitle.getText(), annony, overLap);
+                int vote_id = voteDAO.getVoteId(chatid);
+                for (String content : _voteVarList) {
+                    voteDAO.createVoteVar(content, vote_id);
+                    Stage stage = (Stage) borderPane.getScene().getWindow();
+                    stage.close();
                 }
 
             }
