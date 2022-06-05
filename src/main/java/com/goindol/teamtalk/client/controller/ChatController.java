@@ -2,8 +2,8 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.chatLogDAO;
-import com.goindol.teamtalk.client.service.chatRoomListDAO;
+import com.goindol.teamtalk.client.service.ChatLogDAO;
+import com.goindol.teamtalk.client.service.ChatRoomListDAO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -36,8 +38,8 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.2";
 
     int port = 9500;
-    chatRoomListDAO chatRoomListDAO = com.goindol.teamtalk.client.service.chatRoomListDAO.getInstance();
-    chatLogDAO chatLogDAO = com.goindol.teamtalk.client.service.chatLogDAO.getInstance();
+    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     public MainController mainController;
     @FXML private BorderPane chatRoomContainer;
@@ -48,12 +50,13 @@ public class ChatController implements Initializable {
     @FXML private Button voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
-    @FXML private Button sendButton;
-    @FXML private Button chatRoomInfo;
-    @FXML private Button goBackButton;
+    @FXML private ImageView sendButton;
+    @FXML private ImageView chatRoomInfo;
+    @FXML private ImageView goBackButton;
 
     public int chatid;
     public UserDTO userDTO;
+    DropShadow dropShadow = new DropShadow();
 
     public void startClient(String IP, int port) {
 

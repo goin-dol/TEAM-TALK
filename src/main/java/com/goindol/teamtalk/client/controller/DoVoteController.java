@@ -102,7 +102,6 @@ public class DoVoteController implements Initializable {
     private class RadioListCell extends ListCell<VoteVarDTO> {
         @Override
         public void updateItem(VoteVarDTO obj, boolean empty) {
-            setStyle("-fx-border-style: hidden hidden hidden hidden");
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);

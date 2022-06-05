@@ -6,14 +6,13 @@ import com.goindol.teamtalk.client.DB.DBDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class chatLogDAO {
-    private static chatLogDAO instance = null;
+public class ChatLogDAO {
+    private static ChatLogDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -21,11 +20,11 @@ public class chatLogDAO {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
-    private chatLogDAO() {}
+    private ChatLogDAO() {}
 
-    public static chatLogDAO getInstance() {
+    public static ChatLogDAO getInstance() {
         if(instance == null)
-            instance = new chatLogDAO();
+            instance = new ChatLogDAO();
         return instance;
     }
 

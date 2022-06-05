@@ -7,8 +7,8 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class userDAO {
-    private static userDAO instance = null;
+public class UserDAO {
+    private static UserDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -17,9 +17,9 @@ public class userDAO {
     private ResultSet rs = null;
 
     //싱글톤 패턴(객체를 단 1개만 생성)
-    public static userDAO getInstance() {
+    public static UserDAO getInstance() {
         if(instance == null)
-            instance = new userDAO();
+            instance = new UserDAO();
         return instance;
     }
 

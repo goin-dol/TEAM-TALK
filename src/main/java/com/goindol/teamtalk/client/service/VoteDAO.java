@@ -77,13 +77,13 @@ public class VoteDAO {
 
 
 
-            }catch(Exception e){
-                e.printStackTrace();
-            } finally{
-                //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-                //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            }
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
+    }
 
     //투표를 생성할 때 먼저 Vote 테이블에 투표를 만들고 Vote_Var에 투표 리스트들을 다 넣어주기 위해서 Vote테이블에서
     // Vote_id를 가져오는 메소드
@@ -170,11 +170,11 @@ public class VoteDAO {
 
 
     //채팅방에서 해당 채팅 인원이 투표방에서 투표를 선택
-     public void choiceVote(int vote_id, String content,String nickName){
+    public void choiceVote(int vote_id, String content,String nickName){
         String query =
                 "INSERT INTO `DB_ppick`.`voteResult` (vote_id,content,nickName) values (?,?,?)";
-         String over =
-                 "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
+        String over =
+                "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
         try{
 
             conn = DB.getConnection();
@@ -195,10 +195,10 @@ public class VoteDAO {
 
                 }
                 else {*/
-                    //중복 투표가 아닐때 투표 했는지 안했는지 체킹
+                //중복 투표가 아닐때 투표 했는지 안했는지 체킹
 //                if(!checkOverlapVoteVar(vote_id,voteVar_id,nickName) && !checkOverlapVoteVar1(vote_id,nickName)) pstmt.executeUpdate();
 //                else System.out.println("이미 투표 했습니다 경고문");
-                    pstmt.executeUpdate();
+                pstmt.executeUpdate();
                 //}
             }
 
@@ -418,7 +418,15 @@ public class VoteDAO {
 
         ArrayList<VoteResultDTO> arr = null;
         String query =
-                "SELECT count(content) as count, content, nickName FROM `DB_ppick`.`voteResult` where vote_id=? group by content";
+                "select " +
+                        " p.content, " +
+                        " count(q.content) as count " +
+                        " from `DB_ppick`.`voteVar` as p " +
+                        " left join " +
+                        " `DB_ppick`.`voteResult` as q " +
+                        " on p.content = q.content " +
+                        " where p.vote_id = ? " +
+                        " group by p.content ";
 
         try{
             conn = DB.getConnection();

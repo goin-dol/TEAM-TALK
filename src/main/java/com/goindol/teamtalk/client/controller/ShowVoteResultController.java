@@ -44,14 +44,12 @@ public class ShowVoteResultController implements Initializable {
             names.add(voteResult);
         }
 
-
         voteResultList.setItems(names);
         //voteDAO.checkAnnony(voteId);  <-- 이용해서 익명 여부 확인 후 닉네임 안띄워주기
-        //voteResultList.setCellFactory(param -> new listCell());
+        voteResultList.setCellFactory(param -> new listCell());
 
         //투표결과닉네임
 //        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
-
     }
 
     @Override
@@ -68,11 +66,11 @@ public class ShowVoteResultController implements Initializable {
         this.userDTO = userDTO;
     }
 
-    private class listCell extends ListCell<VoteVarDTO> {
+    private class listCell extends ListCell<VoteResultDTO> {
         HBox hbox = new HBox();
         Label label = new Label("(empty)");
         Pane pane = new Pane();
-        Button button = new Button("(>)");
+        Button button = new Button("투표자 현황");
         String lastItem;
 
         public listCell() {
@@ -88,7 +86,7 @@ public class ShowVoteResultController implements Initializable {
         }
 
         @Override
-        public void updateItem(VoteVarDTO obj, boolean empty) {
+        public void updateItem(VoteResultDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 lastItem = null;

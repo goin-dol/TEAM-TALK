@@ -5,11 +5,10 @@ import com.goindol.teamtalk.client.DB.DBDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class chatRoomUserListDAO {
-    private static chatRoomUserListDAO instance = null;
+public class ChatRoomUserListDAO {
+    private static ChatRoomUserListDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -17,11 +16,11 @@ public class chatRoomUserListDAO {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
-    private chatRoomUserListDAO() {}
+    private ChatRoomUserListDAO() {}
 
-    public static chatRoomUserListDAO getInstance() {
+    public static ChatRoomUserListDAO getInstance() {
         if(instance == null)
-            instance = new chatRoomUserListDAO();
+            instance = new ChatRoomUserListDAO();
         return instance;
     }
 

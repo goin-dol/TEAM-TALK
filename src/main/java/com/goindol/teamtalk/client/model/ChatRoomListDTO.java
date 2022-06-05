@@ -13,6 +13,7 @@ public class ChatRoomListDTO {
         this.chatRoom_id = chatRoom_id;
         this.chatRoomName = chatRoomName;
     }
+    
     public int getChatRoom_id() {
         return chatRoom_id;
     }

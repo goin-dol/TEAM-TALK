@@ -7,12 +7,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="pane2" stylesheets="@../css/Global.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MakeChatRoomController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="pane" stylesheets="@../css/MakeChatRoomView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MakeChatRoomController">
    <children>
-      <Pane fx:id="pane" layoutY="20.0" prefHeight="26.0" prefWidth="400.0" styleClass="pane2">
+      <Pane fx:id="pane" layoutY="20.0" prefHeight="26.0" prefWidth="400.0" styleClass="pane">
          <children>
             <Label layoutX="150.0" layoutY="10.0" text="채팅방 제목 입력" />
-            <ImageView fx:id="goBackButton" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="goBackButton" styleClass="image-view" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goToBack" pickOnBounds="true" preserveRatio="true">
                <Image url="@../images/goToBack.png" />
             </ImageView>
          </children>

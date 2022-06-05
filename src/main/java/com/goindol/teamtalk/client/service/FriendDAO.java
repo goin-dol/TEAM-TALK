@@ -6,13 +6,10 @@ import com.goindol.teamtalk.client.DB.DBDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class friendDAO {
+public class FriendDAO {
 
-    private static friendDAO instance = null;
+    private static FriendDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -20,9 +17,9 @@ public class friendDAO {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
-    public static friendDAO getInstance(){
+    public static FriendDAO getInstance(){
         if(instance==null)
-            instance = new friendDAO();
+            instance = new FriendDAO();
         return instance;
     }
 

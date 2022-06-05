@@ -2,9 +2,8 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.userDAO;
+import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,8 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -32,11 +29,10 @@ public class LoginController implements Initializable {
     @FXML public PasswordField Password;
     @FXML public Button loginButton;
     @FXML public Button signupButton;
-    DropShadow dropShadow = new DropShadow();
 
     Socket socket;
     public UserDTO userDTO;
-    public userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+    public UserDAO userDAO = UserDAO.getInstance();
 
     public void showScene() throws IOException {
         Platform.runLater(() -> {
@@ -105,30 +101,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        signupButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                signupButton.setEffect(dropShadow);
-            }
-        });
-        signupButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                signupButton.setEffect(null);
-            }
-        });
 
-        loginButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                loginButton.setEffect(dropShadow);
-            }
-        });
-        loginButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                loginButton.setEffect(null);
-            }
-        });
     }
 }
