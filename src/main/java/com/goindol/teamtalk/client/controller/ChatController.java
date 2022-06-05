@@ -35,7 +35,7 @@ public class ChatController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-    //String IP = "192.168.219.106";
+    String IP = "192.168.0.2";
 
     int port = 9500;
     ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
@@ -50,9 +50,9 @@ public class ChatController implements Initializable {
     @FXML private Button voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
-    @FXML private ImageView sendButton;
-    @FXML private ImageView chatRoomInfo;
-    @FXML private ImageView goBackButton;
+    @FXML private Button sendButton;
+    @FXML private Button chatRoomInfo;
+    @FXML private Button goBackButton;
 
     public int chatid;
     public UserDTO userDTO;

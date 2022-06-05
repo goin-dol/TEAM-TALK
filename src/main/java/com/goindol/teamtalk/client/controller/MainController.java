@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class MainController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-
+    String IP = "192.168.0.16";
     int port = 9600;
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
@@ -304,14 +303,7 @@ public class MainController implements Initializable {
             }
         });
 
-        try {
-            InetAddress ia = InetAddress.getLocalHost();
-            String ip_str = ia.toString();
-            String IP = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
+        startClient(IP, port);
     }
     private class colorListCell extends ListCell<FriendDTO> {
         @Override

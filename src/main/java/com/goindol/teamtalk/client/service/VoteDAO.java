@@ -418,7 +418,15 @@ public class VoteDAO {
 
         ArrayList<VoteResultDTO> arr = null;
         String query =
-                "SELECT count(content) as count, content, nickName FROM `DB_ppick`.`voteResult` where vote_id=? group by content";
+                "select " +
+                        " p.content, " +
+                        " count(q.content) as count " +
+                        " from `DB_ppick`.`voteVar` as p " +
+                        " left join " +
+                        " `DB_ppick`.`voteResult` as q " +
+                        " on p.content = q.content " +
+                        " where p.vote_id = ? " +
+                        " group by p.content ";
 
         try{
             conn = DB.getConnection();
