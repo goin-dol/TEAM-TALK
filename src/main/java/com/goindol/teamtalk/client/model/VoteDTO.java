@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.model;
 
 
-public class voteDTO {
+public class VoteDTO {
 
     int vote_id;
     private int chatRoom_id;

@@ -2,7 +2,6 @@ package com.goindol.teamtalk.server;
 
 
 
-import com.mysql.cj.xdevapi.Client;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -20,12 +19,12 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainServer extends Application {
+public class ChatServer extends Application {
     public static ExecutorService threadPool;
     ServerSocket serverSocket;
     Socket socket;
 
-    public static Map<String, MainClient> clients = new HashMap<String, MainClient>();
+    public static Map<String, ChatClient> clients = new HashMap<String, ChatClient>();
 
     public void startServer(int port) {
         try {
@@ -43,12 +42,10 @@ public class MainServer extends Application {
             public void run() {
                 while(true) {
                     try {
-                        System.out.println("MAINSERVER START");
                         Socket socket = serverSocket.accept();
-                        System.out.println("Connect Complete");
-                        MainClient client = new MainClient(socket);
+                        ChatClient client = new ChatClient(socket);
                         client.receiveData();
-                        MainServer.clients.put(client.key, client);
+                        ChatServer.clients.put(client.key, client);
                         System.out.println("accept Client : " + socket.getRemoteSocketAddress() + " - " + Thread.currentThread().getName());
                     } catch (Exception e) {
                         if(!serverSocket.isClosed()) {
@@ -68,7 +65,7 @@ public class MainServer extends Application {
         try {
             Iterator it = clients.entrySet().iterator();
             while(it.hasNext()) {
-                Map.Entry<Integer, MainClient> entry = (Map.Entry)it.next();
+                Map.Entry<Integer, ChatClient> entry = (Map.Entry)it.next();
                 entry.getValue().socket.close();
                 it.remove();
             }
@@ -97,7 +94,7 @@ public class MainServer extends Application {
         BorderPane.setMargin(toggleButton, new Insets(1, 0, 0, 0));
         root.setBottom(toggleButton);
 
-        int port = 9600;
+        int port = 9500;
 
         toggleButton.setOnAction(event-> {
             if(toggleButton.getText().equals("시작하기")) {
@@ -117,7 +114,7 @@ public class MainServer extends Application {
             }
         });
         Scene scene = new Scene(root, 200, 200);
-        primaryStage.setTitle("MainServer Controller");
+        primaryStage.setTitle("ChatServer Controller");
         primaryStage.setOnCloseRequest(event -> stopServer());
         primaryStage.setScene(scene);
         primaryStage.show();

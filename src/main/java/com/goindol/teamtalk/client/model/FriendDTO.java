@@ -1,12 +1,19 @@
 package com.goindol.teamtalk.client.model;
 
-public class friendDTO {
+public class FriendDTO {
 
     private int f_id;
     private String nickName;
     private String friendNickName;
     private boolean friendStatus;
 
+    public FriendDTO() {
+
+    }
+
+    public FriendDTO(String friendNickName) {
+        this.friendNickName = friendNickName;
+    }
     public int getF_id() {
         return f_id;
     }
@@ -23,5 +30,10 @@ public class friendDTO {
     }
     public boolean isFriendStatus() {return friendStatus;}
     public void setFriendStatus(boolean friendStatus) {this.friendStatus = friendStatus;}
-
+    public String toString() {
+        if(friendStatus) {
+            return friendNickName + "(접속 중)";
+        }
+        return friendNickName;
+    }
 }

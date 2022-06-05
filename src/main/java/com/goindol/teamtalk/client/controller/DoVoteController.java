@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.userDTO;
-import com.goindol.teamtalk.client.model.voteVarDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteVarDTO;
 import com.goindol.teamtalk.client.service.voteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,12 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import javax.swing.border.Border;
 import java.util.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class doVoteController implements Initializable {
+public class DoVoteController implements Initializable {
 
     @FXML public BorderPane borderPane;
     @FXML public ListView voteList;
@@ -28,9 +27,7 @@ public class doVoteController implements Initializable {
     private voteDAO voteDAO;
 
     public int chatid;
-    public userDTO userDTO;
-
-
+    public UserDTO userDTO;
 
     public void saveVoteResult() {
         String temp = group.getSelectedToggle().toString();
@@ -47,10 +44,10 @@ public class doVoteController implements Initializable {
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         ObservableList names = FXCollections.observableArrayList();
-        List<voteVarDTO> voteVarDTOList = new ArrayList<>();
-        voteVarDTOList.add(new voteVarDTO(1,"에그드랍"));
-        voteVarDTOList.add(new voteVarDTO(1,"한솥"));
-        voteVarDTOList.add(new voteVarDTO(1,"남경"));
+        List<VoteVarDTO> voteVarDTOList = new ArrayList<>();
+        voteVarDTOList.add(new VoteVarDTO(1,"에그드랍"));
+        voteVarDTOList.add(new VoteVarDTO(1,"한솥"));
+        voteVarDTOList.add(new VoteVarDTO(1,"남경"));
         names.addAll(voteVarDTOList);
 
 
@@ -72,17 +69,18 @@ public class doVoteController implements Initializable {
         });
     }
 
-    public void getChatRoomId(int chatid) {
+    public void setChatRoomId(int chatid) {
         this.chatid = chatid;
     }
 
-    public void setuserDTO(userDTO userDTO) {
+    public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 
-    private class RadioListCell extends ListCell<voteVarDTO> {
+    private class RadioListCell extends ListCell<VoteVarDTO> {
         @Override
-        public void updateItem(voteVarDTO obj, boolean empty) {
+        public void updateItem(VoteVarDTO obj, boolean empty) {
+            setStyle("-fx-border-style: hidden hidden hidden hidden");
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);

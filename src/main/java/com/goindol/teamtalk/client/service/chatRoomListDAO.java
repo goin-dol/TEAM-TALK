@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.chatRoomListDTO;
+import com.goindol.teamtalk.client.model.ChatRoomListDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ public class chatRoomListDAO {
         String query =
                 "INSERT INTO `DB_ppick`.`chatRoomList` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -38,9 +38,8 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
     }
 
@@ -50,7 +49,7 @@ public class chatRoomListDAO {
                 "`chatRoomList`.`chatRoom_id`" +
                 "FROM `DB_ppick`.`chatRoomList` WHERE chatRoomName = ? and nickName = ?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -60,9 +59,8 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return cnt;
     }
@@ -87,7 +85,7 @@ public class chatRoomListDAO {
                         ")";
         try {
 
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(check_query);
             pstmt.setString(1, nickName);
             pstmt.setInt(2, chatRoom_id);
@@ -104,9 +102,8 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return 1;
     }
@@ -127,7 +124,7 @@ public class chatRoomListDAO {
                         "?" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, chatRoomName);
             pstmt.setString(2, nickName);
@@ -137,14 +134,30 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
     }
 
-    public ArrayList<chatRoomListDTO> getChatRoomName(String nickName) {
-        ArrayList<chatRoomListDTO> roomName = null;
+    public String getCurrentChatRoomName(int chatRoomId) {
+        String query = "SELECT chatRoomName FROM DB_ppick.chatRoomList WHERE chatRoom_id = ?";
+        String title = null;
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoomId);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                title = rs.getString("chatRoomName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return title;
+    }
+
+    public ArrayList<ChatRoomListDTO> getChatRoomName(String nickName) {
+        ArrayList<ChatRoomListDTO> roomName = null;
         String query =
                 "select " +
                         "chatRoom_id, " +
@@ -156,14 +169,14 @@ public class chatRoomListDAO {
                         "    where nickName = ?" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                roomName = new ArrayList<chatRoomListDTO>();
+                roomName = new ArrayList<ChatRoomListDTO>();
                 do{
-                    chatRoomListDTO chatRoomListDTO = new chatRoomListDTO();
+                    ChatRoomListDTO chatRoomListDTO = new ChatRoomListDTO();
                     chatRoomListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
                     chatRoomListDTO.setChatRoomName(rs.getString("chatRoomName"));
 
@@ -173,16 +186,11 @@ public class chatRoomListDAO {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return roomName;
     }
-
-
-    //EntryChatRoom(int chatRoom_id) ChatLog 엔티티 불러와서 출력
-
 
 
 }

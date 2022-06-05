@@ -9,9 +9,10 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<BorderPane fx:id="noticeCheckContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.showNoticeController">
+<?import javafx.scene.control.TextArea?>
+<BorderPane fx:id="noticeCheckContainer" stylesheets="@../css/Global.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.ShowNoticeController">
    <top>
-      <Pane prefHeight="40.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="40.0" prefWidth="400.0" BorderPane.alignment="CENTER" styleClass="pane">
          <children>
             <Label fx:id="noticeTitle" layoutX="174.0" layoutY="12.0" text="공지제목" />
          </children>
@@ -20,12 +21,8 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="292.0" prefWidth="400.0">
-               <content>
-                  <TextFlow fx:id="noticeContent" prefHeight="290.0" prefWidth="382.0" />
-               </content>
-            </ScrollPane>
-            <Pane prefHeight="28.0" prefWidth="400.0">
+                  <TextArea fx:id="noticeContent" prefHeight="290.0" prefWidth="382.0" />
+            <Pane prefHeight="28.0" prefWidth="400.0" styleClass="pane">
                <children>
                   <Label layoutX="158.0" layoutY="6.0" text="읽은 사람 목록" />
                </children>

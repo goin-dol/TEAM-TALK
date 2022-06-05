@@ -1,47 +1,74 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.userDTO;
+import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.userDAO;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController{
+public class LoginController implements Initializable {
 
     @FXML public Pane pane;
     @FXML public TextField Id;
-    @FXML public TextField Password;
+    @FXML public PasswordField Password;
+    @FXML public Button loginButton;
+    @FXML public Button signupButton;
+    DropShadow dropShadow = new DropShadow();
 
-    public userDTO userDTO;
-    public userDAO userDAO;
+    Socket socket;
+    public UserDTO userDTO;
+    public userDAO userDAO = com.goindol.teamtalk.client.service.userDAO.getInstance();
+
+    public void showScene() throws IOException {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) Id.getScene().getWindow();
+            stage.setResizable(false);
+            stage.setWidth(400);
+            stage.setHeight(600);
+            stage.setOnCloseRequest((WindowEvent e) -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            stage.setScene(this.Id.getScene());
+        });
+    }
 
     public void loginButtonAction() {
         String id = Id.getText();
         String password = Password.getText();
-        boolean isLoginSuccess = true;
 
         //TODO : 디비랑 아이디 비번 비교
 
-        if (isLoginSuccess) {
+        if (userDAO.login(id, password)) {
             try {
-//                this.userDTO = userDAO.getUser(id, password);
+                ;
+                this.userDTO = userDAO.getUser(id, password);
 
                 Stage stage = (Stage) Id.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
                 MainController main = loader.getController();
-                main.setuserDTO(userDTO);
+                main.setUserDTO(userDTO);
                 main.showChatRoomList();
-
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
                 stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -75,4 +102,32 @@ public class LoginController{
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        signupButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                signupButton.setEffect(dropShadow);
+            }
+        });
+        signupButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                signupButton.setEffect(null);
+            }
+        });
+
+        loginButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                loginButton.setEffect(dropShadow);
+            }
+        });
+        loginButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                loginButton.setEffect(null);
+            }
+        });
+    }
 }

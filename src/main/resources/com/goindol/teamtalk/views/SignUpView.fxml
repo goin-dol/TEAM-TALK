@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.SignupController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" styleClass="pane2" stylesheets="@../css/Login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.SignupController">
     <children>
-        <Button layoutX="182.0" layoutY="448.0" mnemonicParsing="false" text="회원가입" onAction="#registerUserAction"/>
+        <Button layoutX="182.0" layoutY="448.0" mnemonicParsing="false" onAction="#registerUserAction" text="회원가입" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="300.0" text="TEAM -TALK" textAlignment="CENTER" textFill="OLIVEDRAB">
             <font>
                 <Font size="35.0" />
             </font>
         </Label>
-        <Label layoutX="97.0" layoutY="365.0" text="ID" />
-        <TextField fx:id="Id" layoutX="139.0" layoutY="361.0" />
-        <Label layoutX="94.0" layoutY="403.0" text="PW" />
-        <TextField fx:id="Password" layoutX="139.0" layoutY="399.0" />
-        <Label layoutX="74.0" layoutY="329.0" text="NickName" />
-        <TextField fx:id="Nickname" layoutX="139.0" layoutY="325.0" />
+        <TextField fx:id="Id" layoutX="139.0" layoutY="361.0" promptText="Id"/>
+        <TextField fx:id="Password" layoutX="139.0" layoutY="399.0" promptText="Password"/>
+        <TextField fx:id="Nickname" layoutX="139.0" layoutY="325.0" promptText="Nickname"/>
     </children>
 </Pane>
