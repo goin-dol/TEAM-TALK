@@ -6,6 +6,7 @@ import com.goindol.teamtalk.client.model.NoticeDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NoticeDAO {
@@ -65,9 +66,10 @@ public class NoticeDAO {
 
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -90,9 +92,10 @@ public class NoticeDAO {
             pstmt.executeUpdate();
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
 
     }
@@ -116,9 +119,10 @@ public class NoticeDAO {
             }
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return false;
     }
@@ -146,9 +150,10 @@ public class NoticeDAO {
         catch(Exception e) {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
 
         return noticeDTO;
@@ -170,9 +175,10 @@ public class NoticeDAO {
         }catch(Exception e) {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
 
         return false;
@@ -215,9 +221,10 @@ public class NoticeDAO {
         }catch(Exception e) {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
 
         return noticeDTO;
@@ -256,9 +263,10 @@ public class NoticeDAO {
         } catch(Exception e) {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
     //공지 읽은 사람 리스트
@@ -282,9 +290,10 @@ public class NoticeDAO {
         }catch(Exception e) {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return chatPeople;
     }
@@ -323,8 +332,9 @@ public class NoticeDAO {
             //시스템이 오류 메시지 출력
             e.printStackTrace();
         } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return false;
     }

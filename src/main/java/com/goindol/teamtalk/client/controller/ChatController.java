@@ -50,9 +50,9 @@ public class ChatController implements Initializable {
     @FXML private Button voteMake;
     @FXML private TextArea chat;
     @FXML private TextField userInput;
-    @FXML private Button sendButton;
-    @FXML private Button chatRoomInfo;
-    @FXML private Button goBackButton;
+    @FXML private ImageView sendButton;
+    @FXML private ImageView chatRoomInfo;
+    @FXML private ImageView goBackButton;
 
     public int chatid;
     public UserDTO userDTO;
