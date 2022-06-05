@@ -2,11 +2,11 @@ package com.goindol.teamtalk.client;
 
 import com.goindol.teamtalk.client.service.noticeDAO;
 import com.goindol.teamtalk.client.service.userDAO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 
 public class Test {
     public static void main(String[] args) {
-        voteDAO voteDAO = new voteDAO();
+        VoteDAO voteDAO = new VoteDAO();
         userDAO userDAO = new userDAO();
         noticeDAO noticeDAO = new noticeDAO();
 //        noticeDAO.createNotice("김대현",1,"공지","이것은 공지입니다.");

@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class voteDAO {
+public class VoteDAO {
 
-    private static voteDAO instance = null;
+    private static VoteDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -23,9 +23,9 @@ public class voteDAO {
 
     private ResultSet rs = null;
 
-    public static voteDAO getInstance(){
+    public static VoteDAO getInstance(){
         if(instance==null){
-            instance = new voteDAO();
+            instance = new VoteDAO();
         }
         return instance;
     }
@@ -255,7 +255,6 @@ public class voteDAO {
                 "SELECT" +
                         "`voteResult`.`voteResult_id`," +
                         "`voteResult`.`vote_id`," +
-                        "`voteResult`.`voteVar_id`," +
                         "`voteResult`.`content`," +
                         "`voteResult`.`nickName`" +
                         "FROM `DB_ppick`.`voteResult` WHERE vote_id = ? and nickName = ?";
@@ -279,8 +278,7 @@ public class voteDAO {
         String select =
                 "SELECT" +
                         "`voteResult`.`voteResult_id`," +
-                        "`voteResult`.`vote_id`," +
-                        "`voteResult`.`voteVar_id`," +
+                        "`voteResult`.`vote_id`" +
                         "`voteResult`.`content`," +
                         "`voteResult`.`nickName`" +
                         "FROM `DB_ppick`.`voteResult` WHERE vote_id = ? and nickName = ?";
@@ -390,6 +388,31 @@ public class voteDAO {
         }
     }
 
+    //각 투표 리스트 별로 투표한 사람들 리스트
+    public List<String> showResultByContent(int vote_id,String content){
+
+        List<String> result = null;
+
+        String query =
+                "SELECT * FROM `DB_ppick`.`voteResult` WHERE vote_id=? and content=?";
+
+        try{
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,vote_id);
+            pstmt.setString(2,content);
+            rs=pstmt.executeQuery();
+
+            while (rs.next()){
+                String nickName = rs.getString("nickName");
+                result.add(nickName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     //투표한 투표 리스트 보여주기
     public List<VoteResultDTO> ShowVoteList(int vote_id){
 
@@ -422,6 +445,8 @@ public class voteDAO {
         }
         return arr;
     }
+
+
 
     //중복 투표 체크
 

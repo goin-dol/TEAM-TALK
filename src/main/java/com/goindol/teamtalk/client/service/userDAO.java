@@ -66,8 +66,7 @@ public class userDAO {
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
                         "`user`.`nickName`," +
-                        "`user`.`status`," +
-                        "`user`.`ip`" +
+                        "`user`.`status`" +
                         "FROM `DB_ppick`.`user` WHERE userId = ? OR userPassword = ? OR nickName = ?";
         try {
             conn = DBDAO.getConnection();
@@ -95,8 +94,7 @@ public class userDAO {
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
                         "`user`.`nickName`," +
-                        "`user`.`status`," +
-                        "`user`.`ip`" +
+                        "`user`.`status`" +
                         "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
         try {
             conn = DBDAO.getConnection();
@@ -126,8 +124,7 @@ public class userDAO {
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
                         "`user`.`nickName`," +
-                        "`user`.`status`," +
-                        "`user`.`ip`" +
+                        "`user`.`status`" +
                         "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
         String update =
                 "UPDATE `DB_ppick`.`user`" +
@@ -188,7 +185,6 @@ public class userDAO {
                 userDTO.setUserPassword(rs.getString("userPassword"));
                 userDTO.setNickName(rs.getString("nickName"));
                 userDTO.setStatus(rs.getBoolean("status"));
-                userDTO.setIp(rs.getString("ip"));
 
             }
         } catch(Exception e) {
@@ -214,7 +210,6 @@ public class userDAO {
                     userDTO.setUserPassword(rs.getString("userPassword"));
                     userDTO.setStatus(rs.getBoolean("status"));
                     userDTO.setNickName(rs.getString("nickname"));
-                    userDTO.setIp(rs.getString("ip"));
                 }while(rs.next());
                 users.add(userDTO);
             }

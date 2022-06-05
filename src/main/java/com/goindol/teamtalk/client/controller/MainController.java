@@ -303,14 +303,7 @@ public class MainController implements Initializable {
             }
         });
 
-        try {
-            InetAddress ia = InetAddress.getLocalHost();
-            String ip_str = ia.toString();
-            String IP = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
+        startClient("192.168.0.16", port);
     }
     private class colorListCell extends ListCell<String> {
         @Override

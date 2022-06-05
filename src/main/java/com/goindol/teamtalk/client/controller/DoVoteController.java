@@ -2,11 +2,9 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -28,7 +26,7 @@ public class DoVoteController implements Initializable {
     @FXML public ListView voteList;
     @FXML public Button voteButton;
     private ToggleGroup group = new ToggleGroup();
-    public voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    public VoteDAO voteDAO = VoteDAO.getInstance();
 
     public int chatid;
     public int voteId;
