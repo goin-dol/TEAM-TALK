@@ -94,6 +94,7 @@ public class FriendDAO {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, friendNickName);
             pstmt.setString(2, nickName);
+
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 friendDTO = new FriendDTO();
