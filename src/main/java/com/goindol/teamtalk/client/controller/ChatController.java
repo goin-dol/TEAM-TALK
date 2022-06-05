@@ -178,7 +178,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 Optional<ButtonType> result;
                 if (noticeDAO.checkNotice(chatid)) {
-                    if (noticeDAO.AllReadNotice(chatid)) {
+                    if (!noticeDAO.AllReadNotice(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("공지 에러");
@@ -206,6 +206,28 @@ public class ChatController implements Initializable {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                        }
+                    } else {
+                        try {
+                            Stage stage = new Stage();
+                            Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(HelloApplication.class.getResource("views/MakeNoticeView.fxml"));
+                            Parent root = (Parent) loader.load();
+                            MakeNoticeController makeNoticeController = (MakeNoticeController) loader.getController();
+                            makeNoticeController.setChatRoomId(chatid);
+                            makeNoticeController.setUserDTO(userDTO);
+                            makeNoticeController.setMainController(mainController);
+                            stage.setScene(new Scene(root, 400, 600));
+                            stage.setTitle("Team Talk");
+                            stage.setOnCloseRequest(event -> stage.close());
+                            stage.setX(curStage.getX()+400);
+                            stage.setY(curStage.getY());
+                            stage.setResizable(false);
+                            stage.show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 } else {
@@ -349,6 +371,28 @@ public class ChatController implements Initializable {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                        }
+                    } else {
+                        try {
+                            Stage stage = new Stage();
+                            Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(HelloApplication.class.getResource("views/MakeVoteView.fxml"));
+                            Parent root = (Parent) loader.load();
+                            MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
+                            makeVoteController.setChatRoomId(chatid);
+                            makeVoteController.setUserDTO(userDTO);
+                            makeVoteController.setMainController(mainController);
+                            stage.setScene(new Scene(root, 400, 600));
+                            stage.setTitle("Team Talk");
+                            stage.setX(curStage.getX() + 400);
+                            stage.setY(curStage.getY());
+                            stage.setOnCloseRequest(event -> stage.close());
+                            stage.setResizable(false);
+                            stage.show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
