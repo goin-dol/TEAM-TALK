@@ -328,6 +328,7 @@ public class MainController implements Initializable {
             }
         }
     }
+
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }

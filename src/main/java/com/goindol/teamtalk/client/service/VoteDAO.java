@@ -44,7 +44,11 @@ public class VoteDAO {
         String query =
                 "INSERT INTO `DB_ppick`.`vote` (chatRoom_id,title,isAnonymous,isOverLap) VALUES "+
                         "(?,?,?,?)";
-
+        String init =
+                "UPDATE `DB_ppick`.`chatRoomUserList`" +
+                        "SET" +
+                        "`isVoted` = 1 " +
+                        "WHERE `chatRoom_id` = ? ";
         try{
             conn = DB.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -52,6 +56,10 @@ public class VoteDAO {
             pstmt.setString(2,title);
             pstmt.setBoolean(3,isAnonymous);
             pstmt.setBoolean(4, isOverLap);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(init);
+            pstmt.setInt(1, chatRoom_id);
             pstmt.executeUpdate();
 
         } catch(Exception e) {
@@ -178,9 +186,13 @@ public class VoteDAO {
 
 
     //채팅방에서 해당 채팅 인원이 투표방에서 투표를 선택
-    public void choiceVote(int vote_id, String content,String nickName){
+    public void choiceVote(int vote_id, int chatRoom_id, String content,String nickName){
         String query =
                 "INSERT INTO `DB_ppick`.`voteResult` (vote_id,content,nickName) values (?,?,?)";
+        String update =
+                "UPDATE `DB_ppick`.`chatRoomUserList`" +
+                        "SET `isVoted`=2 " +
+                        "WHERE `nickName`=? and chatRoom_id=?";
         String over =
                 "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
         try{
@@ -191,6 +203,11 @@ public class VoteDAO {
             pstmt.setInt(1, vote_id);
             rs = pstmt.executeQuery();
             if(rs.next()) {
+                pstmt = conn.prepareStatement(update);
+                pstmt.setString(1, nickName);
+                pstmt.setInt(2, chatRoom_id);
+                pstmt.executeUpdate();
+
                 boolean isOverLap = rs.getBoolean("isOverLap");
                 pstmt = conn.prepareStatement(query);
                 pstmt.setInt(1,vote_id);
@@ -412,6 +429,84 @@ public class VoteDAO {
         }
     }
 
+    public boolean ALLReadVote(int chatRoom_id) {
+        String query =
+                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
+
+        String query1 =
+                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where isVoted=? and chatRoom_id=?";
+
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,chatRoom_id);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+                pstmt = conn.prepareStatement(query1);
+                pstmt.setInt(1, 2);
+                pstmt.setInt(2, chatRoom_id);
+                ResultSet rs1 = pstmt.executeQuery();
+
+                if(rs1.next()){
+                    int cnt = rs.getInt(1);
+                    int cnt1 = rs1.getInt(1);
+                    if(cnt==cnt1){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        } catch(Exception e) {
+            //시스템이 오류 메시지 출력
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+        return false;
+    }
+
+    public void deleteVote(int vote_id, int chatRoom_id){
+        String query =
+                "DELETE FROM `DB_ppick`.`vote` WHERE vote_id =?";
+        String query1 =
+                "DELETE FROM `DB_ppick`.`voteVar` WHERE vote_id =?";
+        String query2 =
+                "DELETE FROM `DB_ppick`.`voteResult` WHERE vote_id =?";
+        String update =
+                "UPDATE `DB_ppick`.`chatRoomUserList`" +
+                        "SET `isNoticeRead`= 1 " +
+                        "WHERE chatRoom_id=?";
+        try {
+            conn = DB.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(query1);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(query2);
+            pstmt.setInt(1,vote_id);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(update);
+            pstmt.setInt(1, chatRoom_id);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
+        }
+
+    }
+
     //각 투표 리스트 별로 투표한 사람들 리스트
     public List<String> showResultByContent(int vote_id,String content){
 
@@ -427,9 +522,13 @@ public class VoteDAO {
             pstmt.setString(2,content);
             rs=pstmt.executeQuery();
 
-            while (rs.next()){
-                String nickName = rs.getString("nickName");
-                result.add(nickName);
+            if (rs.next()){
+                result = new ArrayList<String>();
+                do {
+                    String nickName = rs.getString("nickName");
+                    result.add(nickName);
+                }while(rs.next());
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -468,7 +567,6 @@ public class VoteDAO {
                     VoteResultDTO voteResultDTO = new VoteResultDTO();
                     voteResultDTO.setCount(rs.getInt("count"));
                     voteResultDTO.setContent(rs.getString("content"));
-                    voteResultDTO.setNickName(rs.getString("nickName"));
                     arr.add(voteResultDTO);
                 }while(rs.next());
             }

@@ -48,6 +48,10 @@ public class ChatRoomInfoController implements Initializable {
         chatRoomUserList.setItems(chatRoomUserListItems);
     }
 
+    public void existRoom() {
+        chatRoomUserListDAO.existRoom(chatId, userDTO.getNickName());
+
+    }
 
 
     @Override
@@ -60,7 +64,9 @@ public class ChatRoomInfoController implements Initializable {
         });
 
         exitRoom.setOnMouseClicked(event-> {
+            existRoom();
             //info 창 닫고 채팅방 페이지를 메인페이지로 이동
+
         });
     }
 
