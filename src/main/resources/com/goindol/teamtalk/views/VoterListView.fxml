@@ -13,7 +13,7 @@
          <children>
             <Pane prefHeight="40.0" prefWidth="200.0" styleClass="pane">
                <children>
-                  <Label alignment="CENTER" layoutY="14.0" prefHeight="17.0" prefWidth="200.0" text="Label">
+                  <Label fx:id="voteVar" alignment="CENTER" layoutY="14.0" prefHeight="17.0" prefWidth="200.0" text="Label">
                      <font>
                         <Font size="15.0" />
                      </font></Label>

@@ -111,7 +111,6 @@ public class MainController implements Initializable {
                 }else if(message.equals("chatRoom")) {
                     showChatRoomList();
                 }else if(message.equals("notice")) {
-                    showAlert(true);
                     showChatRoomList();
 
                 }
@@ -126,7 +125,6 @@ public class MainController implements Initializable {
         Thread thread = new Thread() {
             public void run() {
                 try {
-
                     OutputStream out = socket.getOutputStream();
                     byte[] buffer = message.getBytes("UTF-8");
                     out.write(buffer);
@@ -270,28 +268,6 @@ public class MainController implements Initializable {
             stage.setResizable(false);
             stopClient();
             stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void showAlert(boolean type) {
-        try {
-            Stage alert = new Stage();
-            FXMLLoader alertLoader = new FXMLLoader();
-            alertLoader.setLocation(HelloApplication.class.getResource("views/AlertView.fxml"));
-            Parent alertRoot = (Parent) alertLoader.load();
-            AlertController alertController = (AlertController) alertLoader.getController();
-            alertController.setAlert("채팅방1",type);
-
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            double width = screenSize.getWidth();
-            double height = screenSize.getHeight();
-            alert.setScene(new Scene(alertRoot,400,85));
-            alert.setResizable(false);
-            alert.setX(width);
-            alert.setY(height);
-            alert.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
