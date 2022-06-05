@@ -6,6 +6,7 @@ import com.goindol.teamtalk.client.model.ChatRoomListDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ChatRoomListDAO {
@@ -36,9 +37,10 @@ public class ChatRoomListDAO {
             pstmt.executeUpdate();
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -57,9 +59,10 @@ public class ChatRoomListDAO {
                 cnt = rs.getInt(1);
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return cnt;
     }
@@ -110,9 +113,10 @@ public class ChatRoomListDAO {
 
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return 1;
     }
@@ -131,6 +135,10 @@ public class ChatRoomListDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return title;
     }
@@ -162,9 +170,10 @@ public class ChatRoomListDAO {
             }
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-            //if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            //if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return roomName;
     }

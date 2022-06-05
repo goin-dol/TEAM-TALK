@@ -6,6 +6,7 @@ import com.goindol.teamtalk.client.DB.DBDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,9 +56,10 @@ public class ChatLogDAO {
             pstmt.executeUpdate();
         } catch(Exception e) {
             e.printStackTrace();
-        } finally {
-           // if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-           // if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -78,9 +80,10 @@ public class ChatLogDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-           // if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-           // if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return content;
     }
