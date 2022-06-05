@@ -9,6 +9,11 @@ public class VoteDTO {
     private boolean isAnonoymous;
     private boolean isOverLap;
 
+    public VoteDTO(String title, boolean isAnonoymous, boolean isOverLap) {
+        this.title = title;
+        this.isAnonoymous = isAnonoymous;
+        this.isOverLap = isOverLap;
+    }
 
     public int getVote_id() {
         return vote_id;

@@ -50,10 +50,18 @@ public class ChatRoomInfoController implements Initializable {
             alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
             alert.show();
         }else {
-            chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
-            ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
-            chatRoomUserListItems.add(userInput.getText());
-            chatRoomUserList.setItems(chatRoomUserListItems);
+            if(chatRoomListDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
+                chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
+                ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
+                chatRoomUserListItems.add(userInput.getText());
+                chatRoomUserList.setItems(chatRoomUserListItems);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("친구 오류");
+                alert.setContentText("친구 목록에 존재하지 않습니다.");
+                alert.show();
+            }
         }
     }
 
