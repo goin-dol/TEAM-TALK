@@ -72,7 +72,6 @@ public class ChatController implements Initializable {
                         stopClient();
                         System.out.println("Server Failed");
                     }
-
                 }
             }
         };
