@@ -427,9 +427,13 @@ public class VoteDAO {
             pstmt.setString(2,content);
             rs=pstmt.executeQuery();
 
-            while (rs.next()){
-                String nickName = rs.getString("nickName");
-                result.add(nickName);
+            if (rs.next()){
+                result = new ArrayList<String>();
+                do {
+                    String nickName = rs.getString("nickName");
+                    result.add(nickName);
+                }while(rs.next());
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -468,7 +472,6 @@ public class VoteDAO {
                     VoteResultDTO voteResultDTO = new VoteResultDTO();
                     voteResultDTO.setCount(rs.getInt("count"));
                     voteResultDTO.setContent(rs.getString("content"));
-                    voteResultDTO.setNickName(rs.getString("nickName"));
                     arr.add(voteResultDTO);
                 }while(rs.next());
             }

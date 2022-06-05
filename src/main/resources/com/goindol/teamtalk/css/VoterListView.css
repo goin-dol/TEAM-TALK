@@ -3,6 +3,7 @@
 }
 .label{
     -fx-text-fill: #d7d6dc;
+    -fx-font-size: 14;
 }
 
 .list-view {

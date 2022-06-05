@@ -68,7 +68,10 @@ public class LoginController implements Initializable {
                 main.send("login/roomId/value");
                stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
-                stage.setOnCloseRequest(event -> {System.exit(0);});
+                stage.setOnCloseRequest(event -> {
+                    userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+                    main.send("login/roomId/value");
+                    System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
             } catch (IOException e) {

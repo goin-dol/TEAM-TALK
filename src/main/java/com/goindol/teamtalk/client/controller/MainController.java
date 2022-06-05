@@ -190,8 +190,10 @@ public class MainController implements Initializable {
             chatController.initialChat();
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
-            stage.setOnCloseRequest(event -> chatController.stopClient());
-            stage.setOnCloseRequest(event -> {System.exit(0);});
+            stage.setOnCloseRequest(event -> {
+                userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+                send("login/roomId/value");
+                System.exit(0);});
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
