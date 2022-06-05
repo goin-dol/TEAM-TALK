@@ -3,7 +3,7 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
-import com.goindol.teamtalk.client.service.voteDAO;
+import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,7 +32,7 @@ public class ShowVoteResultController implements Initializable {
 
     public int chatid;
     public int voteId;
-    public voteDAO voteDAO = com.goindol.teamtalk.client.service.voteDAO.getInstance();
+    public VoteDAO voteDAO = VoteDAO.getInstance();
     public UserDTO userDTO;
 
     public void initialVoteList() {
@@ -45,14 +44,12 @@ public class ShowVoteResultController implements Initializable {
             names.add(voteResult);
         }
 
-
         voteResultList.setItems(names);
         //voteDAO.checkAnnony(voteId);  <-- 이용해서 익명 여부 확인 후 닉네임 안띄워주기
-        //voteResultList.setCellFactory(param -> new listCell());
+        voteResultList.setCellFactory(param -> new listCell());
 
         //투표결과닉네임
 //        List<String> resultNickname = voteDAO.ShowVoteList(vote_id);
-
     }
 
     @Override
@@ -69,11 +66,11 @@ public class ShowVoteResultController implements Initializable {
         this.userDTO = userDTO;
     }
 
-    private class listCell extends ListCell<VoteVarDTO> {
+    private class listCell extends ListCell<VoteResultDTO> {
         HBox hbox = new HBox();
         Label label = new Label("(empty)");
         Pane pane = new Pane();
-        Button button = new Button("(>)");
+        Button button = new Button("투표자 현황");
         String lastItem;
 
         public listCell() {
@@ -89,7 +86,7 @@ public class ShowVoteResultController implements Initializable {
         }
 
         @Override
-        public void updateItem(VoteVarDTO obj, boolean empty) {
+        public void updateItem(VoteResultDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 lastItem = null;
