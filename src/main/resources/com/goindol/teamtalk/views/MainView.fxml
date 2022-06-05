@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="stackPane" prefWidth="400.0" styleClass="stackpane" stylesheets="@../css/mainView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MainController">
+<StackPane fx:id="stackPane" prefWidth="400.0" styleClass="stackpane" stylesheets="@../css/MainView.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.goindol.teamtalk.client.controller.MainController">
     <children>
         <TabPane fx:id="tabContainer" prefHeight="600.0" prefWidth="454.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="50" tabMaxWidth="50" tabMinHeight="50" tabMinWidth="50">
             <tabs>
@@ -21,14 +21,14 @@
                     <content>
                         <AnchorPane fx:id="chatAnchor" prefHeight="600.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
                             <VBox prefHeight="600.0" prefWidth="340.0">
-                                <Pane prefHeight="60.0" prefWidth="340.0" style="-fx-background-color: #3d4855;">
+                                <Pane prefHeight="60.0" prefWidth="340.0">
                                     <ImageView fx:id="makeChatRoomButton" styleClass="image-view"  fitHeight="40.0" fitWidth="40.0" layoutX="276.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
                                             <Image url="@../images/createChat.png" />
                                         </image>
                                     </ImageView>
                                 </Pane>
-                                 <ListView fx:id="chatRoomList" fixedCellSize="40" prefHeight="540.0" prefWidth="323.5" style="-fx-background-color: #3d4855;" />
+                                 <ListView fx:id="chatRoomList" fixedCellSize="40" prefHeight="540.0" prefWidth="323.5" />
 
                             </VBox>
                         </AnchorPane>
@@ -45,12 +45,12 @@
                     <content>
                         <AnchorPane fx:id="friendAnchor" prefHeight="600.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
                             <VBox prefHeight="600.0" prefWidth="340.0">
-                                <Pane prefHeight="60.0" prefWidth="340.0" style="-fx-background-color: #3d4855;">
-                                    <Label layoutX="14.0" layoutY="20.0" text="친구 추가" />
+                                <Pane prefHeight="60.0" prefWidth="340.0">
+                                    <Label styleClass="label2" layoutX="14.0" layoutY="20.0" text="친구 추가" />
                                     <TextField fx:id="searchFriend" layoutX="72.0" layoutY="16.0" prefHeight="22.0" prefWidth="211.0" />
                                     <Button fx:id="addFriendButton" layoutX="289.0" layoutY="16.0" mnemonicParsing="false" text="추가" />
                                 </Pane>
-                                 <ListView fx:id="friendList" fixedCellSize="40" prefHeight="540.0" prefWidth="323.5" style="-fx-background-color: #3d4855;" />
+                                 <ListView fx:id="friendList" fixedCellSize="40" prefHeight="540.0" prefWidth="323.5" />
                             </VBox>
                         </AnchorPane>
                     </content>

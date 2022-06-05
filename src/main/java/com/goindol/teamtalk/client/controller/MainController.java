@@ -148,6 +148,7 @@ public class MainController implements Initializable {
         ObservableList<FriendDTO> friendObervableList = FXCollections.observableList(strings);
         Platform.runLater(()->{
             friendList.setItems(friendObervableList);
+            friendList.setCellFactory(param -> new colorListCell());
         });
     }
 
@@ -273,13 +274,13 @@ public class MainController implements Initializable {
         });
 
 
-        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
-        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                makeChatRoomButton.setEffect(null);
-            }
-        });
+//        makeChatRoomButton.setOnMouseEntered(mouseEvent -> makeChatRoomButton.setEffect(dropShadow));
+//        makeChatRoomButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                makeChatRoomButton.setEffect(null);
+//            }
+//        });
 
 
         addFriendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -304,17 +305,21 @@ public class MainController implements Initializable {
 
         startClient(IP, port);
     }
-    private class colorListCell extends ListCell<String> {
+    private class colorListCell extends ListCell<FriendDTO> {
         @Override
-        public void updateItem(String obj, boolean empty) {
+        public void updateItem(FriendDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);
                 setGraphic(null);
             } else {
-                Label label = new Label(obj);
+                Label label = new Label(obj.getFriendNickName());
                 //#TODO 친구 온라인일시 Color.GREEN, 오프라인이면 Color.BLACK
-                label.setTextFill(Color.GREEN);
+                if(obj.isFriendStatus()){
+                    label.setTextFill(Color.valueOf("#33ff33"));
+                } else {
+                    label.setTextFill(Color.valueOf("#d7d6dc"));
+                }
                 setGraphic(label);
             }
         }

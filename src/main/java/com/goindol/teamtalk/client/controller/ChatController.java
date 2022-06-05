@@ -16,12 +16,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.List;
@@ -53,6 +56,7 @@ public class ChatController implements Initializable {
 
     public int chatid;
     public UserDTO userDTO;
+    DropShadow dropShadow = new DropShadow();
 
     public void startClient(String IP, int port) {
 
@@ -366,7 +370,14 @@ public class ChatController implements Initializable {
                 }
             }
         });
-        startClient(IP, port);
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String ip_str = ia.toString();
+            String IP = ip_str.substring(ip_str.indexOf("/") + 1);
+            startClient(IP, port);
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 

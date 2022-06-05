@@ -1,11 +1,7 @@
-.root {
+.pane {
     -fx-background-color: #3d4855;
+    -fx-border-style: hidden hidden hidden hidden;
 }
-.label {
-    -fx-text-fill: #d7d6dc;
-    -fx-font-family: sans-serif;
-}
-
 .text-field {
     -fx-background-color: #3d4855;
     -fx-text-fill: #d7d6dc;
@@ -16,9 +12,13 @@
 .button {
     -fx-background-color: #eba576;
     -fx-text-fill: black;
-    -fx-font-family: sans-serif;
     -fx-cursor: hand;
+    -fx-border-radius: 400;
+    -fx-background-radius: 15;
 }
-/*.button {*/
-/*    -fx-background-color: #505a6c;*/
-/*}*/
+.button:hover {
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.7) , 15,0,0,1 );
+}
+.label{
+    -fx-text-fill: #d7d6dc;
+}
