@@ -38,7 +38,7 @@ public class DoVoteController implements Initializable {
         if(tempList.size() >= 2) {
             if(voteDAO.checkOverlapVote(voteId)) {
                 for(String temp : tempList) {
-                    voteDAO.choiceVote(voteId, temp, userDTO.getNickName());
+                    voteDAO.choiceVote(voteId, chatid, temp, userDTO.getNickName());
                 }
             }else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -49,7 +49,7 @@ public class DoVoteController implements Initializable {
             }
         }else {
             for(String temp : tempList) {
-                voteDAO.choiceVote(voteId, temp, userDTO.getNickName());
+                voteDAO.choiceVote(voteId,chatid, temp, userDTO.getNickName());
                 Stage stage = (Stage) borderPane.getScene().getWindow();
                 stage.close();
             }

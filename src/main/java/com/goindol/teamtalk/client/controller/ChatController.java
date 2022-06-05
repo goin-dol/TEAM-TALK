@@ -419,9 +419,7 @@ public class ChatController implements Initializable {
                 }
             }
         });
-
         startClient(IP, port);
-
 
 
 

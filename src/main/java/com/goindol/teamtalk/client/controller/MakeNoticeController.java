@@ -73,9 +73,10 @@ public class MakeNoticeController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 addNotice();
-                mainController.send("notice/"+ chatid + "/" + noticeTitle.getText());
                 Stage stage = (Stage) makeNoticeContainer.getScene().getWindow();
                 stage.close();
+                mainController.send("notice/"+ chatid + "/" + noticeTitle.getText());
+
             }
         });
     }
