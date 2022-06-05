@@ -20,13 +20,14 @@ public class VoterListController implements Initializable {
 
     public VoteDAO voteDAO = VoteDAO.getInstance();
     private int voteId;
+    private String voteVarContent;
 
     public void showVoterList(){
-
+        voteVar.setText(voteVarContent);
         List<String> strings = new ArrayList<>();
-        List<VoteResultDTO> voter_List = voteDAO.ShowVoteList(voteId);
-        for(VoteResultDTO voters : voter_List) {
-            strings.add(voters.getNickName());
+        List<String> voter_List = voteDAO.showResultByContent(voteId, voteVarContent);
+        for(String voters : voter_List) {
+            strings.add(voters);
         }
         ObservableList<String> chatRoomObservableUserList = FXCollections.observableList(strings);
 
@@ -36,10 +37,11 @@ public class VoterListController implements Initializable {
     public void setVoteId(int voteId) {
         this.voteId = voteId;
     }
-
+    public void setVoteVarContent(String lastItem) { this.voteVarContent = lastItem; }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showVoterList();
+
     }
+
 }
