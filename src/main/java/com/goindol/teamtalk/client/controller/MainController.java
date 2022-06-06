@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
@@ -305,8 +306,17 @@ public class MainController implements Initializable {
                 openChatRoom();
             }
         });
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String ip_str = ia.toString();
+            String ip = ip_str.substring(ip_str.indexOf("/") + 1);
+            startClient(ip, port);
+        }catch (IOException e) {
+            e.printStackTrace();
 
-        startClient(IP, port);
+        }
+
+
     }
 
     private class chatRoomListCell extends ListCell<ChatRoomListDTO> {

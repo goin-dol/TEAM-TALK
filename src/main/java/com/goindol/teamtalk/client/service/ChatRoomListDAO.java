@@ -40,7 +40,6 @@ public class ChatRoomListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
@@ -62,7 +61,6 @@ public class ChatRoomListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return cnt;
     }
@@ -82,6 +80,9 @@ public class ChatRoomListDAO {
             if(rs.next()) check = true;
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return check;
     }
@@ -136,7 +137,6 @@ public class ChatRoomListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return 1;
     }
@@ -158,7 +158,6 @@ public class ChatRoomListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return title;
     }
@@ -195,7 +194,6 @@ public class ChatRoomListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return roomName;
     }

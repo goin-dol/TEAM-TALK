@@ -520,7 +520,15 @@ public class ChatController implements Initializable {
                 }
             }
         });
-        startClient(IP, port);
+        try {
+            InetAddress ia = InetAddress.getLocalHost();
+            String ip_str = ia.toString();
+            String ip = ip_str.substring(ip_str.indexOf("/") + 1);
+            startClient(ip, port);
+        }catch (IOException e) {
+            e.printStackTrace();
+
+        }
 
 
 
