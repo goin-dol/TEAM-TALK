@@ -43,6 +43,9 @@ public class ChatRoomUserListDAO {
 
         }catch(Exception e){
             e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return check;
     }
@@ -68,7 +71,6 @@ public class ChatRoomUserListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
         return nickName;
     }
@@ -87,7 +89,6 @@ public class ChatRoomUserListDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-            if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
     }
 
