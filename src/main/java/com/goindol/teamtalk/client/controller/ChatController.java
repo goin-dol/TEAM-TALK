@@ -507,10 +507,10 @@ public class ChatController implements Initializable {
                     chatRoomInfoController.setUserDTO(userDTO);
                     chatRoomInfoController.setMainController(mainController);
                     chatRoomInfoController.showChatRoomUserList();
-
+                    stage.initOwner(curStage);
                     stage.setScene(new Scene(root, 250, 400));
                     stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> curStage.close());
+                    stage.setOnCloseRequest(event -> stage.close());
                     stage.setResizable(false);
                     stage.setX(curStage.getX()+400);
                     stage.setY(curStage.getY());
