@@ -94,6 +94,8 @@ public class ChatRoomInfoController implements Initializable {
             try {
                 Stage curStage = (Stage) userInput.getScene().getWindow();
                 curStage.close();
+                Stage parentStage = (Stage) curStage.getOwner();
+                parentStage.close();
                 Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
