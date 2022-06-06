@@ -23,58 +23,74 @@ import java.util.ResourceBundle;
 
 public class DoVoteController implements Initializable {
 
-    @FXML public BorderPane borderPane;
-    @FXML public ListView voteList;
-    @FXML public Button voteButton;
-    @FXML public Label voteTitle;
+    @FXML
+    public BorderPane borderPane;
+    @FXML
+    public ListView voteList;
+    @FXML
+    public Button voteButton;
+    @FXML
+    public Label voteTitle;
     private ToggleGroup group = new ToggleGroup();
     public VoteDAO voteDAO = VoteDAO.getInstance();
 
     public int chatid;
     public int voteVarId;
+    public boolean isOverLab;
     List<String> tempList = new ArrayList<String>();
     public UserDTO userDTO;
     public VoteDTO voteDTO;
 
     public void saveVoteResult() {
-        if(tempList.size() >= 2) {
-            if(voteDAO.checkOverlapVote(voteDTO.getVote_id())) {
-                for(String temp : tempList) {
-                    voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
-                    Stage stage = (Stage) borderPane.getScene().getWindow();
-                    stage.close();
-                }
+//        if(tempList.size() >= 2) {
+//            if(voteDAO.checkOverlapVote(voteDTO.getVote_id())) {
+//                for(String temp : tempList) {
+//                    voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
+//                    Stage stage = (Stage) borderPane.getScene().getWindow();
+//                    stage.close();
+//                }
+//                Stage stage = (Stage) borderPane.getScene().getWindow();
+//                stage.close();
+//            }else {
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setTitle("warning");
+//                alert.setHeaderText("OverLap vote");
+//                alert.setContentText("You Only One Vote");
+//                alert.show();
+//            }
+//        }else {
+//            for(String temp : tempList) {
+//                voteDAO.choiceVote(voteDTO.getVote_id(),chatid, temp, userDTO.getNickName());
+//                Stage stage = (Stage) borderPane.getScene().getWindow();
+//                stage.close();
+//            }
+//        }
+        if (isOverLab) {
+            for (String temp : tempList) {
+                voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
                 Stage stage = (Stage) borderPane.getScene().getWindow();
                 stage.close();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("warning");
-                alert.setHeaderText("OverLap vote");
-                alert.setContentText("You Only One Vote");
-                alert.show();
             }
-        }else {
-            for(String temp : tempList) {
-                voteDAO.choiceVote(voteDTO.getVote_id(),chatid, temp, userDTO.getNickName());
-                Stage stage = (Stage) borderPane.getScene().getWindow();
-                stage.close();
-            }
+        } else {
+            String temp = group.getSelectedToggle().toString();
+            String value = temp.substring(temp.indexOf("'") + 1, temp.length() - 1);
+            voteDAO.choiceVote(voteDTO.getVote_id(), chatid, value, userDTO.getNickName());
         }
 
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.close();
 
-        //String temp = group.getSelectedToggle().toString();
-        //String value = temp.substring(temp.indexOf("'")+1, temp.length()-1);
-        //TODO temp
 
     }
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
+        isOverLab = voteDTO.isOverLap();
         voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 하기");
         ObservableList names = FXCollections.observableArrayList();
         List<VoteVarDTO> voteVarDTOList = voteDAO.ReadVoteList(voteDTO.getVote_id());
-        if(voteVarDTOList != null) {
-            for(VoteVarDTO voteVar : voteVarDTOList) {
+        if (voteVarDTOList != null) {
+            for (VoteVarDTO voteVar : voteVarDTOList) {
                 voteVarId = voteVar.getVoteVar_id();
                 names.add(voteVar);
             }
@@ -106,7 +122,9 @@ public class DoVoteController implements Initializable {
         this.userDTO = userDTO;
     }
 
-    public void setVote(VoteDTO voteDTO) { this.voteDTO = voteDTO; }
+    public void setVote(VoteDTO voteDTO) {
+        this.voteDTO = voteDTO;
+    }
 
     private class RadioListCell extends ListCell<VoteVarDTO> {
         @Override
@@ -116,24 +134,26 @@ public class DoVoteController implements Initializable {
                 setText(null);
                 setGraphic(null);
             } else {
-                CheckBox checkBox = new CheckBox(obj.getContent());
-                checkBox.setText(obj.getContent());
-                checkBox.selectedProperty().addListener(new InvalidationListener() {
-                    @Override
-                    public void invalidated(Observable observable) {
-                        if(checkBox.isSelected()) {
-                            tempList.add(obj.getContent());
-                        }else {
-                            tempList.remove(obj.getContent());
+                if (isOverLab) {
+                    CheckBox checkBox = new CheckBox(obj.getContent());
+                    checkBox.setText(obj.getContent());
+                    checkBox.selectedProperty().addListener(new InvalidationListener() {
+                        @Override
+                        public void invalidated(Observable observable) {
+                            if (checkBox.isSelected()) {
+                                tempList.add(obj.getContent());
+                            } else {
+                                tempList.remove(obj.getContent());
+                            }
+
                         }
-
-                    }
-                });
-
-                        setGraphic(checkBox);
-                //RadioButton radioButton = new RadioButton(obj.getContent());
-                //radioButton.setToggleGroup(group);
-                //setGraphic(radioButton);
+                    });
+                    setGraphic(checkBox);
+                } else {
+                    RadioButton radioButton = new RadioButton(obj.getContent());
+                    radioButton.setToggleGroup(group);
+                    setGraphic(radioButton);
+                }
             }
         }
     }
