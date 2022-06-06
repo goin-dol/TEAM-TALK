@@ -67,11 +67,28 @@ public class ChatRoomListDAO {
         return cnt;
     }
 
+    // 채팅방에 초대할 때 친구인지 확인
+    public boolean checkFriend(String nickName,String friend){
+        Boolean check=false;
+        String check_query =
+                "select * from friendInfo where nickName = ? and friendNickName=?";
+
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(check_query);
+            pstmt.setString(1,nickName);
+            pstmt.setString(2,friend);
+            rs=pstmt.executeQuery();
+            if(rs.next()) check = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
     //최초 방 생성시 자기 자신 아이디 정보 입력
     //여러명 초대시 해당 매개변수 리스트에 담아서 반복 실행
     public int inviteChatRoom(int chatRoom_id, String nickName) {
-        String check_query =
-                "select nickName from chatRoomUserList where nickName = ? and chatRoom_id = ?";
         String query =
                 "INSERT INTO `DB_ppick`.`chatRoomUserList`" +
                         "(" +
@@ -93,15 +110,6 @@ public class ChatRoomListDAO {
                 "SELECT * FROM vote WHERE chatRoom_id = ?";
         try {
 
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(check_query);
-            pstmt.setString(1, nickName);
-            pstmt.setInt(2, chatRoom_id);
-            rs = pstmt.executeQuery();
-            if(rs.next()) {
-                //이미 있는 사람
-                return 2;
-            }
             pstmt = conn.prepareStatement(notice);
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();

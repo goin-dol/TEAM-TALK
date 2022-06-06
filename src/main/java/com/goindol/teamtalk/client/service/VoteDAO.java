@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
+import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
 
@@ -262,6 +263,32 @@ public class VoteDAO {
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
             if(conn != null) try {conn.close();}catch(SQLException ex) {}
         }
+    }
+
+    //vote_id로 VoteDTO 조회
+    public VoteDTO readByVoteId(int vote_id,int chatRoom_id){
+        VoteDTO voteDTO = null;
+        String query = "SELECT * FROM DB_ppick.vote WHERE vote_id=? and chatRoom_id=?";
+
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, vote_id);
+            pstmt.setInt(2,chatRoom_id);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                String title = rs.getString("title");
+                boolean isAnonymous = rs.getBoolean("isAnonymous");
+                boolean isOverLap = rs.getBoolean("isOverLap");
+
+                voteDTO = new VoteDTO(title, isAnonymous, isOverLap);
+                voteDTO.setVote_id(vote_id);
+                return voteDTO;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return voteDTO;
     }
 
     //투표가 있는지 체크

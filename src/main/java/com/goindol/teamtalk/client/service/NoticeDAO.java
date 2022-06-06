@@ -50,6 +50,10 @@ public class NoticeDAO {
                         "SET" +
                         "`isNoticeRead` = 1 " +
                         "WHERE `chatRoom_id` = ? ";
+
+        String update="UPDATE `DB_ppick`.`chatRoomUserList`" +
+                "SET `isNoticeRead`=2 " +
+                "WHERE `nickName`=? and chatRoom_id=?";
         try {
 
             conn = DB.getConnection();
@@ -62,6 +66,11 @@ public class NoticeDAO {
 
             pstmt = conn.prepareStatement(init);
             pstmt.setInt(1, chatRoom_id);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement(update);
+            pstmt.setString(1,nickName);
+            pstmt.setInt(2, chatRoom_id);
             pstmt.executeUpdate();
 
         } catch(Exception e) {
@@ -182,6 +191,22 @@ public class NoticeDAO {
         }
 
         return false;
+    }
+
+    public void updateIsNoticed(int chatRoom_id,String nickName){
+        String query="UPDATE `DB_ppick`.`chatRoomUserList`" +
+                "SET `isNoticeRead`=2 " +
+                "WHERE `nickName`=? and chatRoom_id=?";
+
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, chatRoom_id);
+            pstmt.setString(2,nickName);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public NoticeDTO showNoticeContent(int chatRoom_id, String nickName){

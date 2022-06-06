@@ -4,6 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.ChatRoomListDAO;
 import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
+import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import java.util.ResourceBundle;
 public class ChatRoomInfoController implements Initializable {
 
     public UserDTO userDTO;
+    public UserDAO userDAO = UserDAO.getInstance();
     public int chatId;
     public MainController mainController;
     public ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
@@ -56,10 +58,18 @@ public class ChatRoomInfoController implements Initializable {
             alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
             alert.show();
         }else {
-            chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
-            ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
-            chatRoomUserListItems.add(userInput.getText());
-            chatRoomUserList.setItems(chatRoomUserListItems);
+            if(chatRoomListDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
+                chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
+                ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
+                chatRoomUserListItems.add(userInput.getText());
+                chatRoomUserList.setItems(chatRoomUserListItems);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("친구 오류");
+                alert.setContentText("친구 목록에 존재하지 않습니다.");
+                alert.show();
+            }
         }
     }
 
@@ -82,7 +92,11 @@ public class ChatRoomInfoController implements Initializable {
             existRoom();
             //TO DO 현재 화면 닫아주기
             try {
-                Stage stage = (Stage) userInput.getScene().getWindow();
+                Stage curStage = (Stage) userInput.getScene().getWindow();
+                curStage.close();
+                Stage parentStage = (Stage) curStage.getOwner();
+                parentStage.close();
+                Stage stage = new Stage();
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
                 MainController main = loader.getController();
@@ -90,7 +104,10 @@ public class ChatRoomInfoController implements Initializable {
                 main.showChatRoomList();
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
-                stage.setOnCloseRequest(event1 -> {System.exit(0);});
+                stage.setOnCloseRequest(event1 -> {
+                    userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+                    main.send("login/roomId/value");
+                    System.exit(0);});
                 stage.setResizable(false);
                 stage.show();
             } catch (IOException e) {

@@ -11,7 +11,7 @@
    <top>
       <Pane prefHeight="80.0" prefWidth="400.0" styleClass="pane" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutY="32.0" prefHeight="23.0" prefWidth="400.0" text="투표하기">
+            <Label fx:id="voteTitle" alignment="CENTER" layoutY="32.0" prefHeight="23.0" prefWidth="400.0" text="투표하기">
                <font>
                   <Font size="18.0" />
                </font></Label>

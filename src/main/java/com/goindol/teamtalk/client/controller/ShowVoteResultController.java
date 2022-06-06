@@ -2,6 +2,7 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
 import com.goindol.teamtalk.client.service.VoteDAO;
@@ -13,9 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -35,18 +39,22 @@ public class ShowVoteResultController implements Initializable {
 
     @FXML
     public ListView voteResultList;
+    @FXML
+    public Label voteTitle;
     private ToggleGroup group = new ToggleGroup();
 
     public int chatid;
-    public int voteId;
+    public VoteDTO voteDTO;
     public VoteDAO voteDAO = VoteDAO.getInstance();
     public UserDTO userDTO;
+    public boolean anonymous;
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
+        voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 현황");
+        anonymous = voteDAO.readByVoteId(voteDTO.getVote_id(), chatid).isAnonoymous();
         ObservableList names = FXCollections.observableArrayList();
-        List<VoteResultDTO> voteVarDTOList = voteDAO.ShowVoteList(voteId);
-
+        List<VoteResultDTO> voteVarDTOList = voteDAO.ShowVoteList(voteDTO.getVote_id());
         for(VoteResultDTO voteResult : voteVarDTOList) {
             names.add(voteResult);
         }
@@ -68,7 +76,7 @@ public class ShowVoteResultController implements Initializable {
     public void setChatRoomId(int chatid) {
         this.chatid = chatid;
     }
-    public void setVoteId(int voteId) { this.voteId = voteId; }
+    public void setVote(VoteDTO vote) { this.voteDTO = vote; }
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
@@ -84,32 +92,34 @@ public class ShowVoteResultController implements Initializable {
             super();
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            button.setPrefWidth(130);
+            button.setPrefWidth(120);
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    try {
-                        Stage curStage = (Stage) borderPane.getScene().getWindow();
-                        Stage stage = new Stage();
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/VoterListView.fxml"));
-                        Parent root = (Parent) loader.load();
-                        VoterListController voterListController = (VoterListController) loader.getController();
+                    if (!anonymous) {
+                        try {
+                            Stage curStage = (Stage) borderPane.getScene().getWindow();
+                            Stage stage = new Stage();
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(HelloApplication.class.getResource("views/VoterListView.fxml"));
+                            Parent root = (Parent) loader.load();
+                            VoterListController voterListController = (VoterListController) loader.getController();
 
-                        voterListController.setVoteId(voteId);
-                        voterListController.setVoteVarContent(lastItem);
-                        voterListController.showVoterList();
-                        stage.setScene(new Scene(root, 200, 250));
-                        stage.setTitle("Team Talk");
-                        stage.setOnCloseRequest(event -> stage.close());
-                        stage.setResizable(false);
-                        stage.setX(curStage.getX()+400);
-                        stage.setY(curStage.getY());
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                            voterListController.setVote(voteDTO);
+                            voterListController.setVoteVarContent(lastItem);
+                            voterListController.showVoterList();
+                            stage.setScene(new Scene(root, 200, 250));
+                            stage.setTitle("Team Talk");
+                            stage.setOnCloseRequest(event -> stage.close());
+                            stage.setResizable(false);
+                            stage.setX(curStage.getX() + 400);
+                            stage.setY(curStage.getY());
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-
                 }
             });
         }
@@ -121,6 +131,12 @@ public class ShowVoteResultController implements Initializable {
                 lastItem = null;
                 setGraphic(null);
             } else {
+                if(anonymous) {
+                    ImageCursor imageCursor = new ImageCursor(new Image(HelloApplication.class.getResourceAsStream("images/x.png")));
+                    button.setCursor(imageCursor);
+                }
+                else
+                    button.setCursor(Cursor.HAND);
                 lastItem=obj.getContent();
                 button.setText("투표자 현황 "+"(" + String.valueOf(obj.getCount()) + " 명)");
                 label.setText(obj.getContent()!=null ? obj.getContent() : "<null>");
