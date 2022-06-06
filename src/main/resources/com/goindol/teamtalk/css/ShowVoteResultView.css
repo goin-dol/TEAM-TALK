@@ -20,7 +20,6 @@
 .button {
     -fx-background-color: #eba576;
     -fx-text-fill: black;
-    -fx-cursor: hand;
     -fx-font-size: 13;
 }
 .button:hover {

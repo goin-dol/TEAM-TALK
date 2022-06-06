@@ -319,12 +319,12 @@ public class MainController implements Initializable {
             super();
             hbox.getChildren().addAll(label1,label2,label3);
             label1.setTextFill(Color.valueOf("#d7d6dc"));
-            label1.setPrefWidth(190);
+            label1.setPrefWidth(180);
             label2.setTextFill(Color.valueOf("#eba576"));
             label3.setTextFill(Color.valueOf("#eba576"));
-            label2.setPrefWidth(70);
+            label2.setPrefWidth(65);
             label2.setVisible(false);
-            label3.setPrefWidth(70);
+            label3.setPrefWidth(65);
             label3.setVisible(false);
             HBox.setHgrow(pane, Priority.ALWAYS);
 

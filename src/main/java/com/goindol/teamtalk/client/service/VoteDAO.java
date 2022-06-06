@@ -278,10 +278,11 @@ public class VoteDAO {
             rs = pstmt.executeQuery();
             if(rs.next()){
                 String title = rs.getString("title");
-                boolean isAnonoymous = rs.getBoolean("isAnonoymous");
+                boolean isAnonymous = rs.getBoolean("isAnonymous");
                 boolean isOverLap = rs.getBoolean("isOverLap");
 
-                voteDTO = new VoteDTO(title, isAnonoymous, isOverLap);
+                voteDTO = new VoteDTO(title, isAnonymous, isOverLap);
+                voteDTO.setVote_id(vote_id);
                 return voteDTO;
             }
         } catch (Exception e) {

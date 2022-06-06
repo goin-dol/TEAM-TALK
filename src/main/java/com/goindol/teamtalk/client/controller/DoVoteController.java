@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.model.VoteVarDTO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.beans.InvalidationListener;
@@ -25,20 +26,21 @@ public class DoVoteController implements Initializable {
     @FXML public BorderPane borderPane;
     @FXML public ListView voteList;
     @FXML public Button voteButton;
+    @FXML public Label voteTitle;
     private ToggleGroup group = new ToggleGroup();
     public VoteDAO voteDAO = VoteDAO.getInstance();
 
     public int chatid;
-    public int voteId;
     public int voteVarId;
     List<String> tempList = new ArrayList<String>();
     public UserDTO userDTO;
+    public VoteDTO voteDTO;
 
     public void saveVoteResult() {
         if(tempList.size() >= 2) {
-            if(voteDAO.checkOverlapVote(voteId)) {
+            if(voteDAO.checkOverlapVote(voteDTO.getVote_id())) {
                 for(String temp : tempList) {
-                    voteDAO.choiceVote(voteId, chatid, temp, userDTO.getNickName());
+                    voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
                     Stage stage = (Stage) borderPane.getScene().getWindow();
                     stage.close();
                 }
@@ -53,7 +55,7 @@ public class DoVoteController implements Initializable {
             }
         }else {
             for(String temp : tempList) {
-                voteDAO.choiceVote(voteId,chatid, temp, userDTO.getNickName());
+                voteDAO.choiceVote(voteDTO.getVote_id(),chatid, temp, userDTO.getNickName());
                 Stage stage = (Stage) borderPane.getScene().getWindow();
                 stage.close();
             }
@@ -68,9 +70,9 @@ public class DoVoteController implements Initializable {
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
-        voteId = voteDAO.getVoteId(chatid);
+        voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 하기");
         ObservableList names = FXCollections.observableArrayList();
-        List<VoteVarDTO> voteVarDTOList = voteDAO.ReadVoteList(voteId);
+        List<VoteVarDTO> voteVarDTOList = voteDAO.ReadVoteList(voteDTO.getVote_id());
         if(voteVarDTOList != null) {
             for(VoteVarDTO voteVar : voteVarDTOList) {
                 voteVarId = voteVar.getVoteVar_id();
@@ -103,6 +105,8 @@ public class DoVoteController implements Initializable {
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
+
+    public void setVote(VoteDTO voteDTO) { this.voteDTO = voteDTO; }
 
     private class RadioListCell extends ListCell<VoteVarDTO> {
         @Override

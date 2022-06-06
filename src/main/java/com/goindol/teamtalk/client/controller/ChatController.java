@@ -2,6 +2,7 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.service.ChatLogDAO;
 import com.goindol.teamtalk.client.service.ChatRoomListDAO;
 import com.goindol.teamtalk.client.service.NoticeDAO;
@@ -11,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -426,6 +428,7 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
+                VoteDTO voteDTO = voteDAO.readByVoteId(voteid, chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
                 if(voteDAO.checkVote(chatid)) {
                     if (ifAlreadyVote) {
@@ -438,7 +441,7 @@ public class ChatController implements Initializable {
                             ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
                             showVoteResultController.setChatRoomId(chatid);
                             showVoteResultController.setUserDTO(userDTO);
-                            showVoteResultController.setVoteId(voteid);
+                            showVoteResultController.setVote(voteDTO);
                             showVoteResultController.initialVoteList();
                             stage.setScene(new Scene(root, 400, 600));
                             stage.setTitle("Team Talk");
@@ -461,6 +464,7 @@ public class ChatController implements Initializable {
                             DoVoteController doVoteController = (DoVoteController) loader.getController();
                             doVoteController.setChatRoomId(chatid);
                             doVoteController.setUserDTO(userDTO);
+                            doVoteController.setVote(voteDTO);
                             doVoteController.initialVoteList();
 
                             stage.setScene(new Scene(root, 400, 600));
@@ -503,9 +507,10 @@ public class ChatController implements Initializable {
                     chatRoomInfoController.setUserDTO(userDTO);
                     chatRoomInfoController.setMainController(mainController);
                     chatRoomInfoController.showChatRoomUserList();
+
                     stage.setScene(new Scene(root, 250, 400));
                     stage.setTitle("Team Talk");
-                    stage.setOnCloseRequest(event -> stage.close());
+                    stage.setOnCloseRequest(event -> curStage.close());
                     stage.setResizable(false);
                     stage.setX(curStage.getX()+400);
                     stage.setY(curStage.getY());
