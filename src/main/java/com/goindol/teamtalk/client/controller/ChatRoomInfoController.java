@@ -102,12 +102,13 @@ public class ChatRoomInfoController implements Initializable {
                 main.showChatRoomList();
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
+                stage.setResizable(false);
+                stage.show();
                 stage.setOnCloseRequest(event1 -> {
                     userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
                     main.send("login/roomId/value");
-                    System.exit(0);});
-                stage.setResizable(false);
-                stage.show();
+                    //System.exit(0);
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -124,4 +125,5 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void setMainController(MainController mainController) { this.mainController = mainController; }
+
 }
