@@ -461,44 +461,8 @@ public class VoteDAO {
     }
 
     //투표 인원 체크
-    public boolean AllReadVote(int chatRoom_id,int vote_id){
-        boolean status=false;
-        String query =
-                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
-        String query1 =
-                "SELECT count(*) as count from `DB_ppick`.`voteVar` where vote_id=?";
-
-        try{
-            conn = DB.getConnection();
-            pstmt= conn.prepareStatement(query);
-            pstmt.setInt(1,chatRoom_id);
-            rs = pstmt.executeQuery();
-            if(rs.next()){
-                int chatCnt = rs.getInt("count");
-
-                pstmt = conn.prepareStatement(query1);
-                pstmt.setInt(1, vote_id);
-                ResultSet rs1 = pstmt.executeQuery();
-                if(rs1.next()){
-                    int votedCnt = rs1.getInt("count");
-                    if(chatCnt==votedCnt){
-                        status = true;
-                        return status;
-                    }
-                }
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return status;
-    }
-
-    public boolean ALLReadVote(int chatRoom_id) {
+    public boolean allReadVote(int chatRoom_id) {
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 

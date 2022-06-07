@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -345,7 +343,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 if(voteDAO.checkVote(chatid)) {
                     int vote_id = voteDAO.getVoteId(chatid);
-                    if (!voteDAO.AllReadVote(chatid, vote_id)) {
+                    if (!voteDAO.allReadVote(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("투표 에러");

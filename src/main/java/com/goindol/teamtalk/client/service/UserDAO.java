@@ -61,23 +61,42 @@ public class UserDAO {
 
 
 
-    public boolean validSignUp(String userId, String nickName) {
-        boolean status = true;
+    public int validSignUp(String userId, String nickName) {
+        int status = 0;
+        String query1 =
+                "SELECT " +
+                        "`user`.`userId`," +
+                        "`user`.`userPassword`," +
+                        "`user`.`nickName`," +
+                        "`user`.`status`" +
+                        "FROM `DB_ppick`.`user` WHERE userId = ? ";
+
         String query =
                 "SELECT " +
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
                         "`user`.`nickName`," +
                         "`user`.`status`" +
-                        "FROM `DB_ppick`.`user` WHERE userId = ?  OR nickName = ?";
+                        "FROM `DB_ppick`.`user` WHERE nickName = ?";
+
+
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userId);
-            pstmt.setString(2, nickName);
             rs = pstmt.executeQuery();
-            if(rs.next())
-                status = false;
+            if(rs.next()) {
+                status = 1;
+                return status;
+            }
+
+            pstmt = conn.prepareStatement(query1);
+            pstmt.setString(1, nickName);
+            rs= pstmt.executeQuery();
+            if(rs.next()) {
+                status = 2;
+                return status;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
