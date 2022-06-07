@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.service;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.ChatRoomListDTO;
+import com.goindol.teamtalk.client.model.ChatRoomDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,7 @@ public class ChatRoomDAO {
     //채팅 생성
     public void createChatRoom(String chatRoomName, String nickName) {
         String query =
-                "INSERT INTO `DB_ppick`.`chatRoomList` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
+                "INSERT INTO `DB_ppick`.`chatRoom` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -48,8 +48,8 @@ public class ChatRoomDAO {
     public int getChatRoomId(String chatRoomName, String nickName) {
         int cnt = 0;
         String query = "SELECT " +
-                "`chatRoomList`.`chatRoom_id`" +
-                "FROM `DB_ppick`.`chatRoomList` WHERE chatRoomName = ? and nickName = ?";
+                "`chatRoom`.`chatRoom_id`" +
+                "FROM `DB_ppick`.`chatRoom` WHERE chatRoomName = ? and nickName = ?";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -93,7 +93,7 @@ public class ChatRoomDAO {
     //여러명 초대시 해당 매개변수 리스트에 담아서 반복 실행
     public int inviteChatRoom(int chatRoom_id, String nickName) {
         String query =
-                "INSERT INTO `DB_ppick`.`chatRoomUserList`" +
+                "INSERT INTO `DB_ppick`.`chatRoomParticipants`" +
                         "(" +
                         "`chatRoom_id`," +
                         "`nickName`," +
@@ -146,7 +146,7 @@ public class ChatRoomDAO {
 
     //현재 채팅방 이름을 가져옴
     public String getCurrentChatRoomName(int chatRoomId) {
-        String query = "SELECT chatRoomName FROM DB_ppick.chatRoomList WHERE chatRoom_id = ?";
+        String query = "SELECT chatRoomName FROM DB_ppick.chatRoom WHERE chatRoom_id = ?";
         String title = null;
         try {
             conn = DBDAO.getConnection();
@@ -165,16 +165,15 @@ public class ChatRoomDAO {
         return title;
     }
 
-    //채팅방 리스트를 보여줄때 해당 회원이 참여하고 있는 채팅방 이름들을 가져옴
-    public ArrayList<ChatRoomListDTO> getChatRoomNameList(String nickName) {
-        ArrayList<ChatRoomListDTO> roomName = null;
+    public ArrayList<ChatRoomDTO> getChatRoomName(String nickName) {
+        ArrayList<ChatRoomDTO> roomName = null;
         String query =
                 "select p.chatRoom_id, " +
                         "   p.chatRoomName, " +
                         "   q.isNoticeRead, " +
                         "       q.isVoted "  +
-                        "from chatRoomList as p " +
-                        "join chatRoomUserList as q " +
+                        "from chatRoom as p " +
+                        "join chatRoomParticipants as q " +
                         "on p.chatRoom_id = q.chatRoom_id " +
                         "where q.nickName = ?";
         try {
@@ -183,14 +182,14 @@ public class ChatRoomDAO {
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                roomName = new ArrayList<ChatRoomListDTO>();
+                roomName = new ArrayList<ChatRoomDTO>();
                 do{
-                    ChatRoomListDTO chatRoomListDTO = new ChatRoomListDTO();
-                    chatRoomListDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
-                    chatRoomListDTO.setChatRoomName(rs.getString("chatRoomName"));
-                    chatRoomListDTO.setNoticeRead(rs.getInt("isNoticeRead"));
-                    chatRoomListDTO.setVoted(rs.getInt("isVoted"));
-                    roomName.add(chatRoomListDTO);
+                    ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
+                    chatRoomDTO.setChatRoom_id(rs.getInt("chatRoom_id"));
+                    chatRoomDTO.setChatRoomName(rs.getString("chatRoomName"));
+                    chatRoomDTO.setNoticeRead(rs.getInt("isNoticeRead"));
+                    chatRoomDTO.setVoted(rs.getInt("isVoted"));
+                    roomName.add(chatRoomDTO);
                 }while(rs.next());
             }
         } catch(Exception e) {

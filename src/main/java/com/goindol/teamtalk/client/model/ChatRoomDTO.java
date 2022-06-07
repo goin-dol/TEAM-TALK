@@ -1,16 +1,16 @@
 package com.goindol.teamtalk.client.model;
 
-public class ChatRoomListDTO {
+public class ChatRoomDTO {
     private int chatRoom_id;
     private String chatRoomName;
     private String nickName;
     private int isNoticeRead;
     private int isVoted;
 
-    public ChatRoomListDTO() {
+    public ChatRoomDTO() {
 
     }
-    public ChatRoomListDTO(int chatRoom_id, String chatRoomName) {
+    public ChatRoomDTO(int chatRoom_id, String chatRoomName) {
         this.chatRoom_id = chatRoom_id;
         this.chatRoomName = chatRoomName;
     }

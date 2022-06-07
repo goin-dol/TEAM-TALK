@@ -41,7 +41,7 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.230";
 
     int port = 9500;
-    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
+    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     NoticeDAO noticeDAO = NoticeDAO.getInstance();
@@ -158,7 +158,7 @@ public class ChatController implements Initializable {
     }
 
     public void setChatRoomTitle(){
-        String title = chatRoomDAO.getCurrentChatRoomName(chatid);
+        String title = chatRoomListDAO.getCurrentChatRoomName(chatid);
         chatRoomTitle.setText(title);
     }
 

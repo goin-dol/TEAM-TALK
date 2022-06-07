@@ -1,6 +1,7 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.ChatRoomUserDAO;
+import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
+import com.goindol.teamtalk.client.service.FriendDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainClient {
-    ChatRoomUserDAO chatRoomUserDAO = ChatRoomUserDAO.getInstance();
+    FriendDAO friendDAO = FriendDAO.getInstance();
+    ChatRoomParticipantsDAO chatRoomUserListDAO = ChatRoomParticipantsDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
@@ -19,12 +21,10 @@ public class MainClient {
 
     public MainClient(Socket socket) {
         this.socket = socket;
-
     }
 
     public void receiveData() {
         try {
-
             InputStream in = socket.getInputStream();
             byte[] buffer = new byte[512];
             int length = in.read(buffer);
@@ -60,34 +60,22 @@ public class MainClient {
                         String code = data[0];
                         String roomId = data[1];
                         String value = data[2];
-
+                        System.out.println("value : " + value);
                         System.out.println("code : " + code);
                         if(code.equals("login")) {
-                            for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
-                                entry.getValue().send("login");
-                            }
+                            ArrayList<String> sendUser = friendDAO.getFriendList(value);
+                            sendUser.add(value);
+                            realTimeSend(sendUser, code);
                         }else if(code.equals("chatRoom")) {
-                            ArrayList<String> sendUser = chatRoomUserDAO.getChatRoomUserList(Integer.parseInt(roomId));
-                            for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
-                                for(String user : sendUser) {
-                                    if(entry.getKey().equals(user)) {
-                                        entry.getValue().send(code);
-                                    }
-                                }
-                            }
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            realTimeSend(sendUser, code);
                         }else if(code.equals("notice")) {
-                            ArrayList<String> sendUser = chatRoomUserDAO.getChatRoomUserList(Integer.parseInt(roomId));
-                            for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
-                                for(String user : sendUser) {
-                                    if(entry.getKey().equals(user)) {
-                                        entry.getValue().send(code);
-                                    }
-                                }
-                            }
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            realTimeSend(sendUser, code);
                         }else if(code.equals("vote")) {
-
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            realTimeSend(sendUser, code);
                         }
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -101,6 +89,16 @@ public class MainClient {
         };
         //쓰레드 안전적으로 관리
         MainServer.threadPool.submit(thread);
+    }
+
+    private void realTimeSend(ArrayList<String> sendUser, String code) {
+        for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
+            for(String user : sendUser) {
+                if(entry.getKey().equals(user)) {
+                    entry.getValue().send(code);
+                }
+            }
+        }
     }
 
     public void send(String message) {

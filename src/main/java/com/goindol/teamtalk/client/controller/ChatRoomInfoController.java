@@ -3,7 +3,7 @@ package com.goindol.teamtalk.client.controller;
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.ChatRoomDAO;
-import com.goindol.teamtalk.client.service.ChatRoomUserDAO;
+import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
 import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +31,7 @@ public class ChatRoomInfoController implements Initializable {
     public int chatId;
     public MainController mainController;
     public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
-    public ChatRoomUserDAO chatRoomUserDAO = ChatRoomUserDAO.getInstance();
+    public ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
     @FXML private Button invite;
@@ -40,7 +40,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void showChatRoomUserList() {
        List<String> strings = new ArrayList<>();
-        ArrayList<String> chatRoomUsers = chatRoomUserDAO.getChatRoomUserList(chatId);
+        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomUser(chatId);
         for(String users : chatRoomUsers) {
             strings.add(users);
         }
@@ -51,7 +51,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void inviteFriend() {
         System.out.println("chatId = " + chatId);
-        if(chatRoomUserDAO.overlapChatRoomUser(chatId,userInput.getText())){
+        if(chatRoomParticipantsDAO.overlapUser(chatId,userInput.getText())){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("채팅방 친구 오류");
@@ -74,7 +74,7 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void existRoom() {
-        chatRoomUserDAO.exitChatRoom(chatId, userDTO.getNickName());
+        chatRoomParticipantsDAO.existRoom(chatId, userDTO.getNickName());
 
     }
 

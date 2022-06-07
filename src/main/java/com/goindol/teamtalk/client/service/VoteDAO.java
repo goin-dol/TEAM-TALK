@@ -300,83 +300,6 @@ public class VoteDAO {
         return status;
     }
 
-    //같은 투표 중복 체킹
-    public boolean checkOverlapVoteVar(int voteid, String nickName){
-        boolean status = false;
-        String select =
-                "SELECT" +
-                        "`voteResult`.`voteResult_id`," +
-                        "`voteResult`.`vote_id`" +
-                        "`voteResult`.`content`," +
-                        "`voteResult`.`nickName`" +
-                        "FROM `DB_ppick`.`voteResult` WHERE vote_id = ? and nickName = ?";
-        try{
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(select);
-            pstmt.setInt(1, voteid);
-            pstmt.setString(1, nickName);
-            rs = pstmt.executeQuery(select);
-            if(rs.next()){
-                status = true;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return status;
-    }
-
-    // 중복 투표가 가능할때
-    public boolean checkOverlapVoteVar1(int vote_id, String nickName){
-        String query =
-                "SELECT count(*) as count FROM `DB_ppick`.`voteResult` FROM vote_id=? and nickName=? and voteVar_id=?";
-
-
-        try{
-            conn = DB.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, vote_id);
-            pstmt.setString(2, nickName);
-            ResultSet rs = pstmt.executeQuery(query);
-            if(rs.next()){
-                int cnt = rs.getInt("count");
-                if(cnt>=1) return true;
-                else return false;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return false;
-    }
-
-    //중복 투표 가능 여부 체킹
-    public boolean checkOverLap(int vote_id){
-        String query =
-                "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
-
-        try{
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, vote_id);
-            rs = pstmt.executeQuery(query);
-            if(rs.next()){
-                boolean isOverLap = rs.getBoolean("isOverLap");
-                if(isOverLap) return true;
-                else return false;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return false;
-    }
 
     //투표 인원 체크
 
@@ -492,11 +415,5 @@ public class VoteDAO {
         return arr;
     }
 
-
-
-    //중복 투표 체크
-
-
-    //채팅방 인원 체크
 
 }

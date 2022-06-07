@@ -58,7 +58,7 @@ public class MainController implements Initializable {
     @FXML public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
-    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
+    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
     FriendDAO friendDAO = FriendDAO.getInstance();
     UserDAO userDAO = UserDAO.getInstance();
     public UserDTO userDTO;
@@ -107,11 +107,8 @@ public class MainController implements Initializable {
                 String message = new String(buffer, 0, length, "UTF-8");
                 if(message.equals("login")) {
                     showFriendList();
-                }else if(message.equals("chatRoom")) {
+                }else if(message.equals("notice") || message.equals("vote") || message.equals("chatRoom")) {
                     showChatRoomList();
-                }else if(message.equals("notice")) {
-                    showChatRoomList();
-
                 }
             }catch(Exception e) {
                 stopClient();
@@ -156,9 +153,9 @@ public class MainController implements Initializable {
     }
 
     public void showChatRoomList(){
-        List<ChatRoomListDTO> strings = new ArrayList<>();
+        List<ChatRoomDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<ChatRoomListDTO> chatRoom = chatRoomDAO.getChatRoomNameList(userDTO.getNickName());
+            ArrayList<ChatRoomDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));
@@ -166,7 +163,7 @@ public class MainController implements Initializable {
             }
         }
 
-        ObservableList<ChatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
+        ObservableList<ChatRoomDTO> chatRoomObservableList = FXCollections.observableArrayList();
 
         chatRoomObservableList.addAll(strings);
 
@@ -177,7 +174,7 @@ public class MainController implements Initializable {
     }
 
     public void openChatRoom(){
-        ChatRoomListDTO cr = (ChatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
+        ChatRoomDTO cr = (ChatRoomDTO) chatRoomList.getSelectionModel().getSelectedItem();
         if(cr==null)
             return;
         try {
@@ -196,7 +193,7 @@ public class MainController implements Initializable {
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {
                 userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-                send("login/roomId/value");
+                send("login/roomId/" + userDTO.getNickName());
                 System.exit(0);});
             stage.setResizable(false);
             stage.show();
@@ -253,12 +250,12 @@ public class MainController implements Initializable {
             searchFriend.setText("");
         }
 
-        send("login/roomId/value");
+        send("login/roomId/" + userDTO.getNickName());
     }
 
     public void logOut(){
         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-        send("login/roomId/value");
+        send("login/roomId/" + userDTO.getNickName());
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
@@ -317,7 +314,7 @@ public class MainController implements Initializable {
 
     }
 
-    private class chatRoomListCell extends ListCell<ChatRoomListDTO> {
+    private class chatRoomListCell extends ListCell<ChatRoomDTO> {
         HBox hbox = new HBox();
         Label label1 = new Label("label1");
         Label label2 = new Label("새 공지");
@@ -338,7 +335,7 @@ public class MainController implements Initializable {
 
         }
         @Override
-        public void updateItem(ChatRoomListDTO obj, boolean empty) {
+        public void updateItem(ChatRoomDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);

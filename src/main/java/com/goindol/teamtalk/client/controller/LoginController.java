@@ -67,12 +67,12 @@ public class LoginController implements Initializable {
                     MainController main = loader.getController();
                     main.setUserDTO(userDTO);
                     main.showChatRoomList();
-                    main.send("login/roomId/value");
+                    main.send("login/roomId/" + userDTO.getNickName());
                     stage.setScene(new Scene(root, 400, 600));
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> {
                         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-                        main.send("login/roomId/value");
+                        main.send("login/roomId/" + userDTO.getNickName());
                         System.exit(0);
                     });
                     stage.setResizable(false);

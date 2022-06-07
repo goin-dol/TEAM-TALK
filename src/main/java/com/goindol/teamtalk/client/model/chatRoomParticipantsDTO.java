@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.client.model;
 
-public class ChatRoomUserListDTO {
+public class chatRoomParticipantsDTO {
     private int chatRomUser_id;
     private int chatRoom_id;
     private String nickName;
