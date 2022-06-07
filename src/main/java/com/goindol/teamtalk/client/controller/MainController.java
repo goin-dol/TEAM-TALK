@@ -109,11 +109,8 @@ public class MainController implements Initializable {
                 String message = new String(buffer, 0, length, "UTF-8");
                 if(message.equals("login")) {
                     showFriendList();
-                }else if(message.equals("chatRoom")) {
+                }else if(message.equals("notice") || message.equals("vote") || message.equals("chatRoom")) {
                     showChatRoomList();
-                }else if(message.equals("notice")) {
-                    showChatRoomList();
-
                 }
             }catch(Exception e) {
                 stopClient();
@@ -198,7 +195,7 @@ public class MainController implements Initializable {
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {
                 userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-                send("login/roomId/value");
+                send("login/roomId/" + userDTO.getNickName());
                 System.exit(0);});
             stage.setResizable(false);
             stage.show();
@@ -255,12 +252,12 @@ public class MainController implements Initializable {
             searchFriend.setText("");
         }
 
-        send("login/roomId/value");
+        send("login/roomId/" + userDTO.getNickName());
     }
 
     public void logOut(){
         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-        send("login/roomId/value");
+        send("login/roomId/" + userDTO.getNickName());
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();

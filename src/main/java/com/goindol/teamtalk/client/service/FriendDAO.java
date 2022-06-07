@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FriendDAO {
 
@@ -111,6 +112,34 @@ public class FriendDAO {
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
         return friendDTO;
+    }
+
+    public ArrayList<String> getFriendList(String nickName) {
+        ArrayList<String> friendList = null;
+        String query =
+                "SELECT `friendInfo`.`f_id`," +
+                        "`friendInfo`.`nickName`," +
+                        "`friendInfo`.`friendNickName`," +
+                        "`friendInfo`.`friendStatus`" +
+                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, nickName);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                friendList = new ArrayList<String>();
+                do {
+                    friendList.add(rs.getString("friendNickName"));
+                }while(rs.next());
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+        return friendList;
     }
 
 
