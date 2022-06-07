@@ -498,7 +498,7 @@ public class VoteDAO {
         return status;
     }
 
-    public boolean ALLReadVote(int chatRoom_id) {
+    public boolean allDoVote(int chatRoom_id) {
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
