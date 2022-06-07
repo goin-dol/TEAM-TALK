@@ -2,7 +2,6 @@ package com.goindol.teamtalk.server;
 
 
 
-import com.mysql.cj.xdevapi.Client;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -25,7 +24,7 @@ public class MainServer extends Application {
     ServerSocket serverSocket;
     Socket socket;
 
-    public static Map<String, MainClient> clients = new HashMap<String, MainClient>();
+    public static Map<String, MainServerController> clients = new HashMap<String, MainServerController>();
 
     public void startServer(int port) {
         try {
@@ -47,7 +46,7 @@ public class MainServer extends Application {
                         Socket socket = serverSocket.accept();
 
                         System.out.println("Connect Complete");
-                        MainClient client = new MainClient(socket);
+                        MainServerController client = new MainServerController(socket);
                         client.receiveData();
                         MainServer.clients.put(client.key, client);
                         synchronized (this) {
@@ -73,7 +72,7 @@ public class MainServer extends Application {
         try {
             Iterator it = clients.entrySet().iterator();
             while(it.hasNext()) {
-                Map.Entry<Integer, MainClient> entry = (Map.Entry)it.next();
+                Map.Entry<Integer, MainServerController> entry = (Map.Entry)it.next();
                 entry.getValue().socket.close();
                 it.remove();
             }

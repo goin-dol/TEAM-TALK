@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class ChatRoomParticipantsDAO {
     private static ChatRoomParticipantsDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -26,7 +24,7 @@ public class ChatRoomParticipantsDAO {
     }
 
     //채팅방에 친구 추가시 이미 채팅방에 존재하는 친구인지 확인
-    public boolean overlapUser(int chatRoom_id,String nickName){
+    public boolean isParticipants(int chatRoom_id, String nickName){
         boolean check = false;
         String query = "SELECT * FROM DB_ppick.chatRoomParticipants WHERE chatRoom_id=? and nickName=?";
 
@@ -50,7 +48,7 @@ public class ChatRoomParticipantsDAO {
         return check;
     }
 
-    public ArrayList<String> getChatRoomUser(int chatRoom_id) {
+    public ArrayList<String> getChatRoomParticipants(int chatRoom_id) {
         ArrayList<String> nickName = null;
         String query = "SELECT nickName FROM DB_ppick.chatRoomParticipants where chatRoom_id = ?";
 
@@ -75,7 +73,7 @@ public class ChatRoomParticipantsDAO {
         return nickName;
     }
 
-    public void existRoom(int chatRoomId, String nickName) {
+    public void exitCurrentRoom(int chatRoomId, String nickName) {
         String query = "DELETE FROM `DB_ppick`.`chatRoomParticipants` " +
                 "WHERE chatRoom_id = ? and nickName = ?";
         try {

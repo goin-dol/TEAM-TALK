@@ -138,7 +138,7 @@ public class MainController implements Initializable {
         List<FriendDTO> strings = new ArrayList<>();
 
         if(userDTO != null) {
-            ArrayList<FriendDTO> friends = userDAO.getFriendList(userDTO.getNickName());
+            ArrayList<FriendDTO> friends = friendDAO.getFriendList(userDTO.getNickName());
             if(friends != null) {
                 for(int i = 0; i < friends.size(); i++) {
                     strings.add(friends.get(i));
@@ -155,7 +155,7 @@ public class MainController implements Initializable {
     public void showChatRoomList(){
         List<ChatRoomDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<ChatRoomDTO> chatRoom = chatRoomDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomDTO> chatRoom = chatRoomDAO.getChatRoomNameList(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));

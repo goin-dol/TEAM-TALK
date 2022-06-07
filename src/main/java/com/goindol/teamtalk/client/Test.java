@@ -23,7 +23,7 @@ public class Test {
 //            System.out.println("notice = " + notice.getContent());
 //        }
 //        System.out.println("noticeDAO = " + noticeDAO.AllReadNotice(1));
-        System.out.println(noticeDAO.checkNotice(1));
+        System.out.println(noticeDAO.hasNotice(1));
     }
 
 }

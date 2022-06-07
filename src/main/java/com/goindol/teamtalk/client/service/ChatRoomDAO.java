@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class ChatRoomDAO {
     private static ChatRoomDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -26,6 +24,7 @@ public class ChatRoomDAO {
         return instance;
     }
 
+    //채팅 생성
     public void createChatRoom(String chatRoomName, String nickName) {
         String query =
                 "INSERT INTO `DB_ppick`.`chatRoom` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
@@ -43,6 +42,7 @@ public class ChatRoomDAO {
         }
     }
 
+    // 채팅방을 만들고 자기 자신을 초대할 때 채팅방 id 필요
     public int getChatRoomId(String chatRoomName, String nickName) {
         int cnt = 0;
         String query = "SELECT " +
@@ -121,6 +121,7 @@ public class ChatRoomDAO {
     }
 
 
+    //현재 채팅방 이름을 가져옴
     public String getCurrentChatRoomName(int chatRoomId) {
         String query = "SELECT chatRoomName FROM DB_ppick.chatRoom WHERE chatRoom_id = ?";
         String title = null;
@@ -141,7 +142,7 @@ public class ChatRoomDAO {
         return title;
     }
 
-    public ArrayList<ChatRoomDTO> getChatRoomName(String nickName) {
+    public ArrayList<ChatRoomDTO> getChatRoomNameList(String nickName) {
         ArrayList<ChatRoomDTO> roomName = null;
         String query =
                 "select p.chatRoom_id, " +

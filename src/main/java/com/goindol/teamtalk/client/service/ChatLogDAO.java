@@ -15,8 +15,6 @@ import java.util.List;
 public class ChatLogDAO {
     private static ChatLogDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -30,6 +28,7 @@ public class ChatLogDAO {
     }
 
 
+    //채팅 로그 기록
     public void writeLog(int chatRoom_id, String content) {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -48,7 +47,7 @@ public class ChatLogDAO {
                         "?" +
                         ")";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, chatRoom_id);
             pstmt.setString(2, content);
@@ -62,11 +61,12 @@ public class ChatLogDAO {
         }
     }
 
+    //채팅 로그 보여줌
     public List<String> showChatLog(int chatRoomId) {
         List<String> content = null;
         String query = "SELECT * FROM DB_ppick.chatLog WHERE chatRoom_id = ? order by regDate asc";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, chatRoomId);
             rs = pstmt.executeQuery();

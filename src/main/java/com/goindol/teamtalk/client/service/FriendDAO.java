@@ -14,8 +14,6 @@ public class FriendDAO {
 
     private static FriendDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -28,6 +26,7 @@ public class FriendDAO {
 
 
 
+    //친구 추가
     public int addFriend(String nickName, String friendNickName){
         int status = 0;
         String friend =
@@ -87,6 +86,7 @@ public class FriendDAO {
         return status;
     }
 
+    //친구 객체를 불러오기 위한 메소드
     public FriendDTO getFriend(String nickName, String friendNickName) {
         FriendDTO friendDTO = null;
         String query =
@@ -114,7 +114,46 @@ public class FriendDAO {
         return friendDTO;
     }
 
-    public ArrayList<String> getFriendList(String nickName) {
+    public ArrayList<FriendDTO> getFriendList(String nickName) {
+        ArrayList<FriendDTO> friendList = null;
+        String query =
+                "SELECT `friendInfo`.`f_id`," +
+                        "`friendInfo`.`nickName`," +
+                        "`friendInfo`.`friendNickName`," +
+                        "`friendInfo`.`friendStatus`" +
+                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, nickName);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                friendList = new ArrayList<FriendDTO>();
+                do {
+                    FriendDTO friend = new FriendDTO();
+                    friend.setF_id(rs.getInt("f_id"));
+                    friend.setNickName(rs.getString("nickName"));
+                    friend.setFriendNickName(rs.getString("friendNickName"));
+                    friend.setFriendStatus(rs.getBoolean("friendStatus"));
+                    friendList.add(friend);
+                } while (rs.next());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) try {
+                rs.close();
+            } catch (SQLException ex) {
+            }
+            if (pstmt != null) try {
+                pstmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return friendList;
+    }
+
+    public ArrayList<String> getFriendNickNameList(String nickName) {
         ArrayList<String> friendList = null;
         String query =
                 "SELECT `friendInfo`.`f_id`," +
@@ -143,8 +182,8 @@ public class FriendDAO {
     }
 
     // 채팅방에 초대할 때 친구인지 확인
-    public boolean checkFriend(String nickName,String friend){
-        Boolean check=false;
+    public boolean isFriend(String nickName, String friend){
+        boolean check=false;
         String check_query =
                 "select * from friendInfo where nickName = ? and friendNickName=?";
 

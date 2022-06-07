@@ -32,8 +32,8 @@ public class ChatRoomInfoController implements Initializable {
     public int chatId;
     public MainController mainController;
     public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
-    public ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     public FriendDAO friendDAO = FriendDAO.getInstance();
+    public ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
     @FXML private Button invite;
@@ -42,7 +42,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void showChatRoomUserList() {
        List<String> strings = new ArrayList<>();
-        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomUser(chatId);
+        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomParticipants(chatId);
         for(String users : chatRoomUsers) {
             strings.add(users);
         }
@@ -53,14 +53,14 @@ public class ChatRoomInfoController implements Initializable {
 
     public void inviteFriend() {
         System.out.println("chatId = " + chatId);
-        if(chatRoomParticipantsDAO.overlapUser(chatId,userInput.getText())){
+        if(chatRoomParticipantsDAO.isParticipants(chatId,userInput.getText())){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("채팅방 친구 오류");
             alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
             alert.show();
         }else {
-            if(friendDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
+            if(friendDAO.isFriend(userDTO.getNickName(),userInput.getText())) {
                 chatRoomDAO.inviteChatRoom(chatId, userInput.getText());
                 ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
                 chatRoomUserListItems.add(userInput.getText());
@@ -76,7 +76,7 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void existRoom() {
-        chatRoomParticipantsDAO.existRoom(chatId, userDTO.getNickName());
+        chatRoomParticipantsDAO.exitCurrentRoom(chatId, userDTO.getNickName());
 
     }
 
