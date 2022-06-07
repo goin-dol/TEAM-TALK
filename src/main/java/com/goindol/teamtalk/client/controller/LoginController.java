@@ -72,7 +72,7 @@ public class LoginController implements Initializable {
                     stage.setTitle("Team Talk");
                     stage.setOnCloseRequest(event -> {
                         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
-                        main.send("login/roomId/value");
+                        main.send("login/roomId/" + userDTO.getNickName());
                         System.exit(0);
                     });
                     stage.setResizable(false);

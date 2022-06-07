@@ -2,8 +2,8 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
-import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
+import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
 import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,8 +30,8 @@ public class ChatRoomInfoController implements Initializable {
     public UserDAO userDAO = UserDAO.getInstance();
     public int chatId;
     public MainController mainController;
-    public ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
-    public ChatRoomUserListDAO chatRoomUserListDAO = ChatRoomUserListDAO.getInstance();
+    public ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
+    public ChatRoomParticipantsDAO chatRoomUserListDAO = ChatRoomParticipantsDAO.getInstance();
     @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
     @FXML private Button invite;

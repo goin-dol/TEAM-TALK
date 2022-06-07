@@ -5,7 +5,6 @@ public class UserDTO {
     private String userPassword;
     private String nickName;
     private boolean status;
-    private String ip;
 
     public String getUserId() {
         return userId;
@@ -30,12 +29,6 @@ public class UserDTO {
     }
     public void setStatus(boolean status) {
         this.status = status;
-    }
-    public String getIp() {
-        return ip;
-    }
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 
 

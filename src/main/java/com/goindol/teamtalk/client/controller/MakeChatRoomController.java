@@ -2,7 +2,7 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MakeChatRoomController implements Initializable {
-    public ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    public ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
     public UserDTO userDTO;
     @FXML private Pane pane;
     @FXML private TextField chatRoomTitle;

@@ -8,7 +8,6 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,7 +26,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.*;
 import java.net.InetAddress;
@@ -60,7 +58,7 @@ public class MainController implements Initializable {
     @FXML public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
-    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
     FriendDAO friendDAO = FriendDAO.getInstance();
     UserDAO userDAO = UserDAO.getInstance();
     public UserDTO userDTO;
@@ -155,9 +153,9 @@ public class MainController implements Initializable {
     }
 
     public void showChatRoomList(){
-        List<ChatRoomListDTO> strings = new ArrayList<>();
+        List<ChatRoomDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));
@@ -165,7 +163,7 @@ public class MainController implements Initializable {
             }
         }
 
-        ObservableList<ChatRoomListDTO> chatRoomObservableList = FXCollections.observableArrayList();
+        ObservableList<ChatRoomDTO> chatRoomObservableList = FXCollections.observableArrayList();
 
         chatRoomObservableList.addAll(strings);
 
@@ -176,7 +174,7 @@ public class MainController implements Initializable {
     }
 
     public void openChatRoom(){
-        ChatRoomListDTO cr = (ChatRoomListDTO) chatRoomList.getSelectionModel().getSelectedItem();
+        ChatRoomDTO cr = (ChatRoomDTO) chatRoomList.getSelectionModel().getSelectedItem();
         if(cr==null)
             return;
         try {
@@ -316,7 +314,7 @@ public class MainController implements Initializable {
 
     }
 
-    private class chatRoomListCell extends ListCell<ChatRoomListDTO> {
+    private class chatRoomListCell extends ListCell<ChatRoomDTO> {
         HBox hbox = new HBox();
         Label label1 = new Label("label1");
         Label label2 = new Label("새 공지");
@@ -337,7 +335,7 @@ public class MainController implements Initializable {
 
         }
         @Override
-        public void updateItem(ChatRoomListDTO obj, boolean empty) {
+        public void updateItem(ChatRoomDTO obj, boolean empty) {
             super.updateItem(obj, empty);
             if (empty) {
                 setText(null);

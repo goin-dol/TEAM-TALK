@@ -4,7 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.service.ChatLogDAO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
 import com.goindol.teamtalk.client.service.NoticeDAO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.application.Platform;
@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -43,7 +41,7 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.230";
 
     int port = 9500;
-    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     NoticeDAO noticeDAO = NoticeDAO.getInstance();

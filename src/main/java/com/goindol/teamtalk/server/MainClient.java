@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
 import com.goindol.teamtalk.client.service.FriendDAO;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class MainClient {
     FriendDAO friendDAO = FriendDAO.getInstance();
-    ChatRoomUserListDAO chatRoomUserListDAO = ChatRoomUserListDAO.getInstance();
+    ChatRoomParticipantsDAO chatRoomUserListDAO = ChatRoomParticipantsDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
