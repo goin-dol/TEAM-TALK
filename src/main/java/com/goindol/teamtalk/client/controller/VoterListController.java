@@ -1,7 +1,6 @@
 package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.model.VoteResultDTO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +25,7 @@ public class VoterListController implements Initializable {
     public void showVoterList(){
         voteVar.setText(voteVarContent);
         List<String> strings = new ArrayList<>();
-        List<String> voter_List = voteDAO.showResultByContent(voteDTO.getVote_id(), voteVarContent);
+        List<String> voter_List = voteDAO.readVoteUserByContent(voteDTO.getVote_id(), voteVarContent);
         if(voter_List!=null) {
             for (String voters : voter_List) {
                 strings.add(voters);

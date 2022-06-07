@@ -26,6 +26,7 @@ public class ChatRoomListDAO {
         return instance;
     }
 
+    //채팅 생성
     public void createChatRoom(String chatRoomName, String nickName) {
         String query =
                 "INSERT INTO `DB_ppick`.`chatRoomList` (`chatRoomName`, `nickName`) VALUES ( ?, ? ) ";
@@ -43,6 +44,7 @@ public class ChatRoomListDAO {
         }
     }
 
+    // 채팅방을 만들고 자기 자신을 초대할 때 채팅방 id 필요
     public int getChatRoomId(String chatRoomName, String nickName) {
         int cnt = 0;
         String query = "SELECT " +
@@ -142,6 +144,7 @@ public class ChatRoomListDAO {
     }
 
 
+    //현재 채팅방 이름을 가져옴
     public String getCurrentChatRoomName(int chatRoomId) {
         String query = "SELECT chatRoomName FROM DB_ppick.chatRoomList WHERE chatRoom_id = ?";
         String title = null;
@@ -162,7 +165,8 @@ public class ChatRoomListDAO {
         return title;
     }
 
-    public ArrayList<ChatRoomListDTO> getChatRoomName(String nickName) {
+    //채팅방 리스트를 보여줄때 해당 회원이 참여하고 있는 채팅방 이름들을 가져옴
+    public ArrayList<ChatRoomListDTO> getChatRoomNameList(String nickName) {
         ArrayList<ChatRoomListDTO> roomName = null;
         String query =
                 "select p.chatRoom_id, " +

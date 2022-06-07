@@ -4,7 +4,6 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.model.VoteResultDTO;
-import com.goindol.teamtalk.client.model.VoteVarDTO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
@@ -52,9 +50,9 @@ public class ShowVoteResultController implements Initializable {
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
         voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 현황");
-        anonymous = voteDAO.readByVoteId(voteDTO.getVote_id(), chatid).isAnonoymous();
+        anonymous = voteDAO.findVoteByVoteId(voteDTO.getVote_id(), chatid).isAnonoymous();
         ObservableList names = FXCollections.observableArrayList();
-        List<VoteResultDTO> voteVarDTOList = voteDAO.ShowVoteList(voteDTO.getVote_id());
+        List<VoteResultDTO> voteVarDTOList = voteDAO.showVoteList(voteDTO.getVote_id());
         for(VoteResultDTO voteResult : voteVarDTOList) {
             names.add(voteResult);
         }

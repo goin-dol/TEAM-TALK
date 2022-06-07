@@ -26,7 +26,7 @@ public class ChatRoomUserListDAO {
     }
 
     //채팅방에 친구 추가시 이미 채팅방에 존재하는 친구인지 확인
-    public boolean overlapUser(int chatRoom_id,String nickName){
+    public boolean overlapChatRoomUser(int chatRoom_id, String nickName){
         boolean check = false;
         String query = "SELECT * FROM DB_ppick.chatRoomUserList WHERE chatRoom_id=? and nickName=?";
 
@@ -50,7 +50,8 @@ public class ChatRoomUserListDAO {
         return check;
     }
 
-    public ArrayList<String> getChatRoomUser(int chatRoom_id) {
+    // 해당 채팅방 클릭시 채팅방 유저 닉네임을 뽑아냄
+    public ArrayList<String> getChatRoomUserList(int chatRoom_id) {
         ArrayList<String> nickName = null;
         String query = "SELECT nickName FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
 
@@ -75,7 +76,8 @@ public class ChatRoomUserListDAO {
         return nickName;
     }
 
-    public void existRoom(int chatRoomId, String nickName) {
+    //채팅방 나가기
+    public void exitChatRoom(int chatRoomId, String nickName) {
         String query = "DELETE FROM `DB_ppick`.`chatRoomUserList` " +
                 "WHERE chatRoom_id = ? and nickName = ?";
         try {

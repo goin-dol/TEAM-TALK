@@ -67,7 +67,7 @@ public class MainClient {
                                 entry.getValue().send("login");
                             }
                         }else if(code.equals("chatRoom")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUserList(Integer.parseInt(roomId));
                             for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
                                 for(String user : sendUser) {
                                     if(entry.getKey().equals(user)) {
@@ -76,7 +76,7 @@ public class MainClient {
                                 }
                             }
                         }else if(code.equals("notice")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUserList(Integer.parseInt(roomId));
                             for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
                                 for(String user : sendUser) {
                                     if(entry.getKey().equals(user)) {

@@ -30,6 +30,7 @@ public class ChatLogDAO {
     }
 
 
+    //채팅 로그 기록
     public void writeLog(int chatRoom_id, String content) {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -62,6 +63,7 @@ public class ChatLogDAO {
         }
     }
 
+    //채팅 로그 보여줌
     public List<String> showChatLog(int chatRoomId) {
         List<String> content = null;
         String query = "SELECT * FROM DB_ppick.chatLog WHERE chatRoom_id = ? order by regDate asc";

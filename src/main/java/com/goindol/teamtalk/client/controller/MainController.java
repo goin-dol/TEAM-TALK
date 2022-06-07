@@ -8,7 +8,6 @@ import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,7 +26,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.*;
 import java.net.InetAddress;
@@ -160,7 +158,7 @@ public class MainController implements Initializable {
     public void showChatRoomList(){
         List<ChatRoomListDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomListDTO> chatRoom = chatRoomListDAO.getChatRoomNameList(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));

@@ -178,7 +178,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 Optional<ButtonType> result;
                 if (noticeDAO.checkNotice(chatid)) {
-                    if (!noticeDAO.AllReadNotice(chatid)) {
+                    if (!noticeDAO.allReadNotice(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("공지 에러");
@@ -426,7 +426,7 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
-                VoteDTO voteDTO = voteDAO.readByVoteId(voteid, chatid);
+                VoteDTO voteDTO = voteDAO.findVoteByVoteId(voteid, chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
                 if(voteDAO.checkVote(chatid)) {
                     if (ifAlreadyVote) {

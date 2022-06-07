@@ -27,6 +27,7 @@ public class FriendDAO {
 
 
 
+    //친구 추가
     public int addFriend(String nickName, String friendNickName){
         int status = 0;
         String friend =
@@ -86,6 +87,7 @@ public class FriendDAO {
         return status;
     }
 
+    //친구 객체를 불러오기 위한 메소드
     public FriendDTO getFriend(String nickName, String friendNickName) {
         FriendDTO friendDTO = null;
         String query =

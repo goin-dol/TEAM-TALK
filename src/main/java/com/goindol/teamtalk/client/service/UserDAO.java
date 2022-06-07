@@ -61,7 +61,7 @@ public class UserDAO {
 
 
 
-    public int validSignUp(String userId, String nickName) {
+    public int validateSignUp(String userId, String nickName) {
         int status = 0;
         String query1 =
                 "SELECT " +
@@ -107,33 +107,6 @@ public class UserDAO {
         return status;
     }
 
-    public boolean checkLogin(String userId, String userPassword) {
-        boolean status = false;
-        String query =
-                "SELECT " +
-                        "`user`.`userId`," +
-                        "`user`.`userPassword`," +
-                        "`user`.`nickName`," +
-                        "`user`.`status`" +
-                        "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
-        try {
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, userPassword);
-            rs = pstmt.executeQuery();
-            if(rs.next())
-                status = true;
-            else
-                status = false;
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return status;
-    }
 
 
 
@@ -228,31 +201,6 @@ public class UserDAO {
         return userDTO;
     }
 
-    public ArrayList<UserDTO> getUserList() {
-        ArrayList users = null;
-        String query = "SELECT * FROM user";
-        try {
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
-            rs = pstmt.executeQuery();
-            if(rs.next()) {
-                UserDTO userDTO = new UserDTO();
-                do{
-                    userDTO.setUserId(rs.getString("userId"));
-                    userDTO.setUserPassword(rs.getString("userPassword"));
-                    userDTO.setStatus(rs.getBoolean("status"));
-                    userDTO.setNickName(rs.getString("nickname"));
-                }while(rs.next());
-                users.add(userDTO);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return users;
-    }
 
     public void logout(String userId, String nickName) {
         String update =
@@ -280,27 +228,6 @@ public class UserDAO {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
-    }
-
-
-    public int getFriendCnt(String userId) {
-        int Cnt = 0;
-        String query =
-                "SELECT count(*) FROM DB_ppick.friendInfo where userId = ?";
-        try {
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            rs = pstmt.executeQuery();
-            if(rs.next())
-                Cnt = rs.getInt(1);
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally{
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return Cnt;
     }
 
     public ArrayList<FriendDTO> getFriendList(String nickName) {
@@ -335,4 +262,77 @@ public class UserDAO {
         }
         return friendList;
     }
+
+
+//    public ArrayList<UserDTO> getUserList() {
+//        ArrayList users = null;
+//        String query = "SELECT * FROM user";
+//        try {
+//            conn = DBDAO.getConnection();
+//            pstmt = conn.prepareStatement(query);
+//            rs = pstmt.executeQuery();
+//            if(rs.next()) {
+//                UserDTO userDTO = new UserDTO();
+//                do{
+//                    userDTO.setUserId(rs.getString("userId"));
+//                    userDTO.setUserPassword(rs.getString("userPassword"));
+//                    userDTO.setStatus(rs.getBoolean("status"));
+//                    userDTO.setNickName(rs.getString("nickname"));
+//                }while(rs.next());
+//                users.add(userDTO);
+//            }
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+//            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+//        }
+//        return users;
+//    }
+//    public boolean checkLogin(String userId, String userPassword) {
+//        boolean status = false;
+//        String query =
+//                "SELECT " +
+//                        "`user`.`userId`," +
+//                        "`user`.`userPassword`," +
+//                        "`user`.`nickName`," +
+//                        "`user`.`status`" +
+//                        "FROM `DB_ppick`.`user` WHERE userId = ? AND userPassword = ?";
+//        try {
+//            conn = DBDAO.getConnection();
+//            pstmt = conn.prepareStatement(query);
+//            pstmt.setString(1, userId);
+//            pstmt.setString(2, userPassword);
+//            rs = pstmt.executeQuery();
+//            if(rs.next())
+//                status = true;
+//            else
+//                status = false;
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+//            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+//        }
+//        return status;
+//    }
+//    public int getFriendCnt(String userId) {
+//        int Cnt = 0;
+//        String query =
+//                "SELECT count(*) FROM DB_ppick.friendInfo where userId = ?";
+//        try {
+//            conn = DBDAO.getConnection();
+//            pstmt = conn.prepareStatement(query);
+//            pstmt.setString(1, userId);
+//            rs = pstmt.executeQuery();
+//            if(rs.next())
+//                Cnt = rs.getInt(1);
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        } finally{
+//            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+//            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+//        }
+//        return Cnt;
+//    }
 }
