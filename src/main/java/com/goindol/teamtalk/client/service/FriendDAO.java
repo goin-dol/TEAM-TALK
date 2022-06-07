@@ -142,5 +142,27 @@ public class FriendDAO {
         return friendList;
     }
 
+    // 채팅방에 초대할 때 친구인지 확인
+    public boolean checkFriend(String nickName,String friend){
+        Boolean check=false;
+        String check_query =
+                "select * from friendInfo where nickName = ? and friendNickName=?";
+
+        try {
+            conn = DBDAO.getConnection();
+            pstmt = conn.prepareStatement(check_query);
+            pstmt.setString(1,nickName);
+            pstmt.setString(2,friend);
+            rs=pstmt.executeQuery();
+            if(rs.next()) check = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+        }
+        return check;
+    }
+
 
 }

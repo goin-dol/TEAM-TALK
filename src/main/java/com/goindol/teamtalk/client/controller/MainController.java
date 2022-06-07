@@ -58,7 +58,7 @@ public class MainController implements Initializable {
     @FXML public ImageView logoutTabImage;
     DropShadow dropShadow = new DropShadow();
 
-    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
+    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     FriendDAO friendDAO = FriendDAO.getInstance();
     UserDAO userDAO = UserDAO.getInstance();
     public UserDTO userDTO;
@@ -155,7 +155,7 @@ public class MainController implements Initializable {
     public void showChatRoomList(){
         List<ChatRoomDTO> strings = new ArrayList<>();
         if(userDTO != null) {
-            ArrayList<ChatRoomDTO> chatRoom = chatRoomListDAO.getChatRoomName(userDTO.getNickName());
+            ArrayList<ChatRoomDTO> chatRoom = chatRoomDAO.getChatRoomName(userDTO.getNickName());
             if(chatRoom != null) {
                 for(int i = 0; i < chatRoom.size(); i++) {
                     strings.add(chatRoom.get(i));

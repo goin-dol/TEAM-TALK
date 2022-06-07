@@ -65,27 +65,6 @@ public class ChatRoomDAO {
         return cnt;
     }
 
-    // 채팅방에 초대할 때 친구인지 확인
-    public boolean checkFriend(String nickName,String friend){
-        Boolean check=false;
-        String check_query =
-                "select * from friendInfo where nickName = ? and friendNickName=?";
-
-        try {
-            conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(check_query);
-            pstmt.setString(1,nickName);
-            pstmt.setString(2,friend);
-            rs=pstmt.executeQuery();
-            if(rs.next()) check = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
-            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
-        }
-        return check;
-    }
 
     //최초 방 생성시 자기 자신 아이디 정보 입력
     //여러명 초대시 해당 매개변수 리스트에 담아서 반복 실행
