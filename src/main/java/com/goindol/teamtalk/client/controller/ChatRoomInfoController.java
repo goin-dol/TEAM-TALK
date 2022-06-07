@@ -2,8 +2,8 @@ package com.goindol.teamtalk.client.controller;
 
 import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
-import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
+import com.goindol.teamtalk.client.service.ChatRoomUserDAO;
 import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,8 +30,8 @@ public class ChatRoomInfoController implements Initializable {
     public UserDAO userDAO = UserDAO.getInstance();
     public int chatId;
     public MainController mainController;
-    public ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
-    public ChatRoomUserListDAO chatRoomUserListDAO = ChatRoomUserListDAO.getInstance();
+    public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
+    public ChatRoomUserDAO chatRoomUserDAO = ChatRoomUserDAO.getInstance();
     @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
     @FXML private Button invite;
@@ -40,7 +40,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void showChatRoomUserList() {
        List<String> strings = new ArrayList<>();
-        ArrayList<String> chatRoomUsers = chatRoomUserListDAO.getChatRoomUserList(chatId);
+        ArrayList<String> chatRoomUsers = chatRoomUserDAO.getChatRoomUserList(chatId);
         for(String users : chatRoomUsers) {
             strings.add(users);
         }
@@ -51,15 +51,15 @@ public class ChatRoomInfoController implements Initializable {
 
     public void inviteFriend() {
         System.out.println("chatId = " + chatId);
-        if(chatRoomUserListDAO.overlapChatRoomUser(chatId,userInput.getText())){
+        if(chatRoomUserDAO.overlapChatRoomUser(chatId,userInput.getText())){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("채팅방 친구 오류");
             alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
             alert.show();
         }else {
-            if(chatRoomListDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
-                chatRoomListDAO.inviteChatRoom(chatId, userInput.getText());
+            if(chatRoomDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
+                chatRoomDAO.inviteChatRoom(chatId, userInput.getText());
                 ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
                 chatRoomUserListItems.add(userInput.getText());
                 chatRoomUserList.setItems(chatRoomUserListItems);
@@ -74,7 +74,7 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void existRoom() {
-        chatRoomUserListDAO.exitChatRoom(chatId, userDTO.getNickName());
+        chatRoomUserDAO.exitChatRoom(chatId, userDTO.getNickName());
 
     }
 

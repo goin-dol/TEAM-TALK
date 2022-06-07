@@ -1,6 +1,6 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.ChatRoomUserListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomUserDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainClient {
-    ChatRoomUserListDAO chatRoomUserListDAO = ChatRoomUserListDAO.getInstance();
+    ChatRoomUserDAO chatRoomUserDAO = ChatRoomUserDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
@@ -67,7 +67,7 @@ public class MainClient {
                                 entry.getValue().send("login");
                             }
                         }else if(code.equals("chatRoom")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUserList(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserDAO.getChatRoomUserList(Integer.parseInt(roomId));
                             for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
                                 for(String user : sendUser) {
                                     if(entry.getKey().equals(user)) {
@@ -76,7 +76,7 @@ public class MainClient {
                                 }
                             }
                         }else if(code.equals("notice")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUserList(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserDAO.getChatRoomUserList(Integer.parseInt(roomId));
                             for(Map.Entry<String, MainClient> entry : MainServer.clients.entrySet()) {
                                 for(String user : sendUser) {
                                     if(entry.getKey().equals(user)) {

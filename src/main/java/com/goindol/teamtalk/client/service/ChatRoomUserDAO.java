@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ChatRoomUserListDAO {
-    private static ChatRoomUserListDAO instance = null;
+public class ChatRoomUserDAO {
+    private static ChatRoomUserDAO instance = null;
 
     private static DBDAO DB = DBDAO.getInstance();
 
@@ -17,11 +17,11 @@ public class ChatRoomUserListDAO {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
-    private ChatRoomUserListDAO() {}
+    private ChatRoomUserDAO() {}
 
-    public static ChatRoomUserListDAO getInstance() {
+    public static ChatRoomUserDAO getInstance() {
         if(instance == null)
-            instance = new ChatRoomUserListDAO();
+            instance = new ChatRoomUserDAO();
         return instance;
     }
 

@@ -4,7 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.service.ChatLogDAO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
 import com.goindol.teamtalk.client.service.NoticeDAO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.application.Platform;
@@ -41,7 +41,7 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.230";
 
     int port = 9500;
-    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     NoticeDAO noticeDAO = NoticeDAO.getInstance();
@@ -158,7 +158,7 @@ public class ChatController implements Initializable {
     }
 
     public void setChatRoomTitle(){
-        String title = chatRoomListDAO.getCurrentChatRoomName(chatid);
+        String title = chatRoomDAO.getCurrentChatRoomName(chatid);
         chatRoomTitle.setText(title);
     }
 
