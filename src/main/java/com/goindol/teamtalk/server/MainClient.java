@@ -63,17 +63,17 @@ public class MainClient {
                         System.out.println("value : " + value);
                         System.out.println("code : " + code);
                         if(code.equals("login")) {
-                            ArrayList<String> sendUser = friendDAO.getFriendList(value);
+                            ArrayList<String> sendUser = friendDAO.getFriendNameList(value);
                             sendUser.add(value);
                             realTimeSend(sendUser, code);
                         }else if(code.equals("chatRoom")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }else if(code.equals("notice")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }else if(code.equals("vote")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomUser(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }
                     }

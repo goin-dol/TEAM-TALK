@@ -40,7 +40,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void showChatRoomUserList() {
        List<String> strings = new ArrayList<>();
-        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomUser(chatId);
+        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomParticipants(chatId);
         for(String users : chatRoomUsers) {
             strings.add(users);
         }
@@ -51,7 +51,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void inviteFriend() {
         System.out.println("chatId = " + chatId);
-        if(chatRoomParticipantsDAO.overlapUser(chatId,userInput.getText())){
+        if(chatRoomParticipantsDAO.isParticipants(chatId,userInput.getText())){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("채팅방 친구 오류");
@@ -74,7 +74,7 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void existRoom() {
-        chatRoomParticipantsDAO.existRoom(chatId, userDTO.getNickName());
+        chatRoomParticipantsDAO.exitRoom(chatId, userDTO.getNickName());
 
     }
 

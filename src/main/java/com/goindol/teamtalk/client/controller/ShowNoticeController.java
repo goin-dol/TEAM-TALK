@@ -51,7 +51,7 @@ public class ShowNoticeController implements Initializable {
 
     public boolean showNoticeContent(){
 //        만약 공지사항이 있다면 checkNotice에서 true값이 나옴
-         if(noticeDAO.checkNotice(chatid)) {
+         if(noticeDAO.hasNotice(chatid)) {
              noticeDTO = noticeDAO.showNoticeContent(chatid, userDTO.getNickName());
              noticeTitle.setText(noticeDTO.getTitle());
              noticeContent.setText(noticeDTO.getContent());

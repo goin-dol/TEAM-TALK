@@ -31,14 +31,7 @@ public class VoteDAO {
         return instance;
     }
 
-    //투표 리스트 - 지워도 될듯
-    public List<String> createVoteVar(List<String> v,String content){
-        if(content.equals("")){
-            System.out.println("입력하지 않은 항목이 있습니다.");
-        }else
-            v.add(content);
-        return v;
-    }
+
 
     //투표 생성 (투표 리스트 다 담아서 만듦)
     public void creatVote(int chatRoom_id,String title,boolean isAnonymous,boolean isOverLap){
@@ -51,7 +44,7 @@ public class VoteDAO {
                         "`isVoted` = 1 " +
                         "WHERE `chatRoom_id` = ? ";
         try{
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             pstmt.setString(2,title);
@@ -76,7 +69,7 @@ public class VoteDAO {
                 "INSERT INTO `DB_ppick`.`voteVar` (vote_id,content) VALUES" +
                         "(?,?)";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
 
 
             pstmt = conn.prepareStatement(query1);
@@ -125,7 +118,7 @@ public class VoteDAO {
                 "SELECT * FROM `DB_ppick`.`voteVar` WHERE vote_id=?";
 
         try{
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1, vote_id);
             ResultSet rs = pstmt.executeQuery();
@@ -160,7 +153,7 @@ public class VoteDAO {
         String query2 =
                 "DELETE FROM `DB_ppick`.`voteResult` WHERE vote_id =?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,vote_id);
             pstmt.executeUpdate();
@@ -194,7 +187,7 @@ public class VoteDAO {
                 "SELECT * FROM `DB_ppick`.`vote` WHERE `vote`.`vote_id` = ?";
         try{
 
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
 
             pstmt = conn.prepareStatement(over);
             pstmt.setInt(1, vote_id);
@@ -311,7 +304,7 @@ public class VoteDAO {
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where isVoted=? and chatRoom_id=?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             rs = pstmt.executeQuery();
@@ -391,7 +384,7 @@ public class VoteDAO {
                         " group by p.content ";
 
         try{
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt= conn.prepareStatement(query);
             pstmt.setInt(1,vote_id);
             rs = pstmt.executeQuery();

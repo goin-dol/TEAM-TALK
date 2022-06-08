@@ -177,8 +177,8 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Optional<ButtonType> result;
-                if (noticeDAO.checkNotice(chatid)) {
-                    if (!noticeDAO.allReadNotice(chatid)) {
+                if (noticeDAO.hasNotice(chatid)) {
+                    if (!noticeDAO.readNoticeAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("공지 에러");

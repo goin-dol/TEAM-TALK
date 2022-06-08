@@ -11,7 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MakeNoticeController implements Initializable {
@@ -29,7 +28,7 @@ public class MakeNoticeController implements Initializable {
     public void addNotice(){
         // TODO : DB에 공지 제목과 내용 추가
         if (!noticeTitle.getText().isBlank() && !noticeContent.getText().isBlank()) {
-            if (noticeDAO.checkNotice(chatid)) {
+            if (noticeDAO.hasNotice(chatid)) {
                 noticeDAO.deleteNotice(chatid);
             }
             noticeDAO.createNotice(userDTO.getNickName(), chatid, noticeTitle.getText(), noticeContent.getText());

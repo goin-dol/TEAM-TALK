@@ -56,7 +56,7 @@ public class NoticeDAO {
                 "WHERE `nickName`=? and chatRoom_id=?";
         try {
 
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, nickName);
             pstmt.setInt(2, chatRoom_id);
@@ -90,7 +90,7 @@ public class NoticeDAO {
                         "SET `isNoticeRead`= 1 " +
                         "WHERE chatRoom_id=?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             pstmt.executeUpdate();
@@ -109,7 +109,7 @@ public class NoticeDAO {
 
 
     // 해당 채팅 방에 공지가 있는지
-    public boolean checkNotice(int chatRoom_id){
+    public boolean hasNotice(int chatRoom_id){
         String query =
                 "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
 
@@ -146,7 +146,7 @@ public class NoticeDAO {
         String query =
                 "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(select);
             pstmt.setInt(1,chatRoom_id);
             rs = pstmt.executeQuery();
@@ -191,7 +191,7 @@ public class NoticeDAO {
                         "WHERE `nickName`=? and chatRoom_id=?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
 
             //공지가 하나라도 있으면 수정 가능
             pstmt = conn.prepareStatement(update);
@@ -215,7 +215,7 @@ public class NoticeDAO {
                 "SELECT * FROM `DB_ppick`.`chatRoomUserList` WHERE chatRoom_id =? and isNoticeRead=?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             pstmt.setInt(2,2);
@@ -236,7 +236,7 @@ public class NoticeDAO {
     }
 
     // 공지를 전부 읽었는지 확인
-    public boolean allReadNotice(int chatRoom_id){
+    public boolean readNoticeAllParticipants(int chatRoom_id){
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
@@ -244,7 +244,7 @@ public class NoticeDAO {
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where isNoticeRead=? and chatRoom_id=?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             rs = pstmt.executeQuery();
