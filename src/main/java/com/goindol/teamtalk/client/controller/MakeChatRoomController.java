@@ -31,7 +31,7 @@ public class MakeChatRoomController implements Initializable {
         if(chatRoomTitle.getText().length()>10){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Title Length Error");
+            alert.setHeaderText("채팅방 제목 오류");
             alert.setContentText("채팅창 제목은 10글자 이내로 입력해주세요.");
             alert.show();
         }else {

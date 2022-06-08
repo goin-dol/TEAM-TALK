@@ -4,6 +4,7 @@ import com.goindol.teamtalk.client.DB.DBDAO;
 import com.goindol.teamtalk.client.dto.UserDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDAO {
     private static UserDAO instance = null;

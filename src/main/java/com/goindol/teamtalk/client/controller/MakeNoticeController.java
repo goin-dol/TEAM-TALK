@@ -35,7 +35,7 @@ public class MakeNoticeController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("공지 에러");
+            alert.setHeaderText("공지 오류");
             alert.setContentText("입력하지 않은 제목이나 내용이 있습니다.");
             alert.show();
         }

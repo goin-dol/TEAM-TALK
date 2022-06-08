@@ -20,7 +20,7 @@
 .button {
     -fx-background-color: #eba576;
     -fx-text-fill: black;
-    -fx-font-size: 13;
+    -fx-font-size: 12;
 }
 .button:hover {
     -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.7) , 15,0,0,1 );

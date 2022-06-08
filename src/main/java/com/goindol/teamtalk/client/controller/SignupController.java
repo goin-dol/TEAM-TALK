@@ -75,27 +75,27 @@ public class SignupController implements Initializable {
                 } else if (userDAO.validateSignUp(id, nickname) == 1) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
-                    alert.setHeaderText("로그인 에러");
-                    alert.setContentText("이미 존재하는 닉네임입니다.");
+                    alert.setHeaderText("로그인 오류");
+                    alert.setContentText("이미 존재하는 아이디입니다.");
                     alert.show();
                 } else if (userDAO.validateSignUp(id, nickname) == 2) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
-                    alert.setHeaderText("로그인 에러");
-                    alert.setContentText("이미 존재하는 아이디입니다.");
+                    alert.setHeaderText("로그인 오류");
+                    alert.setContentText("이미 존재하는 닉네임입니다.");
                     alert.show();
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
-                alert.setHeaderText("로그인 에러");
+                alert.setHeaderText("로그인 오류");
                 alert.setContentText("아이디 및 비밀번호는 숫자와 영어만 사용 가능합니다.");
                 alert.show();
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("로그인 에러");
+            alert.setHeaderText("로그인 오류");
             alert.setContentText("입력하지 않은 항목이 있습니다.");
             alert.show();
         }

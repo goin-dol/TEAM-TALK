@@ -149,6 +149,7 @@ public class MainController implements Initializable {
         Platform.runLater(()->{
             friendList.setItems(friendObervableList);
             friendList.setCellFactory(param -> new colorListCell());
+
         });
     }
 
@@ -223,21 +224,20 @@ public class MainController implements Initializable {
 
     public void addFriend(){
 
-
         int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
         if(status == 1) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Friend Add Error");
-            alert.setContentText("Already friend");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("이미 추가된 사용자입니다. ");
             alert.show();
         }else if(status == 2){
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Friend Add Error");
-            alert.setContentText("Wrong NickName");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("존재하지 않은 사용자입니다. ");
             alert.show();
         }else {
             ObservableList<FriendDTO> friendListItems = friendList.getItems();
@@ -248,14 +248,16 @@ public class MainController implements Initializable {
                 friendList.setCellFactory(param -> new colorListCell());
             });
             searchFriend.setText("");
+            send("login/roomId/" + userDTO.getNickName());
         }
 
-        send("login/roomId/" + userDTO.getNickName());
+
     }
 
     public void logOut(){
-        userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
         send("login/roomId/" + userDTO.getNickName());
+        userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
@@ -279,6 +281,7 @@ public class MainController implements Initializable {
             @Override
             public void handle(Event event) {
                 logOut();
+                send("login/roomId/" + userDTO.getNickName());
             }
         });
 
@@ -286,6 +289,7 @@ public class MainController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 addFriend();
+                send("login/roomId/" + userDTO.getNickName());
             }
         });
 
