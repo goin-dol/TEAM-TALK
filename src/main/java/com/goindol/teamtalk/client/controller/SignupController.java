@@ -76,13 +76,13 @@ public class SignupController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
                     alert.setHeaderText("로그인 에러");
-                    alert.setContentText("이미 존재하는 닉네임입니다.");
+                    alert.setContentText("이미 존재하는 아이디입니다.");
                     alert.show();
                 } else if (userDAO.validateSignUp(id, nickname) == 2) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
                     alert.setHeaderText("로그인 에러");
-                    alert.setContentText("이미 존재하는 아이디입니다.");
+                    alert.setContentText("이미 존재하는 닉네임입니다.");
                     alert.show();
                 }
             } else {
