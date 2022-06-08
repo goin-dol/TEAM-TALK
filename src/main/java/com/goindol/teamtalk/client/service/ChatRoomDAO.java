@@ -104,28 +104,29 @@ public class ChatRoomDAO {
             pstmt.setInt(1, chatRoom_id);
             ResultSet check = pstmt.executeQuery();
 
-            pstmt = conn.prepareStatement(getVote_id);
-            pstmt.setInt(1, chatRoom_id);
-            ResultSet rs1 = pstmt.executeQuery();
-
-            pstmt = conn.prepareStatement(votecheck);
-            pstmt.setString(1, nickName);
-            pstmt.setInt(2, rs1.getInt("vote_id"));
-            ResultSet rs2 = pstmt.executeQuery();
-
             if(check.next()) {
-                pstmt = conn.prepareStatement(query);
+                pstmt = conn.prepareStatement(getVote_id);
                 pstmt.setInt(1, chatRoom_id);
-                pstmt.setString(2, nickName);
-                if(rs.next())
-                    pstmt.setInt(3, 1);
-                else
-                    pstmt.setInt(3, 0);
-                if(rs2.next())
-                    pstmt.setInt(4, 0);
-                else
-                    pstmt.setInt(4, 1);
-                pstmt.executeUpdate();
+                ResultSet rs1 = pstmt.executeQuery();
+                if(rs1.next()) {
+                    pstmt = conn.prepareStatement(votecheck);
+                    pstmt.setString(1, nickName);
+                    pstmt.setInt(2, rs1.getInt("vote_id"));
+                    ResultSet rs2 = pstmt.executeQuery();
+
+                    pstmt = conn.prepareStatement(query);
+                    pstmt.setInt(1, chatRoom_id);
+                    pstmt.setString(2, nickName);
+                    if(rs.next())
+                        pstmt.setInt(3, 1);
+                    else
+                        pstmt.setInt(3, 0);
+                    if(rs2.next())
+                        pstmt.setInt(4, 0);
+                    else
+                        pstmt.setInt(4, 1);
+                    pstmt.executeUpdate();
+                }
             }else {
                 pstmt = conn.prepareStatement(query);
                 pstmt.setInt(1, chatRoom_id);
@@ -137,11 +138,6 @@ public class ChatRoomDAO {
                 pstmt.setInt(4, 0);
                 pstmt.executeUpdate();
             }
-
-
-
-
-
         } catch(Exception e) {
             e.printStackTrace();
         }finally {
