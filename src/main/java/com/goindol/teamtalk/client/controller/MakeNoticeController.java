@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.NoticeDAO;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.NoticeDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

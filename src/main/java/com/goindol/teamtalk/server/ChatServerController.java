@@ -1,11 +1,10 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.ChatLogDAO;
+import com.goindol.teamtalk.client.dao.ChatLogDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 

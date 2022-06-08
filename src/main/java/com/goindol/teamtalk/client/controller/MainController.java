@@ -1,11 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.*;
-import com.goindol.teamtalk.client.service.*;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.*;
+import com.goindol.teamtalk.client.dao.*;
 import javafx.application.Platform;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dto.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -182,7 +182,7 @@ public class MainController implements Initializable {
 
             Stage stage = (Stage) stackPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("views/ChatView.fxml"));
+            loader.setLocation(Main.class.getResource("views/ChatView.fxml"));
             Parent root = (Parent) loader.load();
             ChatController chatController = loader.getController();
             chatController.setuserDTO(userDTO);
@@ -208,7 +208,7 @@ public class MainController implements Initializable {
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MakeChatRoomView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MakeChatRoomView.fxml"));
             Parent root = (Parent) loader.load();
             MakeChatRoomController chatRoomTitleController = loader.getController();
             chatRoomTitleController.setUserDTO(userDTO);
@@ -260,7 +260,7 @@ public class MainController implements Initializable {
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+            Parent root = FXMLLoader.load(Main.class.getResource("views/InitialView.fxml"));
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});

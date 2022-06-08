@@ -1,8 +1,8 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.ChatRoomDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +47,7 @@ public class MakeChatRoomController implements Initializable {
     public void goToBack(){
         try {
             Stage stage = (Stage) chatRoomTitle.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
             Parent root = loader.load();
             MainController main = loader.getController();
             main.setUserDTO(userDTO);
@@ -72,7 +72,7 @@ public class MakeChatRoomController implements Initializable {
                 setChatRoomTitle();
                 try {
                     Stage stage = (Stage) pane.getScene().getWindow();
-                    FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
                     Parent root = loader.load();
                     MainController main = loader.getController();
                     main.setUserDTO(userDTO);

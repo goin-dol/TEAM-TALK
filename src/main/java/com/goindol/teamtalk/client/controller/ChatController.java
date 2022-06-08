@@ -1,12 +1,12 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.service.ChatLogDAO;
-import com.goindol.teamtalk.client.service.ChatRoomDAO;
-import com.goindol.teamtalk.client.service.NoticeDAO;
-import com.goindol.teamtalk.client.service.VoteDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dto.VoteDTO;
+import com.goindol.teamtalk.client.dao.ChatLogDAO;
+import com.goindol.teamtalk.client.dao.ChatRoomDAO;
+import com.goindol.teamtalk.client.dao.NoticeDAO;
+import com.goindol.teamtalk.client.dao.VoteDAO;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -131,7 +131,7 @@ public class ChatController implements Initializable {
     public void goToBack(){
         try {
             Stage stage = (Stage) chatRoomContainer.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
             Parent root = loader.load();
             MainController main = loader.getController();
             main.setUserDTO(userDTO);
@@ -189,7 +189,7 @@ public class ChatController implements Initializable {
                                 Stage stage = new Stage();
                                 Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                                 FXMLLoader loader = new FXMLLoader();
-                                loader.setLocation(HelloApplication.class.getResource("views/MakeNoticeView.fxml"));
+                                loader.setLocation(Main.class.getResource("views/MakeNoticeView.fxml"));
                                 Parent root = (Parent) loader.load();
                                 MakeNoticeController makeNoticeController = (MakeNoticeController) loader.getController();
                                 makeNoticeController.setChatRoomId(chatid);
@@ -212,7 +212,7 @@ public class ChatController implements Initializable {
                             Stage stage = new Stage();
                             Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(HelloApplication.class.getResource("views/MakeNoticeView.fxml"));
+                            loader.setLocation(Main.class.getResource("views/MakeNoticeView.fxml"));
                             Parent root = (Parent) loader.load();
                             MakeNoticeController makeNoticeController = (MakeNoticeController) loader.getController();
                             makeNoticeController.setChatRoomId(chatid);
@@ -235,7 +235,7 @@ public class ChatController implements Initializable {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/MakeNoticeView.fxml"));
+                        loader.setLocation(Main.class.getResource("views/MakeNoticeView.fxml"));
                         Parent root = (Parent) loader.load();
                         MakeNoticeController makeNoticeController = (MakeNoticeController) loader.getController();
                         makeNoticeController.setChatRoomId(chatid);
@@ -309,7 +309,7 @@ public class ChatController implements Initializable {
                     Stage stage = new Stage();
                     Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(HelloApplication.class.getResource("views/ShowNoticeView.fxml"));
+                    loader.setLocation(Main.class.getResource("views/ShowNoticeView.fxml"));
                     Parent root = (Parent) loader.load();
                     ShowNoticeController showNoticeController = (ShowNoticeController) loader.getController();
                     showNoticeController.setChatRoomId(chatid);
@@ -354,7 +354,7 @@ public class ChatController implements Initializable {
                                 Stage stage = new Stage();
                                 Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                                 FXMLLoader loader = new FXMLLoader();
-                                loader.setLocation(HelloApplication.class.getResource("views/MakeVoteView.fxml"));
+                                loader.setLocation(Main.class.getResource("views/MakeVoteView.fxml"));
                                 Parent root = (Parent) loader.load();
                                 MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
                                 makeVoteController.setChatRoomId(chatid);
@@ -377,7 +377,7 @@ public class ChatController implements Initializable {
                             Stage stage = new Stage();
                             Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(HelloApplication.class.getResource("views/MakeVoteView.fxml"));
+                            loader.setLocation(Main.class.getResource("views/MakeVoteView.fxml"));
                             Parent root = (Parent) loader.load();
                             MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
                             makeVoteController.setChatRoomId(chatid);
@@ -401,7 +401,7 @@ public class ChatController implements Initializable {
                         Stage stage = new Stage();
                         Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(HelloApplication.class.getResource("views/MakeVoteView.fxml"));
+                        loader.setLocation(Main.class.getResource("views/MakeVoteView.fxml"));
                         Parent root = (Parent) loader.load();
                         MakeVoteController makeVoteController = (MakeVoteController) loader.getController();
                         makeVoteController.setChatRoomId(chatid);
@@ -434,7 +434,7 @@ public class ChatController implements Initializable {
                             Stage stage = new Stage();
                             Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(HelloApplication.class.getResource("views/ShowVoteResultView.fxml"));
+                            loader.setLocation(Main.class.getResource("views/ShowVoteResultView.fxml"));
                             Parent root = (Parent) loader.load();
                             ShowVoteResultController showVoteResultController = (ShowVoteResultController) loader.getController();
                             showVoteResultController.setChatRoomId(chatid);
@@ -457,7 +457,7 @@ public class ChatController implements Initializable {
                             Stage stage = new Stage();
                             Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(HelloApplication.class.getResource("views/DoVoteView.fxml"));
+                            loader.setLocation(Main.class.getResource("views/DoVoteView.fxml"));
                             Parent root = (Parent) loader.load();
                             DoVoteController doVoteController = (DoVoteController) loader.getController();
                             doVoteController.setChatRoomId(chatid);
@@ -497,7 +497,7 @@ public class ChatController implements Initializable {
                     Stage curStage = (Stage) chatRoomContainer.getScene().getWindow();
                     Stage stage = new Stage();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(HelloApplication.class.getResource("views/ChatRoomInfoView.fxml"));
+                    loader.setLocation(Main.class.getResource("views/ChatRoomInfoView.fxml"));
                     Parent root = (Parent) loader.load();
                     ChatRoomInfoController chatRoomInfoController = (ChatRoomInfoController) loader.getController();
 

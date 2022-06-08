@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.service.UserDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dao.UserDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +32,7 @@ public class SignupController implements Initializable {
     public void goToBack(){
         try {
             Stage stage = (Stage) pane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/InitialView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/InitialView.fxml"));
             Parent root = loader.load();
             LoginController login = loader.getController();
             stage.setScene(new Scene(root, 400, 600));
@@ -61,7 +61,7 @@ public class SignupController implements Initializable {
                         userDAO.signUp(id, password, nickname);
 
                         Stage stage = (Stage) Id.getScene().getWindow();
-                        Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+                        Parent root = FXMLLoader.load(Main.class.getResource("views/InitialView.fxml"));
                         stage.setScene(new Scene(root, 400, 600));
                         stage.setTitle("Team Talk");
                         stage.setOnCloseRequest(event -> {

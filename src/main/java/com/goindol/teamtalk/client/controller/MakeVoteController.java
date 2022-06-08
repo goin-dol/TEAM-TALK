@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.VoteDAO;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MakeVoteController implements Initializable {

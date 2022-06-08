@@ -1,10 +1,10 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.model.VoteResultDTO;
-import com.goindol.teamtalk.client.service.VoteDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dto.VoteDTO;
+import com.goindol.teamtalk.client.dto.VoteResultDTO;
+import com.goindol.teamtalk.client.dao.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -99,7 +99,7 @@ public class ShowVoteResultController implements Initializable {
                             Stage curStage = (Stage) borderPane.getScene().getWindow();
                             Stage stage = new Stage();
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(HelloApplication.class.getResource("views/VoterListView.fxml"));
+                            loader.setLocation(Main.class.getResource("views/VoterListView.fxml"));
                             Parent root = (Parent) loader.load();
                             VoterListController voterListController = (VoterListController) loader.getController();
 
@@ -130,7 +130,7 @@ public class ShowVoteResultController implements Initializable {
                 setGraphic(null);
             } else {
                 if(anonymous) {
-                    ImageCursor imageCursor = new ImageCursor(new Image(HelloApplication.class.getResourceAsStream("images/x.png")));
+                    ImageCursor imageCursor = new ImageCursor(new Image(Main.class.getResourceAsStream("images/x.png")));
                     button.setCursor(imageCursor);
                 }
                 else

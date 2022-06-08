@@ -1,11 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomDAO;
-import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
-import com.goindol.teamtalk.client.service.FriendDAO;
-import com.goindol.teamtalk.client.service.UserDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.ChatRoomDAO;
+import com.goindol.teamtalk.client.dao.ChatRoomParticipantsDAO;
+import com.goindol.teamtalk.client.dao.FriendDAO;
+import com.goindol.teamtalk.client.dao.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,9 +77,7 @@ public class ChatRoomInfoController implements Initializable {
 
     public void existRoom() {
         chatRoomParticipantsDAO.exitCurrentRoom(chatId, userDTO.getNickName());
-
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,14 +90,13 @@ public class ChatRoomInfoController implements Initializable {
 
         exitRoom.setOnMouseClicked(event-> {
             existRoom();
-            //TO DO 현재 화면 닫아주기
             try {
                 Stage curStage = (Stage) userInput.getScene().getWindow();
                 curStage.close();
                 Stage parentStage = (Stage) curStage.getOwner();
                 parentStage.close();
                 Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
                 MainController main = loader.getController();
                 main.setUserDTO(userDTO);
@@ -116,7 +113,6 @@ public class ChatRoomInfoController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         });
     }
 

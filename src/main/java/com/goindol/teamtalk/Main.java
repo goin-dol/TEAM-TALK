@@ -1,20 +1,15 @@
 package com.goindol.teamtalk;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
+
 
     private static Stage primaryStage;
     @Override

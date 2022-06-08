@@ -1,9 +1,9 @@
-package com.goindol.teamtalk.client.service;
+package com.goindol.teamtalk.client.dao;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.model.VoteResultDTO;
-import com.goindol.teamtalk.client.model.VoteVarDTO;
+import com.goindol.teamtalk.client.dto.VoteDTO;
+import com.goindol.teamtalk.client.dto.VoteResultDTO;
+import com.goindol.teamtalk.client.dto.VoteVarDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
