@@ -176,13 +176,13 @@ public class ChatController implements Initializable {
             if(userInput.getText().isBlank()){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
-                alert.setHeaderText("채팅 에러");
+                alert.setHeaderText("채팅 오류");
                 alert.setContentText("내용을 입력하시오");
                 alert.show();
             }else if(userInput.getText().length()>500){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
-                alert.setHeaderText("채팅 에러");
+                alert.setHeaderText("채팅 오류");
                 alert.setContentText("최대 메시지 길이는 500자 입니다.");
                 alert.show();
             }
@@ -199,13 +199,13 @@ public class ChatController implements Initializable {
                 if(userInput.getText().isBlank()){
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
-                    alert.setHeaderText("채팅 에러");
+                    alert.setHeaderText("채팅 오류");
                     alert.setContentText("내용을 입력하시오");
                     alert.show();
                 }else if(userInput.getText().length()>500){
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("warning");
-                    alert.setHeaderText("채팅 에러");
+                    alert.setHeaderText("채팅 오류");
                     alert.setContentText("최대 메시지 길이는 500자 입니다.");
                     alert.show();
                 }else {
@@ -224,7 +224,7 @@ public class ChatController implements Initializable {
                     if (!noticeDAO.readNoticeAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
-                        alert.setHeaderText("공지 에러");
+                        alert.setHeaderText("공지 오류");
                         alert.setContentText("아직 공지를 확인하지 않은 인원이 있습니다\n공지 생성을 진행하시겠습니까?");
                         result = alert.showAndWait();
                         if (result.get() == ButtonType.OK) {
@@ -314,7 +314,7 @@ public class ChatController implements Initializable {
                     if(!showNoticeController.showNoticeContent()){
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("warning");
-                        alert.setHeaderText("공지 에러");
+                        alert.setHeaderText("공지 오류");
                         alert.setContentText("공지가 없습니다.");
                         alert.show();
                     }
@@ -343,7 +343,7 @@ public class ChatController implements Initializable {
                     if (!voteDAO.isReadAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
-                        alert.setHeaderText("투표 에러");
+                        alert.setHeaderText("투표 오류");
                         alert.setContentText("아직 투표를 하지 않은 인원이 있습니다\n투표 생성을 진행하시겠습니까?");
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == ButtonType.OK) {
@@ -477,7 +477,7 @@ public class ChatController implements Initializable {
                     else{
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("warning");
-                        alert.setHeaderText("투표 에러");
+                        alert.setHeaderText("투표 오류");
                         alert.setContentText("투표가 없습니다.");
                         alert.show();
                     }
@@ -519,7 +519,7 @@ public class ChatController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(ip, port);
+            startClient(IP, port);
         }catch (IOException e) {
             e.printStackTrace();
 

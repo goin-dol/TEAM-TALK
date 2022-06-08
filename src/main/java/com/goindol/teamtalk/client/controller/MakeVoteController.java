@@ -48,7 +48,7 @@ public class MakeVoteController implements Initializable {
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("투표 에러");
+            alert.setHeaderText("투표 오류");
             alert.setContentText("투표 항목을 입력해주세요.");
             alert.show();
         }
@@ -71,7 +71,7 @@ public class MakeVoteController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("투표 에러");
+            alert.setHeaderText("투표 오류");
             alert.setContentText("입력하지 않은 투표 제목이나 투표 항목이 있습니다.");
             alert.show();
         }
