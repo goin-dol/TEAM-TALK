@@ -146,7 +146,6 @@ public class ChatController implements Initializable {
         }
     }
 
-
     public void initialChat() {
         List<String> content = chatLogDAO.showChatLog(chatid);
         if(content != null) {
@@ -162,7 +161,6 @@ public class ChatController implements Initializable {
         chatRoomTitle.setText(title);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -173,6 +171,51 @@ public class ChatController implements Initializable {
                 goToBack();
             }
         });
+
+        userInput.setOnAction(event-> {
+            if(userInput.getText().isBlank()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("채팅 오류");
+                alert.setContentText("내용을 입력하시오");
+                alert.show();
+            }else if(userInput.getText().length()>500){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("채팅 오류");
+                alert.setContentText("최대 메시지 길이는 500자 입니다.");
+                alert.show();
+            }
+            else {
+                send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+                userInput.setText("");
+                userInput.requestFocus();
+            }
+        });
+
+        sendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(userInput.getText().isBlank()){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("채팅 오류");
+                    alert.setContentText("내용을 입력하시오");
+                    alert.show();
+                }else if(userInput.getText().length()>500){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("채팅 오류");
+                    alert.setContentText("최대 메시지 길이는 500자 입니다.");
+                    alert.show();
+                }else {
+                    send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
+                    userInput.setText("");
+                    userInput.requestFocus();
+                }
+            }
+        });
+
         noticeMake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -181,7 +224,7 @@ public class ChatController implements Initializable {
                     if (!noticeDAO.readNoticeAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
-                        alert.setHeaderText("공지 에러");
+                        alert.setHeaderText("공지 오류");
                         alert.setContentText("아직 공지를 확인하지 않은 인원이 있습니다\n공지 생성을 진행하시겠습니까?");
                         result = alert.showAndWait();
                         if (result.get() == ButtonType.OK) {
@@ -256,52 +299,6 @@ public class ChatController implements Initializable {
             }
         });
 
-
-        userInput.setOnAction(event-> {
-            if(userInput.getText().isBlank()){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("warning");
-                alert.setHeaderText("채팅 에러");
-                alert.setContentText("내용을 입력하시오.");
-                alert.show();
-            }else if(userInput.getText().length()>500){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("warning");
-                alert.setHeaderText("채팅 에러");
-                alert.setContentText("최대 메시지 길이는 500자 입니다.");
-                alert.show();
-            }
-            else {
-                send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
-                userInput.setText("");
-                userInput.requestFocus();
-            }
-        });
-
-        sendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(userInput.getText().isBlank()){
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("warning");
-                    alert.setHeaderText("채팅 에러");
-                    alert.setContentText("내용을 입력하시오.");
-                    alert.show();
-                }else if(userInput.getText().length()>500){
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("warning");
-                    alert.setHeaderText("채팅 에러");
-                    alert.setContentText("최대 메시지 길이는 500자 입니다.");
-                    alert.show();
-                }else {
-                    send(chatid + "/" + userDTO.getNickName() + " : " + userInput.getText() + "\n");
-                    userInput.setText("");
-                    userInput.requestFocus();
-                }
-            }
-        });
-
-
         noticeCheck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -317,7 +314,7 @@ public class ChatController implements Initializable {
                     if(!showNoticeController.showNoticeContent()){
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("warning");
-                        alert.setHeaderText("공지 에러");
+                        alert.setHeaderText("공지 오류");
                         alert.setContentText("공지가 없습니다.");
                         alert.show();
                     }
@@ -346,7 +343,7 @@ public class ChatController implements Initializable {
                     if (!voteDAO.isReadAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
-                        alert.setHeaderText("투표 에러");
+                        alert.setHeaderText("투표 오류");
                         alert.setContentText("아직 투표를 하지 않은 인원이 있습니다\n투표 생성을 진행하시겠습니까?");
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == ButtonType.OK) {
@@ -427,7 +424,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
                 VoteDTO voteDTO = voteDAO.findVoteByVoteId(voteid, chatid);
-                boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
+                boolean ifAlreadyVote = voteDAO.checkAlreadyVote(voteid, userDTO.getNickName());
                 if(voteDAO.checkVote(chatid)) {
                     if (ifAlreadyVote) {
                         try {
@@ -480,7 +477,7 @@ public class ChatController implements Initializable {
                     else{
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setTitle("warning");
-                        alert.setHeaderText("투표 에러");
+                        alert.setHeaderText("투표 오류");
                         alert.setContentText("투표가 없습니다.");
                         alert.show();
                     }
@@ -504,7 +501,7 @@ public class ChatController implements Initializable {
                     chatRoomInfoController.setChatRoomId(chatid);
                     chatRoomInfoController.setUserDTO(userDTO);
                     chatRoomInfoController.setMainController(mainController);
-                    chatRoomInfoController.showChatRoomUserList();
+                    chatRoomInfoController.showChatRoomParticipants();
                     stage.initOwner(curStage);
                     stage.setScene(new Scene(root, 250, 400));
                     stage.setTitle("Team Talk");

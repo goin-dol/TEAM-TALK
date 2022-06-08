@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class MainServerController {
     FriendDAO friendDAO = FriendDAO.getInstance();
-    ChatRoomParticipantsDAO chatRoomUserListDAO = ChatRoomParticipantsDAO.getInstance();
+    ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     ServerSocket serverSocket;
     Socket socket;
     String key;
@@ -69,13 +69,13 @@ public class MainServerController {
                                 realTimeSend(sendUser, code);
                             }
                         }else if(code.equals("chatRoom")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }else if(code.equals("notice")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }else if(code.equals("vote")) {
-                            ArrayList<String> sendUser = chatRoomUserListDAO.getChatRoomParticipants(Integer.parseInt(roomId));
+                            ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
                         }
                     }

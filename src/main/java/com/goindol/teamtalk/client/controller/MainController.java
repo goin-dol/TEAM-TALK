@@ -229,15 +229,15 @@ public class MainController implements Initializable {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Friend Add Error");
-            alert.setContentText("Already friend");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("이미 추가된 사용자입니다. ");
             alert.show();
         }else if(status == 2){
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Friend Add Error");
-            alert.setContentText("Wrong NickName");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("존재하지 않은 사용자입니다. ");
             alert.show();
         }else {
             ObservableList<FriendDTO> friendListItems = friendList.getItems();

@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MakeVoteController implements Initializable {
@@ -41,10 +40,18 @@ public class MakeVoteController implements Initializable {
     public MainController mainController;
 
     public void addVoteVar() {
-        _voteVarList.add(voteVar.getText());
-        voteVarItems.add(voteVar.getText());
-        voteVarList.setItems(voteVarItems);
-        voteVar.clear();
+        if(!voteVar.getText().isBlank()) {
+            _voteVarList.add(voteVar.getText());
+            voteVarItems.add(voteVar.getText());
+            voteVarList.setItems(voteVarItems);
+            voteVar.clear();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("투표 오류");
+            alert.setContentText("투표 항목을 입력해주세요.");
+            alert.show();
+        }
     }
 
     public void addVote() {
@@ -64,7 +71,7 @@ public class MakeVoteController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("투표 에러");
+            alert.setHeaderText("투표 오류");
             alert.setContentText("입력하지 않은 투표 제목이나 투표 항목이 있습니다.");
             alert.show();
         }

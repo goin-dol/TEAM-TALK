@@ -34,21 +34,21 @@ public class ChatRoomInfoController implements Initializable {
     public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     public FriendDAO friendDAO = FriendDAO.getInstance();
     public ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
-    @FXML private ListView chatRoomUserList;
+    @FXML private ListView chatRoomParticipants;
     @FXML private TextField userInput;
     @FXML private Button invite;
     @FXML private Button exitRoom;
 
 
-    public void showChatRoomUserList() {
+    public void showChatRoomParticipants() {
        List<String> strings = new ArrayList<>();
-        ArrayList<String> chatRoomUsers = chatRoomParticipantsDAO.getChatRoomParticipants(chatId);
-        for(String users : chatRoomUsers) {
+        ArrayList<String> chatRoomParticipant = chatRoomParticipantsDAO.getChatRoomParticipants(chatId);
+        for(String users : chatRoomParticipant) {
             strings.add(users);
         }
         ObservableList<String> chatRoomObservableUserList = FXCollections.observableList(strings);
 
-        chatRoomUserList.setItems(chatRoomObservableUserList);
+        chatRoomParticipants.setItems(chatRoomObservableUserList);
     }
 
     public void inviteFriend() {
@@ -62,9 +62,9 @@ public class ChatRoomInfoController implements Initializable {
         }else {
             if(friendDAO.isFriend(userDTO.getNickName(),userInput.getText())) {
                 chatRoomDAO.inviteChatRoom(chatId, userInput.getText());
-                ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
-                chatRoomUserListItems.add(userInput.getText());
-                chatRoomUserList.setItems(chatRoomUserListItems);
+                ObservableList<String> chatRoomParticipantsItems = chatRoomParticipants.getItems();
+                chatRoomParticipantsItems.add(userInput.getText());
+                chatRoomParticipants.setItems(chatRoomParticipantsItems);
             }else{
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
@@ -75,7 +75,7 @@ public class ChatRoomInfoController implements Initializable {
         }
     }
 
-    public void existRoom() {
+    public void exitRoom() {
         chatRoomParticipantsDAO.exitCurrentRoom(chatId, userDTO.getNickName());
 
     }
@@ -83,7 +83,7 @@ public class ChatRoomInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       chatRoomUserList.setEditable(false);
+        chatRoomParticipants.setEditable(false);
         invite.setOnMouseClicked(event-> {
             inviteFriend();
             mainController.send("chatRoom/"+ chatId + "/" + userInput.getText());
@@ -91,7 +91,7 @@ public class ChatRoomInfoController implements Initializable {
         });
 
         exitRoom.setOnMouseClicked(event-> {
-            existRoom();
+            exitRoom();
             //TO DO 현재 화면 닫아주기
             try {
                 Stage curStage = (Stage) userInput.getScene().getWindow();

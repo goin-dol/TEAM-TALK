@@ -267,7 +267,7 @@ public class VoteDAO {
     }
 
     //해당 유저가 투표를 했는지
-    public boolean checkOverLap(int voteId, String nickName) {
+    public boolean checkAlreadyVote(int voteId, String nickName) {
         boolean status = false;
         String query =
                 "SELECT" +
@@ -338,7 +338,7 @@ public class VoteDAO {
 
 
     //각 투표 리스트 별로 투표한 사람들 리스트 조회
-    public List<String> readVoteUserByContent(int vote_id, String content){
+    public List<String> getVoterByVoteVar(int vote_id, String content){
         List<String> result = null;
         String query =
                 "SELECT * FROM `DB_ppick`.`voteResult` WHERE vote_id=? and content=?";
