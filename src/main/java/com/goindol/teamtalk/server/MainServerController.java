@@ -64,8 +64,10 @@ public class MainServerController {
                         System.out.println("code : " + code);
                         if(code.equals("login")) {
                             ArrayList<String> sendUser = friendDAO.getFriendNickNameList(value);
-                            sendUser.add(value);
-                            realTimeSend(sendUser, code);
+                            if(sendUser != null) {
+                                sendUser.add(value);
+                                realTimeSend(sendUser, code);
+                            }
                         }else if(code.equals("chatRoom")) {
                             ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);

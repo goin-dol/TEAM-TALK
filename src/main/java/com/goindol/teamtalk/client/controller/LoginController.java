@@ -83,20 +83,20 @@ public class LoginController implements Initializable {
             } else if(status == 1){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
-                alert.setHeaderText("로그인 에러");
+                alert.setHeaderText("로그인 오류");
                 alert.setContentText("잘못된 아이디나 비밀번호를 입력했습니다.");
                 alert.show();
             } else if(status == 2) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("warning");
-                alert.setHeaderText("로그인 에러");
+                alert.setHeaderText("로그인 오류");
                 alert.setContentText("이미 로그인 되어 있는 계정입니다.");
                 alert.show();
             }
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("로그인 에러");
+            alert.setHeaderText("로그인 오류");
             alert.setContentText("입력하지 않은 항목이 있습니다.");
             alert.show();
         }
