@@ -38,7 +38,7 @@ public class ChatController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-    String IP = "192.168.0.230";
+    String IP = "192.168.0.6";
 
     int port = 9500;
     ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
@@ -424,7 +424,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
                 VoteDTO voteDTO = voteDAO.findVoteByVoteId(voteid, chatid);
-                boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
+                boolean ifAlreadyVote = voteDAO.checkAlreadyVote(voteid, userDTO.getNickName());
                 if(voteDAO.checkVote(chatid)) {
                     if (ifAlreadyVote) {
                         try {

@@ -25,7 +25,7 @@ public class VoterListController implements Initializable {
     public void showVoterList(){
         voteVar.setText(voteVarContent);
         List<String> strings = new ArrayList<>();
-        List<String> voter_List = voteDAO.readVoteUserByContent(voteDTO.getVote_id(), voteVarContent);
+        List<String> voter_List = voteDAO.getVoterByVoteVar(voteDTO.getVote_id(), voteVarContent);
         if(voter_List!=null) {
             for (String voters : voter_List) {
                 strings.add(voters);
