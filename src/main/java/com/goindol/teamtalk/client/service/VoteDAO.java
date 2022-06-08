@@ -35,7 +35,7 @@ public class VoteDAO {
                 "INSERT INTO `DB_ppick`.`vote` (chatRoom_id,title,isAnonymous,isOverLap) VALUES "+
                         "(?,?,?,?)";
         String init =
-                "UPDATE `DB_ppick`.`chatRoomUserList`" +
+                "UPDATE `DB_ppick`.`chatRoomParticipants`" +
                         "SET" +
                         "`isVoted` = 1 " +
                         "WHERE `chatRoom_id` = ? ";
@@ -172,7 +172,7 @@ public class VoteDAO {
         String query =
                 "INSERT INTO `DB_ppick`.`voteResult` (vote_id,content,nickName) values (?,?,?)";
         String update =
-                "UPDATE `DB_ppick`.`chatRoomUserList`" +
+                "UPDATE `DB_ppick`.`chatRoomParticipants`" +
                         "SET `isVoted`=2 " +
                         "WHERE `nickName`=? and chatRoom_id=?";
         String over =
@@ -289,10 +289,10 @@ public class VoteDAO {
     //투표 인원 체크
     public boolean isReadAllParticipants(int chatRoom_id) {
         String query =
-                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
+                "SELECT count(*) as count from `DB_ppick`.`chatRoomParticipants` where chatRoom_id=?";
 
         String query1 =
-                "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where isVoted=? and chatRoom_id=?";
+                "SELECT count(*) as count from `DB_ppick`.`chatRoomParticipants` where isVoted=? and chatRoom_id=?";
 
         try {
             conn = DBDAO.getConnection();
