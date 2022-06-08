@@ -149,6 +149,7 @@ public class MainController implements Initializable {
         Platform.runLater(()->{
             friendList.setItems(friendObervableList);
             friendList.setCellFactory(param -> new colorListCell());
+
         });
     }
 
@@ -223,7 +224,6 @@ public class MainController implements Initializable {
 
     public void addFriend(){
 
-
         int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
         if(status == 1) {
             searchFriend.setText("");
@@ -248,14 +248,16 @@ public class MainController implements Initializable {
                 friendList.setCellFactory(param -> new colorListCell());
             });
             searchFriend.setText("");
+            send("login/roomId/" + userDTO.getNickName());
         }
 
-        send("login/roomId/" + userDTO.getNickName());
+
     }
 
     public void logOut(){
-        userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
         send("login/roomId/" + userDTO.getNickName());
+        userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
+
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
@@ -279,6 +281,7 @@ public class MainController implements Initializable {
             @Override
             public void handle(Event event) {
                 logOut();
+                send("login/roomId/" + userDTO.getNickName());
             }
         });
 
@@ -286,6 +289,7 @@ public class MainController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 addFriend();
+                send("login/roomId/" + userDTO.getNickName());
             }
         });
 
@@ -305,7 +309,7 @@ public class MainController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
+            startClient(ip, port);
         }catch (IOException e) {
             e.printStackTrace();
 

@@ -522,7 +522,7 @@ public class ChatController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
+            startClient(ip, port);
         }catch (IOException e) {
             e.printStackTrace();
 
