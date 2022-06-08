@@ -24,7 +24,7 @@ public class ChatServer extends Application {
     ServerSocket serverSocket;
     Socket socket;
 
-    public static Map<String, ChatClient> clients = new HashMap<String, ChatClient>();
+    public static Map<String, ChatServerController> clients = new HashMap<String, ChatServerController>();
 
     public void startServer(int port) {
         try {
@@ -44,7 +44,7 @@ public class ChatServer extends Application {
                     try {
                         Socket socket = serverSocket.accept();
 
-                        ChatClient client = new ChatClient(socket);
+                        ChatServerController client = new ChatServerController(socket);
                         client.receiveData();
                         System.out.println("name = " + client.key);
                         ChatServer.clients.put(client.key, client);
@@ -67,7 +67,7 @@ public class ChatServer extends Application {
         try {
             Iterator it = clients.entrySet().iterator();
             while(it.hasNext()) {
-                Map.Entry<Integer, ChatClient> entry = (Map.Entry)it.next();
+                Map.Entry<Integer, ChatServerController> entry = (Map.Entry)it.next();
                 entry.getValue().socket.close();
                 it.remove();
             }

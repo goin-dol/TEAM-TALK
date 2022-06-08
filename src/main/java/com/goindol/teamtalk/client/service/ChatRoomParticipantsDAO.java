@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class ChatRoomParticipantsDAO {
     private static ChatRoomParticipantsDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -75,7 +73,7 @@ public class ChatRoomParticipantsDAO {
         return nickName;
     }
 
-    public void exitRoom(int chatRoomId, String nickName) {
+    public void exitCurrentRoom(int chatRoomId, String nickName) {
         String query = "DELETE FROM `DB_ppick`.`chatRoomParticipants` " +
                 "WHERE chatRoom_id = ? and nickName = ?";
         try {
@@ -91,4 +89,14 @@ public class ChatRoomParticipantsDAO {
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
         }
     }
+
+
+
+
+
+
+
+
+
+
 }

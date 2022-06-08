@@ -13,8 +13,6 @@ public class NoticeDAO {
 
     private static NoticeDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
 
     private PreparedStatement pstmt = null;
@@ -114,7 +112,7 @@ public class NoticeDAO {
                 "SELECT * FROM `DB_ppick`.`notice` WHERE chatRoom_id=?";
 
         try {
-            conn = DB.getConnection();
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,chatRoom_id);
             rs = pstmt.executeQuery();

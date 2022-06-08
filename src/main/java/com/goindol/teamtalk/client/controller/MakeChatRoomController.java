@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MakeChatRoomController implements Initializable {
-    public ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
+    public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     public UserDTO userDTO;
     @FXML private Pane pane;
     @FXML private TextField chatRoomTitle;
@@ -35,9 +35,9 @@ public class MakeChatRoomController implements Initializable {
             alert.setContentText("채팅창 제목은 10글자 이내로 입력해주세요.");
             alert.show();
         }else {
-            chatRoomListDAO.createChatRoom(chatRoomTitle.getText(), userDTO.getNickName());
-            int chatId = chatRoomListDAO.getChatRoomId(chatRoomTitle.getText(), userDTO.getNickName());
-            chatRoomListDAO.inviteChatRoom(chatId, userDTO.getNickName());
+            chatRoomDAO.createChatRoom(chatRoomTitle.getText(), userDTO.getNickName());
+            int chatId = chatRoomDAO.getChatRoomId(chatRoomTitle.getText(), userDTO.getNickName());
+            chatRoomDAO.inviteChatRoom(chatId, userDTO.getNickName());
             chatRoomTitle.setText("");
             //
             String s = chatRoomTitle.getText();

@@ -16,8 +16,6 @@ public class VoteDAO {
 
     private static VoteDAO instance = null;
 
-    private static DBDAO DB = DBDAO.getInstance();
-
     private Connection conn = null;
 
     private PreparedStatement pstmt = null;
@@ -30,8 +28,6 @@ public class VoteDAO {
         }
         return instance;
     }
-
-
 
     //투표 생성 (투표 리스트 다 담아서 만듦)
     public void creatVote(int chatRoom_id,String title,boolean isAnonymous,boolean isOverLap){
@@ -111,9 +107,7 @@ public class VoteDAO {
 
     //투표가 생성되고 투표 리스트들을 확인하는 메소드
     public List<VoteVarDTO> readVoteVar(int vote_id){
-
         ArrayList<VoteVarDTO> v = null;
-
         String query =
                 "SELECT * FROM `DB_ppick`.`voteVar` WHERE vote_id=?";
 
@@ -142,8 +136,6 @@ public class VoteDAO {
         }
         return v;
     }
-
-    //
 
     public void deleteVote(int vote_id){
         String query =
@@ -295,8 +287,7 @@ public class VoteDAO {
 
 
     //투표 인원 체크
-
-    public boolean allReadVote(int chatRoom_id) {
+    public boolean isReadAllParticipants(int chatRoom_id) {
         String query =
                 "SELECT count(*) as count from `DB_ppick`.`chatRoomUserList` where chatRoom_id=?";
 
@@ -338,9 +329,7 @@ public class VoteDAO {
 
     //각 투표 리스트 별로 투표한 사람들 리스트 조회
     public List<String> readVoteUserByContent(int vote_id, String content){
-
         List<String> result = null;
-
         String query =
                 "SELECT * FROM `DB_ppick`.`voteResult` WHERE vote_id=? and content=?";
 

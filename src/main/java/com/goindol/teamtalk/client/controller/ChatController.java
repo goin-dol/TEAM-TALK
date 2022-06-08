@@ -41,7 +41,7 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.230";
 
     int port = 9500;
-    ChatRoomDAO chatRoomListDAO = ChatRoomDAO.getInstance();
+    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     NoticeDAO noticeDAO = NoticeDAO.getInstance();
@@ -158,7 +158,7 @@ public class ChatController implements Initializable {
     }
 
     public void setChatRoomTitle(){
-        String title = chatRoomListDAO.getCurrentChatRoomName(chatid);
+        String title = chatRoomDAO.getCurrentChatRoomName(chatid);
         chatRoomTitle.setText(title);
     }
 
@@ -343,7 +343,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 if(voteDAO.checkVote(chatid)) {
                     int vote_id = voteDAO.getVoteId(chatid);
-                    if (!voteDAO.allReadVote(chatid)) {
+                    if (!voteDAO.isReadAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("투표 에러");

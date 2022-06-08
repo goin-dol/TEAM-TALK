@@ -4,6 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.service.ChatRoomDAO;
 import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
+import com.goindol.teamtalk.client.service.FriendDAO;
 import com.goindol.teamtalk.client.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +32,7 @@ public class ChatRoomInfoController implements Initializable {
     public int chatId;
     public MainController mainController;
     public ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
+    public FriendDAO friendDAO = FriendDAO.getInstance();
     public ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     @FXML private ListView chatRoomUserList;
     @FXML private TextField userInput;
@@ -58,7 +60,7 @@ public class ChatRoomInfoController implements Initializable {
             alert.setContentText("이미 채팅방에 존재하는 친구입니다.");
             alert.show();
         }else {
-            if(chatRoomDAO.checkFriend(userDTO.getNickName(),userInput.getText())) {
+            if(friendDAO.isFriend(userDTO.getNickName(),userInput.getText())) {
                 chatRoomDAO.inviteChatRoom(chatId, userInput.getText());
                 ObservableList<String> chatRoomUserListItems = chatRoomUserList.getItems();
                 chatRoomUserListItems.add(userInput.getText());
@@ -74,7 +76,7 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void existRoom() {
-        chatRoomParticipantsDAO.exitRoom(chatId, userDTO.getNickName());
+        chatRoomParticipantsDAO.exitCurrentRoom(chatId, userDTO.getNickName());
 
     }
 

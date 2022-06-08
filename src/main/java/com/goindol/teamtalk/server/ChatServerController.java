@@ -9,14 +9,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
-public class ChatClient {
+public class ChatServerController {
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
-    ServerSocket serverSocket;
     Socket socket;
     String key;
 
 
-    public ChatClient(Socket socket) {
+    public ChatServerController(Socket socket) {
         this.socket = socket;
         receive();
     }
@@ -59,7 +58,7 @@ public class ChatClient {
                         int chatId = Integer.parseInt(data[0]);
                         String sendMessage = data[1];
 
-                        for(Map.Entry<String, ChatClient> entry : ChatServer.clients.entrySet()) {
+                        for(Map.Entry<String, ChatServerController> entry : ChatServer.clients.entrySet()) {
                             String[] keyValue = entry.getKey().split("/");
                             int sendToRoomId = Integer.parseInt(keyValue[0]);
                             if(sendToRoomId == chatId) {
