@@ -88,7 +88,7 @@ public class DoVoteController implements Initializable {
         isOverLab = voteDTO.isOverLap();
         voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 하기");
         ObservableList names = FXCollections.observableArrayList();
-        List<VoteVarDTO> voteVarDTOList = voteDAO.ReadVoteList(voteDTO.getVote_id());
+        List<VoteVarDTO> voteVarDTOList = voteDAO.readVoteVar(voteDTO.getVote_id());
         if (voteVarDTOList != null) {
             for (VoteVarDTO voteVar : voteVarDTOList) {
                 voteVarId = voteVar.getVoteVar_id();

@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.w3c.dom.events.Event;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,6 +44,7 @@ public class SignupController implements Initializable {
             e.printStackTrace();
         }
     }
+
     public void registerUserAction() {
         String id = Id.getText();
         String password = Password.getText();
@@ -52,27 +52,54 @@ public class SignupController implements Initializable {
 
         //TODO : 중복 회원가입 여부 확인
 
-        if (userDAO.validSignUp(id,  nickname)) {
-            try {
-                userDAO.signUp(id, password, nickname);
 
-                Stage stage = (Stage) Id.getScene().getWindow();
-                Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
-                stage.setScene(new Scene(root, 400, 600));
-                stage.setTitle("Team Talk");
-                stage.setOnCloseRequest(event -> {System.exit(0);});
-                stage.setResizable(false);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (!password.isBlank() && !nickname.isBlank() && !id.isBlank()) {
+
+            if (id.matches("^[a-zA-Z0-9]{1,20}$") && password.matches("^[a-zA-Z0-9]{1,20}$")) {
+                if (userDAO.validateSignUp(id, nickname) == 0) {
+                    try {
+                        userDAO.signUp(id, password, nickname);
+
+                        Stage stage = (Stage) Id.getScene().getWindow();
+                        Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+                        stage.setScene(new Scene(root, 400, 600));
+                        stage.setTitle("Team Talk");
+                        stage.setOnCloseRequest(event -> {
+                            System.exit(0);
+                        });
+                        stage.setResizable(false);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (userDAO.validateSignUp(id, nickname) == 1) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("로그인 에러");
+                    alert.setContentText("이미 존재하는 닉네임입니다.");
+                    alert.show();
+                } else if (userDAO.validateSignUp(id, nickname) == 2) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("warning");
+                    alert.setHeaderText("로그인 에러");
+                    alert.setContentText("이미 존재하는 아이디입니다.");
+                    alert.show();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("로그인 에러");
+                alert.setContentText("아이디 및 비밀번호는 숫자와 영어만 사용 가능합니다.");
+                alert.show();
             }
-        } else {
+        }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
-            alert.setHeaderText("Sign Up Error");
-            alert.setContentText("Already");
+            alert.setHeaderText("로그인 에러");
+            alert.setContentText("입력하지 않은 항목이 있습니다.");
             alert.show();
         }
+
     }
 
     @Override

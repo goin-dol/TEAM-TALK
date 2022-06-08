@@ -8,27 +8,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ChatRoomUserListDAO {
-    private static ChatRoomUserListDAO instance = null;
-
-    private static DBDAO DB = DBDAO.getInstance();
+public class ChatRoomParticipantsDAO {
+    private static ChatRoomParticipantsDAO instance = null;
 
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
-    private ChatRoomUserListDAO() {}
+    private ChatRoomParticipantsDAO() {}
 
-    public static ChatRoomUserListDAO getInstance() {
+    public static ChatRoomParticipantsDAO getInstance() {
         if(instance == null)
-            instance = new ChatRoomUserListDAO();
+            instance = new ChatRoomParticipantsDAO();
         return instance;
     }
 
     //채팅방에 친구 추가시 이미 채팅방에 존재하는 친구인지 확인
-    public boolean overlapUser(int chatRoom_id,String nickName){
+    public boolean isParticipants(int chatRoom_id, String nickName){
         boolean check = false;
-        String query = "SELECT * FROM DB_ppick.chatRoomUserList WHERE chatRoom_id=? and nickName=?";
+        String query = "SELECT * FROM DB_ppick.chatRoomParticipants WHERE chatRoom_id=? and nickName=?";
 
         try {
             conn = DBDAO.getConnection();
@@ -50,9 +48,9 @@ public class ChatRoomUserListDAO {
         return check;
     }
 
-    public ArrayList<String> getChatRoomUser(int chatRoom_id) {
+    public ArrayList<String> getChatRoomParticipants(int chatRoom_id) {
         ArrayList<String> nickName = null;
-        String query = "SELECT nickName FROM DB_ppick.chatRoomUserList where chatRoom_id = ?";
+        String query = "SELECT nickName FROM DB_ppick.chatRoomParticipants where chatRoom_id = ?";
 
         try {
             conn = DBDAO.getConnection();
@@ -75,8 +73,8 @@ public class ChatRoomUserListDAO {
         return nickName;
     }
 
-    public void existRoom(int chatRoomId, String nickName) {
-        String query = "DELETE FROM `DB_ppick`.`chatRoomUserList` " +
+    public void exitCurrentRoom(int chatRoomId, String nickName) {
+        String query = "DELETE FROM `DB_ppick`.`chatRoomParticipants` " +
                 "WHERE chatRoom_id = ? and nickName = ?";
         try {
             conn = DBDAO.getConnection();

@@ -41,10 +41,18 @@ public class MakeVoteController implements Initializable {
     public MainController mainController;
 
     public void addVoteVar() {
-        _voteVarList.add(voteVar.getText());
-        voteVarItems.add(voteVar.getText());
-        voteVarList.setItems(voteVarItems);
-        voteVar.clear();
+        if(!voteVar.getText().isBlank()) {
+            _voteVarList.add(voteVar.getText());
+            voteVarItems.add(voteVar.getText());
+            voteVarList.setItems(voteVarItems);
+            voteVar.clear();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("투표 에러");
+            alert.setContentText("투표 항목을 입력해주세요.");
+            alert.show();
+        }
     }
 
     public void addVote() {

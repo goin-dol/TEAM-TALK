@@ -4,7 +4,7 @@ import com.goindol.teamtalk.HelloApplication;
 import com.goindol.teamtalk.client.model.UserDTO;
 import com.goindol.teamtalk.client.model.VoteDTO;
 import com.goindol.teamtalk.client.service.ChatLogDAO;
-import com.goindol.teamtalk.client.service.ChatRoomListDAO;
+import com.goindol.teamtalk.client.service.ChatRoomDAO;
 import com.goindol.teamtalk.client.service.NoticeDAO;
 import com.goindol.teamtalk.client.service.VoteDAO;
 import javafx.application.Platform;
@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -43,7 +41,7 @@ public class ChatController implements Initializable {
     String IP = "192.168.0.230";
 
     int port = 9500;
-    ChatRoomListDAO chatRoomListDAO = ChatRoomListDAO.getInstance();
+    ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
     VoteDAO voteDAO = VoteDAO.getInstance();
     NoticeDAO noticeDAO = NoticeDAO.getInstance();
@@ -160,7 +158,7 @@ public class ChatController implements Initializable {
     }
 
     public void setChatRoomTitle(){
-        String title = chatRoomListDAO.getCurrentChatRoomName(chatid);
+        String title = chatRoomDAO.getCurrentChatRoomName(chatid);
         chatRoomTitle.setText(title);
     }
 
@@ -179,8 +177,8 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Optional<ButtonType> result;
-                if (noticeDAO.checkNotice(chatid)) {
-                    if (!noticeDAO.AllReadNotice(chatid)) {
+                if (noticeDAO.hasNotice(chatid)) {
+                    if (!noticeDAO.readNoticeAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("공지 에러");
@@ -345,7 +343,7 @@ public class ChatController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 if(voteDAO.checkVote(chatid)) {
                     int vote_id = voteDAO.getVoteId(chatid);
-                    if (!voteDAO.AllReadVote(chatid, vote_id)) {
+                    if (!voteDAO.isReadAllParticipants(chatid)) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("warning");
                         alert.setHeaderText("투표 에러");
@@ -428,7 +426,7 @@ public class ChatController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 int voteid = voteDAO.getVoteId(chatid);
-                VoteDTO voteDTO = voteDAO.readByVoteId(voteid, chatid);
+                VoteDTO voteDTO = voteDAO.findVoteByVoteId(voteid, chatid);
                 boolean ifAlreadyVote = voteDAO.checkOverLap(voteid, userDTO.getNickName());
                 if(voteDAO.checkVote(chatid)) {
                     if (ifAlreadyVote) {
