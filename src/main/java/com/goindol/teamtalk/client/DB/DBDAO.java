@@ -27,7 +27,7 @@ public class DBDAO {
 
         ctx = new InitialContext();
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql:// database-1.cxye1eagwmwj.ap-northeast-2.rds.amazonaws.com:3306/DB_ppick?autoReconnect=true", "teamtalk", "Teamtalk0420!");
+        conn = DriverManager.getConnection("jdbc:mysql:// database-1.cxye1eagwmwj.ap-northeast-2.rds.amazonaws.com:3306/DB_ppick?autoReconnect=true&validationQuery=select 1", "teamtalk", "Teamtalk0420!");
         //conn = DriverManager.getConnection("jdbc:mysql:// 127.0.0.1:3306/db_team?useUnicode=true&serverTimezone=Asia/Seoul", "root", "3249");
         return conn;
     }

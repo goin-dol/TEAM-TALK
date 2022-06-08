@@ -39,6 +39,7 @@ public class ChatRoomDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -61,6 +62,7 @@ public class ChatRoomDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return cnt;
     }
@@ -89,7 +91,7 @@ public class ChatRoomDAO {
         String vote =
                 "SELECT * FROM vote WHERE chatRoom_id = ?";
         try {
-
+            conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(notice);
             pstmt.setInt(1, chatRoom_id);
             rs = pstmt.executeQuery();
@@ -116,6 +118,7 @@ public class ChatRoomDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return 1;
     }
@@ -138,6 +141,7 @@ public class ChatRoomDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return title;
     }
@@ -174,6 +178,7 @@ public class ChatRoomDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return roomName;
     }
