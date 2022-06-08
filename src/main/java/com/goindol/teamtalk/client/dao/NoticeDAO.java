@@ -76,6 +76,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -101,6 +102,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
 
     }
@@ -126,6 +128,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
 
         return false;
@@ -173,6 +176,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
 
         return noticeDTO;
@@ -203,6 +207,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
     //공지 읽은 사람 리스트
@@ -229,6 +234,7 @@ public class NoticeDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return chatPeople;
     }
@@ -269,6 +275,7 @@ public class NoticeDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return false;
     }

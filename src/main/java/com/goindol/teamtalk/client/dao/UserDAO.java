@@ -60,6 +60,7 @@ public class UserDAO {
                 pstmt.close();
             } catch (SQLException ex) {
             }
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -112,6 +113,7 @@ public class UserDAO {
                 pstmt.close();
             } catch (SQLException ex) {
             }
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return status;
     }
@@ -180,6 +182,7 @@ public class UserDAO {
                 pstmt.close();
             } catch (SQLException ex) {
             }
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return status;
     }
@@ -214,6 +217,7 @@ public class UserDAO {
                 pstmt.close();
             } catch (SQLException ex) {
             }
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return userDTO;
     }
@@ -250,6 +254,7 @@ public class UserDAO {
                 pstmt.close();
             } catch (SQLException ex) {
             }
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 

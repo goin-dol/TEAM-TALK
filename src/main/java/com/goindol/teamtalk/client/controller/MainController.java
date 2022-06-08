@@ -39,7 +39,6 @@ public class MainController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-    //String IP = "192.168.0.131";
     String IP = "192.168.0.2";
     int port = 9600;
     @FXML public StackPane stackPane;

@@ -57,6 +57,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -78,6 +79,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -101,6 +103,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return voteId;
     }
@@ -133,6 +136,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return v;
     }
@@ -162,6 +166,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
 
     }
@@ -203,6 +208,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
     }
 
@@ -231,6 +237,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return voteDTO;
     }
@@ -254,6 +261,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return status;
     }
@@ -281,6 +289,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return status;
     }
@@ -322,6 +331,7 @@ public class VoteDAO {
         } finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return false;
     }
@@ -353,6 +363,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return result;
     }
@@ -393,6 +404,7 @@ public class VoteDAO {
         }finally {
             if(rs != null) try {rs.close();}catch(SQLException ex ) {}
             if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
+            if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return arr;
     }

@@ -38,8 +38,8 @@ public class ChatController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-   // String IP = "192.168.0.230";
     String IP = "192.168.0.6";
+
     int port = 9500;
     ChatRoomDAO chatRoomDAO = ChatRoomDAO.getInstance();
     ChatLogDAO chatLogDAO = ChatLogDAO.getInstance();
