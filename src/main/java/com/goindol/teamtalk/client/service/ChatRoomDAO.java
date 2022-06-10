@@ -88,6 +88,10 @@ public class ChatRoomDAO {
                         ")";
         String notice =
                 "SELECT * FROM DB_ppick.notice WHERE chatRoom_id = ?";
+        String getVote_id =
+                "select vote_id from DB_ppick.vote where chatRoom_id = ?";
+        String votecheck =
+                "SELECT * FROM DB_ppick.voteResult WHERE nickName = ? and vote_id = ?";
         String vote =
                 "SELECT * FROM vote WHERE chatRoom_id = ?";
         try {
@@ -98,21 +102,42 @@ public class ChatRoomDAO {
 
             pstmt = conn.prepareStatement(vote);
             pstmt.setInt(1, chatRoom_id);
-            ResultSet rs1 = pstmt.executeQuery();
+            ResultSet check = pstmt.executeQuery();
 
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, chatRoom_id);
-            pstmt.setString(2, nickName);
-            if(rs.next())
-                pstmt.setInt(3, 1);
-            else
-                pstmt.setInt(3, 0);
-            if(rs1.next())
-                pstmt.setInt(4, 1);
-            else
+            if(check.next()) {
+                pstmt = conn.prepareStatement(getVote_id);
+                pstmt.setInt(1, chatRoom_id);
+                ResultSet rs1 = pstmt.executeQuery();
+                if(rs1.next()) {
+                    pstmt = conn.prepareStatement(votecheck);
+                    pstmt.setString(1, nickName);
+                    pstmt.setInt(2, rs1.getInt("vote_id"));
+                    ResultSet rs2 = pstmt.executeQuery();
+
+                    pstmt = conn.prepareStatement(query);
+                    pstmt.setInt(1, chatRoom_id);
+                    pstmt.setString(2, nickName);
+                    if(rs.next())
+                        pstmt.setInt(3, 1);
+                    else
+                        pstmt.setInt(3, 0);
+                    if(rs2.next())
+                        pstmt.setInt(4, 0);
+                    else
+                        pstmt.setInt(4, 1);
+                    pstmt.executeUpdate();
+                }
+            }else {
+                pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, chatRoom_id);
+                pstmt.setString(2, nickName);
+                if(rs.next())
+                    pstmt.setInt(3, 1);
+                else
+                    pstmt.setInt(3, 0);
                 pstmt.setInt(4, 0);
-            pstmt.executeUpdate();
-
+                pstmt.executeUpdate();
+            }
         } catch(Exception e) {
             e.printStackTrace();
         }finally {
