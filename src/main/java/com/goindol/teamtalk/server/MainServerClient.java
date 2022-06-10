@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class MainServerController {
+public class MainServerClient {
     FriendDAO friendDAO = FriendDAO.getInstance();
     ChatRoomParticipantsDAO chatRoomParticipantsDAO = ChatRoomParticipantsDAO.getInstance();
     ServerSocket serverSocket;
@@ -19,7 +19,7 @@ public class MainServerController {
     String key;
 
 
-    public MainServerController(Socket socket) {
+    public MainServerClient(Socket socket) {
         this.socket = socket;
     }
 
@@ -94,7 +94,7 @@ public class MainServerController {
     }
 
     private void realTimeSend(ArrayList<String> sendUser, String code) {
-        for(Map.Entry<String, MainServerController> entry : MainServer.clients.entrySet()) {
+        for(Map.Entry<String, MainServerClient> entry : MainServer.clients.entrySet()) {
             for(String user : sendUser) {
                 if(entry.getKey().equals(user)) {
                     entry.getValue().send(code);
