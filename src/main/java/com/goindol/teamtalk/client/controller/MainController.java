@@ -225,6 +225,7 @@ public class MainController implements Initializable {
     public void addFriend(){
 
         int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
+
         if(status == 1) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -239,7 +240,14 @@ public class MainController implements Initializable {
             alert.setHeaderText("친구 추가 오류");
             alert.setContentText("존재하지 않은 사용자입니다. ");
             alert.show();
-        }else {
+        }else if(userDTO.getNickName().equals(searchFriend.getText())) {
+            searchFriend.setText("");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("자기 자신은 친구추가 할 수 없습니다. ");
+            alert.show();
+        } else {
             ObservableList<FriendDTO> friendListItems = friendList.getItems();
             FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
             friendListItems.add(friend);
@@ -309,7 +317,7 @@ public class MainController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
+            startClient(ip, port);
         }catch (IOException e) {
             e.printStackTrace();
 
