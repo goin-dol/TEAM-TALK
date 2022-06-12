@@ -1,5 +1,5 @@
 .root {
-    -fx-font-family: "Montserrat";
+    -fx-font-family: sans-serif;
 }
 /*윗 공간*/
 .tab-pane .tab-header-area{-fx-padding: 35 0 0 0;}
@@ -22,6 +22,8 @@
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: #d7d6dc;
     -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent ;
 }
 /*탭 선택 시 색깔*/
 .tab:selected {
@@ -68,7 +70,8 @@
     -fx-background-color: #3d4855;
 }
 
-.label2{
+.label2 {
+    -fx-font-family: sans-serif;
     -fx-text-fill: #d7d6dc;
 }
 
@@ -81,8 +84,10 @@
     -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.7) , 15,0,0,1 );
 }
 .button {
+    -fx-font-family: sans-serif;
+
     -fx-background-color: #eba576;
-    -fx-text-fill: black;
+    -fx-text-fill: #3d3d3d;
     -fx-cursor: hand;
 }
 .button:hover {

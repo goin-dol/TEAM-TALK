@@ -21,7 +21,7 @@
             </ImageView>
          </children>
       </Pane>
-      <TextField fx:id="chatRoomTitle" layoutX="80.0" layoutY="58.0" prefHeight="26.0" prefWidth="206.0" />
-      <Button fx:id="complete" layoutX="290.0" layoutY="58.0" mnemonicParsing="false" text="생성" />
+      <TextField fx:id="chatRoomTitle" layoutX="80.0" layoutY="58.0" prefHeight="34.0" prefWidth="206.0" />
+      <Button fx:id="complete" layoutX="290.0" layoutY="60.0" prefHeight="30.0" mnemonicParsing="false" text="생성" />
    </children>
 </Pane>

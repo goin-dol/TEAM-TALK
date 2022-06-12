@@ -22,7 +22,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-                  <TextArea fx:id="noticeContent" prefHeight="290.0" prefWidth="382.0" />
+                  <TextArea fx:id="noticeContent" wrapText="true" prefHeight="290.0" prefWidth="382.0" />
             <Pane prefHeight="52.0" prefWidth="400.0" styleClass="pane">
                <children>
                   <Label alignment="CENTER" layoutY="10.0" prefHeight="17.0" prefWidth="400.0" text="&lt;읽은 사람 목록&gt;">
