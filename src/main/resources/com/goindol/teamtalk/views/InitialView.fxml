@@ -13,7 +13,7 @@
    <children>
       <Button fx:id="loginButton" layoutX="219.0" layoutY="460.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="70.0" styleClass="loginbutton" text="Login" />
       <Button fx:id="signupButton" layoutX="127.0" layoutY="460.0" mnemonicParsing="false" onAction="#signupButtonAction" prefHeight="30.0" prefWidth="70.0" styleClass="signupbutton" text="Signup" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="119.0" prefHeight="100.0" prefWidth="400.0" text="TEAM-TALK" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="119.0" prefHeight="100.0" prefWidth="400.0" text="TEAM - TALK" textAlignment="CENTER">
          <font>
             <Font size="40.0" />
          </font>

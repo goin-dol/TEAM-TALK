@@ -1,5 +1,5 @@
 .root {
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 .pane {
@@ -8,7 +8,7 @@
 }
 .label {
     -fx-text-fill: #d7d6dc;
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 .list-view {

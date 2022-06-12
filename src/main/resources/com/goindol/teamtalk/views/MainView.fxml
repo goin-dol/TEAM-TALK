@@ -46,7 +46,7 @@
                         <AnchorPane fx:id="friendAnchor" prefHeight="600.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
                             <VBox prefHeight="600.0" prefWidth="340.0">
                                 <Pane prefHeight="60.0" prefWidth="340.0">
-                                    <Label layoutX="14.0" layoutY="22.0" styleClass="label" text="친구 추가" />
+                                    <Label layoutX="14.0" layoutY="22.0" styleClass="label2" text="친구 추가" />
                                     <TextField fx:id="searchFriend" layoutX="72.0" layoutY="16.0" prefHeight="30.0" prefWidth="211.0" />
                                     <Button fx:id="addFriendButton" layoutX="289.0" layoutY="16.0" prefHeight="30.0" mnemonicParsing="false" text="추가" />
                                 </Pane>

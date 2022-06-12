@@ -1,12 +1,12 @@
 .root {
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 .pane {
     -fx-background-color: #3d4855;
 }
 .label{
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 14;

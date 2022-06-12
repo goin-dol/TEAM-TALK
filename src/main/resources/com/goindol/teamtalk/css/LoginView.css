@@ -1,13 +1,12 @@
 .root {
     -fx-background-color: #3d4855;
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 
 .label {
     -fx-text-fill: #d7d6dc;
-    -fx-font-family: "yangjin";
-
+    -fx-font-family: sans-serif;
 }
 
 .text-field {

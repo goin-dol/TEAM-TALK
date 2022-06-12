@@ -15,7 +15,7 @@
         <TextField fx:id="Nickname" layoutX="127.0" layoutY="327.0" prefHeight="30.0" prefWidth="160.0" promptText="Nickname" />
         <TextField fx:id="Id" layoutX="128.0" layoutY="363.0" prefHeight="30.0" prefWidth="160.0" promptText="Id" />
         <PasswordField fx:id="Password" layoutX="127.0" layoutY="399.0" prefHeight="30.0" prefWidth="170.0" promptText="Password" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="119.0" prefHeight="100.0" prefWidth="400.0" text="TEAM-TALK" textAlignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="119.0" prefHeight="100.0" prefWidth="400.0" text="TEAM - TALK" textAlignment="CENTER">
          <font>
             <Font size="40.0" />
          </font>

@@ -1,5 +1,5 @@
 .root{
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 .pane {
@@ -23,7 +23,7 @@
     -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.7) , 15,0,0,1 );
 }
 .label{
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
     -fx-text-fill: #d7d6dc;
 }

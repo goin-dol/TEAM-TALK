@@ -1,9 +1,9 @@
 .root {
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
 }
 .label{
-    -fx-font-family: "yangjin";
+    -fx-font-family: sans-serif;
 
     -fx-text-fill: #d7d6dc;
 }
