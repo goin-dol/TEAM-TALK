@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,6 +21,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
+        System.setProperty("prism.lcdtext","false");
+        Font.loadFont(getClass().getResourceAsStream("font/양진체v0.9_ttf.ttf"), 14);
         Parent root = FXMLLoader.load(getClass().getResource("views/InitialView.fxml"));
         stage.setTitle("Team Talk");
         stage.setScene(new Scene(root, 400, 600));

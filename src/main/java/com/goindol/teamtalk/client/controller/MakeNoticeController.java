@@ -32,6 +32,8 @@ public class MakeNoticeController implements Initializable {
                 noticeDAO.deleteNotice(chatid);
             }
             noticeDAO.createNotice(userDTO.getNickName(), chatid, noticeTitle.getText(), noticeContent.getText());
+            Stage stage = (Stage) makeNoticeContainer.getScene().getWindow();
+            stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
@@ -51,13 +53,10 @@ public class MakeNoticeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         complete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 addNotice();
-                Stage stage = (Stage) makeNoticeContainer.getScene().getWindow();
-                stage.close();
                 mainController.send("notice/"+ chatid + "/" + noticeTitle.getText());
 
             }

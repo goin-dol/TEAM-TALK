@@ -1,14 +1,23 @@
+.root {
+    -fx-font-family: "yangjin";
+
+}
 .scroll-bar {
     -fx-background-color: #3d4855;
 }
 .label{
+    -fx-font-family: "yangjin";
+
     -fx-text-fill: #d7d6dc;
-    -fx-font-size: 20;
+    -fx-font-size: 24;
 }
 
 .text-field {
+    -fx-font-family: "yangjin";
+
     -fx-background-color: #505a6c;
     -fx-text-fill: #d7d6dc;
+    -fx-font-size: 16;
 }
 .pane {
     -fx-background-color: #3d4855;
@@ -16,9 +25,13 @@
     -fx-border-color: #d7d6dc;
 }
 .text-area {
+    -fx-font-family: "yangjin";
     -fx-control-inner-background : #3d4855;
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 16;
+}
+.text-area .text {
+    -fx-line-spacing: 5px;
 }
 
 .image-view:hover {
@@ -26,9 +39,10 @@
     -fx-cursor: hand;
 }
 .button {
+    -fx-font-family: "yangjin";
     -fx-background-color: #3d4855;
     -fx-text-fill: #d7d6dc;
-    -fx-font-family: sans-serif;
+    -fx-font-size: 14;
     -fx-cursor: hand;
 }
 .button:hover {

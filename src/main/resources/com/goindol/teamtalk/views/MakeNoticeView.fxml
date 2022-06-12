@@ -35,7 +35,7 @@
             </Pane>
             <Pane prefHeight="576.0" prefWidth="400.0" styleClass="pane">
                <children>
-                  <TextArea fx:id="noticeContent" layoutX="71.0" layoutY="40.0" prefHeight="307.0" prefWidth="300.0" styleClass="text-area" />
+                  <TextArea fx:id="noticeContent" wrapText="true" layoutX="71.0" layoutY="40.0" prefHeight="307.0" prefWidth="300.0" styleClass="text-area" />
                   <Label layoutX="13.0" layoutY="41.0" text="공지 내용" />
                   <Button fx:id="complete" layoutX="301.0" layoutY="399.0" mnemonicParsing="false" text="입력 완료" />
                </children>

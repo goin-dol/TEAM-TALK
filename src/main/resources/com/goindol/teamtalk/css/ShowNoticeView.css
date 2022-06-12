@@ -1,8 +1,14 @@
+.root {
+    -fx-font-family: "yangjin";
+
+}
 .pane {
     -fx-background-color: #3d4855;
     -fx-border-style: hidden hidden hidden hidden;
 }
 .label{
+    -fx-font-family: "yangjin";
+
     -fx-text-fill: #d7d6dc;
 }
 .text-area {

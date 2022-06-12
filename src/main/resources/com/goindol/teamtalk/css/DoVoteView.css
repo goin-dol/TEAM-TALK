@@ -1,9 +1,15 @@
+.root {
+    -fx-font-family: "yangjin";
+
+}
 .pane {
     -fx-background-color: #3d4855;
     -fx-border-style: hidden hidden hidden hidden;
 }
 .label {
     -fx-text-fill: #d7d6dc;
+    -fx-font-family: "yangjin";
+
 }
 .list-view {
     -fx-background-color: #3d4855;
@@ -19,8 +25,7 @@
 }
 .button {
     -fx-background-color: #eba576;
-    -fx-text-fill: black;
-    -fx-font-family: sans-serif;
+    -fx-text-fill: #3d3d3d;
     -fx-cursor: hand;
 }
 .button:hover {
