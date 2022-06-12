@@ -14,11 +14,16 @@
 .text-field {
     -fx-control-inner-background: #444c5c;
     -fx-text-fill: #d7d6dc;
+    -fx-focus-color: #d7d6dc;
+    -fx-font-size: 15;
+    -fx-faint-focus-color: transparent ;
 }
 .text-area {
     -fx-control-inner-background: #444c5c;
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 15;
+    -fx-focus-color: #d7d6dc;
+    -fx-faint-focus-color: transparent ;
 }
 .button {
     -fx-background-color: #eba576;

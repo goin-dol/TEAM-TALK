@@ -53,7 +53,7 @@ public class ShowNoticeController implements Initializable {
 //        만약 공지사항이 있다면 checkNotice에서 true값이 나옴
          if(noticeDAO.hasNotice(chatid)) {
              noticeDTO = noticeDAO.showNoticeContent(chatid, userDTO.getNickName());
-             noticeTitle.setText(noticeDTO.getTitle());
+             noticeTitle.setText("<" + noticeDTO.getTitle() + ">");
              noticeContent.setText(noticeDTO.getContent());
              return true;
          }else {

@@ -26,15 +26,15 @@
          <children>
             <Pane prefHeight="50.0" prefWidth="400.0" styleClass="pane">
                <children>
-                  <TextField fx:id="voteTitle" layoutX="105.0" layoutY="19.0" prefHeight="25.0" prefWidth="190.0" />
+                  <TextField fx:id="voteTitle" layoutX="105.0" layoutY="16.0" prefHeight="32.0" prefWidth="190.0" />
                   <Label layoutX="40.0" layoutY="23.0" text="투표 제목" />
                </children>
             </Pane>
             <Pane prefHeight="91.0" prefWidth="400.0" styleClass="pane">
                <children>
                   <Label layoutX="40.0" layoutY="37.0" text="투표 항목" />
-                  <TextField fx:id="voteVar" layoutX="105.0" layoutY="33.0" prefHeight="25.0" prefWidth="190.0" />
-                  <Button fx:id="addVoteVarbutton" layoutX="305.0" layoutY="33.0" mnemonicParsing="false" text="추가" />
+                  <TextField fx:id="voteVar" layoutX="105.0" layoutY="35.0" prefHeight="32.0" prefWidth="190.0" />
+                  <Button fx:id="addVoteVarbutton" layoutX="305.0" layoutY="30.0" prefHeight="32.0" mnemonicParsing="false" text="추가" />
                </children>
             </Pane>
             <Pane prefHeight="208.0" prefWidth="400.0" styleClass="pane">

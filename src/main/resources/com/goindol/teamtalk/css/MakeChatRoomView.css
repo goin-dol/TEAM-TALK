@@ -7,8 +7,12 @@
     -fx-border-style: hidden hidden hidden hidden;
 }
 .text-field {
-    -fx-control-inner-background: #444c5c;
     -fx-text-fill: #d7d6dc;
+    -fx-background-color: #444c5c;
+    -fx-border-color: #d7d6dc;
+    -fx-border-style: solid solid solid solid;
+    -fx-border-radius: 5 5 5 5;
+    -fx-text-alignment: center;
 }
 .button {
     -fx-background-color: #eba576;

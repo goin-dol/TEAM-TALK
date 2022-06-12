@@ -23,6 +23,8 @@
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: #d7d6dc;
     -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent ;
 }
 /*탭 선택 시 색깔*/
 .tab:selected {

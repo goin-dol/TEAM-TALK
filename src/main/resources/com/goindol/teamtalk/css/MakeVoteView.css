@@ -22,6 +22,8 @@
 .text-field {
     -fx-control-inner-background: #444c5c;
     -fx-text-fill: #d7d6dc;
+    -fx-focus-color: #d7d6dc;
+    -fx-faint-focus-color: transparent ;
 }
 .list-view {
     -fx-background-color: #3d4855;

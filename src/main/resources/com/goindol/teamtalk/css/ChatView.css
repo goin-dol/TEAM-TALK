@@ -14,7 +14,6 @@
 
 .text-field {
     -fx-font-family: "yangjin";
-
     -fx-background-color: #505a6c;
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 16;
@@ -29,6 +28,8 @@
     -fx-control-inner-background : #3d4855;
     -fx-text-fill: #d7d6dc;
     -fx-font-size: 16;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent ;
 }
 .text-area .text {
     -fx-line-spacing: 5px;
