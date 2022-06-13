@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.service.VoteDAO;
+import com.goindol.teamtalk.client.dto.VoteDTO;
+import com.goindol.teamtalk.client.dao.VoteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

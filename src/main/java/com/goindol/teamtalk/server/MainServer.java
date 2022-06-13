@@ -24,7 +24,7 @@ public class MainServer extends Application {
     ServerSocket serverSocket;
     Socket socket;
 
-    public static Map<String, MainServerController> clients = new HashMap<String, MainServerController>();
+    public static Map<String, MainServerClient> clients = new HashMap<String, MainServerClient>();
 
     public void startServer(int port) {
         try {
@@ -46,7 +46,7 @@ public class MainServer extends Application {
                         Socket socket = serverSocket.accept();
 
                         System.out.println("Connect Complete");
-                        MainServerController client = new MainServerController(socket);
+                        MainServerClient client = new MainServerClient(socket);
                         client.receiveData();
                         MainServer.clients.put(client.key, client);
                         synchronized (this) {
@@ -72,7 +72,7 @@ public class MainServer extends Application {
         try {
             Iterator it = clients.entrySet().iterator();
             while(it.hasNext()) {
-                Map.Entry<Integer, MainServerController> entry = (Map.Entry)it.next();
+                Map.Entry<Integer, MainServerClient> entry = (Map.Entry)it.next();
                 entry.getValue().socket.close();
                 it.remove();
             }

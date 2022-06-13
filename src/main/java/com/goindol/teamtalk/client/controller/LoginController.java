@@ -1,12 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.UserDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.UserDAO;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,10 +18,9 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+
+public class LoginController {
 
     @FXML public Pane pane;
     @FXML public TextField Id;
@@ -62,7 +60,7 @@ public class LoginController implements Initializable {
                     this.userDTO = userDAO.getUser(id, password);
 
                     Stage stage = (Stage) Id.getScene().getWindow();
-                    FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
                     Parent root = loader.load();
                     MainController main = loader.getController();
                     main.setUserDTO(userDTO);
@@ -107,7 +105,7 @@ public class LoginController implements Initializable {
     public void signupButtonAction() {
         try {
             Stage stage = (Stage) Id.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/SignUpView.fxml"));
+            Parent root = FXMLLoader.load(Main.class.getResource("views/SignUpView.fxml"));
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -118,8 +116,4 @@ public class LoginController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }

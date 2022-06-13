@@ -1,4 +1,10 @@
+.root {
+    -fx-font-family: sans-serif;
+
+}
 .label{
+    -fx-font-family: sans-serif;
+
     -fx-text-fill: #d7d6dc;
 }
 .list-view {
@@ -19,7 +25,7 @@
 }
 .button {
     -fx-background-color: #eba576;
-    -fx-text-fill: black;
+    -fx-text-fill: #3d3d3d;
     -fx-font-size: 12;
 }
 .button:hover {

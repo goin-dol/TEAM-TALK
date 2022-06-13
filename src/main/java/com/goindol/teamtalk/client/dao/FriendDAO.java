@@ -1,8 +1,8 @@
-package com.goindol.teamtalk.client.service;
+package com.goindol.teamtalk.client.dao;
 
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.dto.FriendDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,7 +123,7 @@ public class FriendDAO {
                         "`friendInfo`.`nickName`," +
                         "`friendInfo`.`friendNickName`," +
                         "`friendInfo`.`friendStatus`" +
-                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
+                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ? order by `friendInfo`.`friendStatus` DESC ";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);

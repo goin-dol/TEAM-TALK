@@ -1,8 +1,8 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.NoticeDTO;
-import com.goindol.teamtalk.client.service.NoticeDAO;
-import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.dto.NoticeDTO;
+import com.goindol.teamtalk.client.dao.NoticeDAO;
+import com.goindol.teamtalk.client.dto.UserDTO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +53,7 @@ public class ShowNoticeController implements Initializable {
 //        만약 공지사항이 있다면 checkNotice에서 true값이 나옴
          if(noticeDAO.hasNotice(chatid)) {
              noticeDTO = noticeDAO.showNoticeContent(chatid, userDTO.getNickName());
-             noticeTitle.setText(noticeDTO.getTitle());
+             noticeTitle.setText("<" + noticeDTO.getTitle() + ">");
              noticeContent.setText(noticeDTO.getContent());
              return true;
          }else {

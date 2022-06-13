@@ -1,9 +1,9 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.model.VoteDTO;
-import com.goindol.teamtalk.client.model.VoteVarDTO;
-import com.goindol.teamtalk.client.service.VoteDAO;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dto.VoteDTO;
+import com.goindol.teamtalk.client.dto.VoteVarDTO;
+import com.goindol.teamtalk.client.dao.VoteDAO;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -36,36 +36,13 @@ public class DoVoteController implements Initializable {
 
     public int chatid;
     public int voteVarId;
-    public boolean isOverLab;
+    public boolean isOverLap;
     List<String> tempList = new ArrayList<String>();
     public UserDTO userDTO;
     public VoteDTO voteDTO;
 
     public void saveVoteResult() {
-//        if(tempList.size() >= 2) {
-//            if(voteDAO.checkOverlapVote(voteDTO.getVote_id())) {
-//                for(String temp : tempList) {
-//                    voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
-//                    Stage stage = (Stage) borderPane.getScene().getWindow();
-//                    stage.close();
-//                }
-//                Stage stage = (Stage) borderPane.getScene().getWindow();
-//                stage.close();
-//            }else {
-//                Alert alert = new Alert(Alert.AlertType.WARNING);
-//                alert.setTitle("warning");
-//                alert.setHeaderText("OverLap vote");
-//                alert.setContentText("You Only One Vote");
-//                alert.show();
-//            }
-//        }else {
-//            for(String temp : tempList) {
-//                voteDAO.choiceVote(voteDTO.getVote_id(),chatid, temp, userDTO.getNickName());
-//                Stage stage = (Stage) borderPane.getScene().getWindow();
-//                stage.close();
-//            }
-//        }
-        if (isOverLab) {
+        if (isOverLap) {
             for (String temp : tempList) {
                 voteDAO.choiceVote(voteDTO.getVote_id(), chatid, temp, userDTO.getNickName());
                 Stage stage = (Stage) borderPane.getScene().getWindow();
@@ -79,13 +56,11 @@ public class DoVoteController implements Initializable {
 
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
-
-
     }
 
     public void initialVoteList() {
         //TODO DB에서 해당 채팅방 투표의 투표 항목 불러오기
-        isOverLab = voteDTO.isOverLap();
+        isOverLap = voteDTO.isOverLap();
         voteTitle.setText("< " + voteDTO.getTitle() + " > " + "투표 하기");
         ObservableList names = FXCollections.observableArrayList();
         List<VoteVarDTO> voteVarDTOList = voteDAO.readVoteVar(voteDTO.getVote_id());
@@ -94,8 +69,6 @@ public class DoVoteController implements Initializable {
                 voteVarId = voteVar.getVoteVar_id();
                 names.add(voteVar);
             }
-
-
             voteList.setItems(names);
             voteList.setCellFactory(param -> new RadioListCell());
         }
@@ -134,7 +107,7 @@ public class DoVoteController implements Initializable {
                 setText(null);
                 setGraphic(null);
             } else {
-                if (isOverLab) {
+                if (isOverLap) {
                     CheckBox checkBox = new CheckBox(obj.getContent());
                     checkBox.setText(obj.getContent());
                     checkBox.selectedProperty().addListener(new InvalidationListener() {

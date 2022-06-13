@@ -1,11 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.*;
-import com.goindol.teamtalk.client.service.*;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.*;
+import com.goindol.teamtalk.client.dao.*;
 import javafx.application.Platform;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dto.FriendDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -182,7 +182,7 @@ public class MainController implements Initializable {
 
             Stage stage = (Stage) stackPane.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("views/ChatView.fxml"));
+            loader.setLocation(Main.class.getResource("views/ChatView.fxml"));
             Parent root = (Parent) loader.load();
             ChatController chatController = loader.getController();
             chatController.setuserDTO(userDTO);
@@ -208,7 +208,7 @@ public class MainController implements Initializable {
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MakeChatRoomView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MakeChatRoomView.fxml"));
             Parent root = (Parent) loader.load();
             MakeChatRoomController chatRoomTitleController = loader.getController();
             chatRoomTitleController.setUserDTO(userDTO);
@@ -225,6 +225,7 @@ public class MainController implements Initializable {
     public void addFriend(){
 
         int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
+
         if(status == 1) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -239,7 +240,14 @@ public class MainController implements Initializable {
             alert.setHeaderText("친구 추가 오류");
             alert.setContentText("존재하지 않은 사용자입니다. ");
             alert.show();
-        }else {
+        }else if(userDTO.getNickName().equals(searchFriend.getText())) {
+            searchFriend.setText("");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("warning");
+            alert.setHeaderText("친구 추가 오류");
+            alert.setContentText("자기 자신은 친구추가 할 수 없습니다. ");
+            alert.show();
+        } else {
             ObservableList<FriendDTO> friendListItems = friendList.getItems();
             FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
             friendListItems.add(friend);
@@ -261,7 +269,7 @@ public class MainController implements Initializable {
 
         try {
             Stage stage = (Stage) stackPane.getScene().getWindow();
-            Parent root = FXMLLoader.load(HelloApplication.class.getResource("views/InitialView.fxml"));
+            Parent root = FXMLLoader.load(Main.class.getResource("views/InitialView.fxml"));
             stage.setScene(new Scene(root, 400, 600));
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
@@ -309,7 +317,7 @@ public class MainController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(IP, port);
+            startClient(ip, port);
         }catch (IOException e) {
             e.printStackTrace();
 

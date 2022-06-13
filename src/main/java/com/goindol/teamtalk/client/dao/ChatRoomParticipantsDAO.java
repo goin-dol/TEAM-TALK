@@ -1,4 +1,4 @@
-package com.goindol.teamtalk.client.service;
+package com.goindol.teamtalk.client.dao;
 
 import com.goindol.teamtalk.client.DB.DBDAO;
 
