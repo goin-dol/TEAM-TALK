@@ -27,7 +27,7 @@ public class FriendDAO {
 
 
     //친구 추가
-    public int addFriend(String nickName, String friendNickName){
+    public synchronized int addFriend(String nickName, String friendNickName){
         int status = 0;
         String friend =
                 "SELECT * FROM DB_ppick.friendInfo WHERE nickName = ? AND friendNickName = ?";
@@ -88,7 +88,7 @@ public class FriendDAO {
     }
 
     //친구 객체를 불러오기 위한 메소드
-    public FriendDTO getFriend(String nickName, String friendNickName) {
+    public synchronized FriendDTO getFriend(String nickName, String friendNickName) {
         FriendDTO friendDTO = null;
         String query =
                 "SELECT * FROM `DB_ppick`.`friendInfo` WHERE friendNickName = ? and nickName = ?";
@@ -116,7 +116,7 @@ public class FriendDAO {
         return friendDTO;
     }
 
-    public ArrayList<FriendDTO> getFriendList(String nickName) {
+    public synchronized ArrayList<FriendDTO> getFriendList(String nickName) {
         ArrayList<FriendDTO> friendList = null;
         String query =
                 "SELECT `friendInfo`.`f_id`," +
@@ -150,7 +150,7 @@ public class FriendDAO {
         return friendList;
     }
 
-    public ArrayList<String> getFriendNickNameList(String nickName) {
+    public synchronized ArrayList<String> getFriendNickNameList(String nickName) {
         ArrayList<String> friendList = null;
         String query =
                 "SELECT `friendInfo`.`f_id`," +
@@ -180,7 +180,7 @@ public class FriendDAO {
     }
 
     // 채팅방에 초대할 때 친구인지 확인
-    public boolean isFriend(String nickName, String friend){
+    public synchronized boolean isFriend(String nickName, String friend){
         boolean check=false;
         String check_query =
                 "select * from friendInfo where nickName = ? and friendNickName=?";
