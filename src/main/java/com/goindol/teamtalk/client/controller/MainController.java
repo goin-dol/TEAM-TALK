@@ -39,7 +39,7 @@ public class MainController implements Initializable {
     PrintWriter out;
     BufferedReader in;
     Socket socket;
-    String IP = "192.168.0.2";
+    String IP = "192.168.0.8";
     int port = 9600;
     @FXML public StackPane stackPane;
     @FXML public AnchorPane chatAnchor;
@@ -274,7 +274,7 @@ public class MainController implements Initializable {
             stage.setTitle("Team Talk");
             stage.setOnCloseRequest(event -> {System.exit(0);});
             stage.setResizable(false);
-            stopClient();
+            //stopClient();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -317,7 +317,7 @@ public class MainController implements Initializable {
             InetAddress ia = InetAddress.getLocalHost();
             String ip_str = ia.toString();
             String ip = ip_str.substring(ip_str.indexOf("/") + 1);
-            startClient(ip, port);
+            startClient(IP, port);
         }catch (IOException e) {
             e.printStackTrace();
 

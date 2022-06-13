@@ -68,7 +68,7 @@ public class UserDAO {
 
     public int validateSignUp(String userId, String nickName) {
         int status = 0;
-        String query1 =
+        String query =
                 "SELECT " +
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
@@ -76,7 +76,7 @@ public class UserDAO {
                         "`user`.`status`" +
                         "FROM `DB_ppick`.`user` WHERE userId = ? ";
 
-        String query =
+        String query1 =
                 "SELECT " +
                         "`user`.`userId`," +
                         "`user`.`userPassword`," +
