@@ -67,6 +67,9 @@ public class MainServerClient {
                             if(sendUser != null) {
                                 sendUser.add(value);
                                 realTimeSend(sendUser, code);
+                            } else {
+                                sendUser = new ArrayList<String>();
+                                sendUser.add(value);
                             }
                         }else if(code.equals("chatRoom")) {
                             ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
