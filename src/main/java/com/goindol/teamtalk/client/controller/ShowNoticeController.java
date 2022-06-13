@@ -1,8 +1,8 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.client.model.NoticeDTO;
-import com.goindol.teamtalk.client.service.NoticeDAO;
-import com.goindol.teamtalk.client.model.UserDTO;
+import com.goindol.teamtalk.client.dto.NoticeDTO;
+import com.goindol.teamtalk.client.dao.NoticeDAO;
+import com.goindol.teamtalk.client.dto.UserDTO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

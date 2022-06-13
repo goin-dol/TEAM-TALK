@@ -1,11 +1,11 @@
 package com.goindol.teamtalk.client.controller;
 
-import com.goindol.teamtalk.HelloApplication;
-import com.goindol.teamtalk.client.model.UserDTO;
-import com.goindol.teamtalk.client.service.ChatRoomDAO;
-import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
-import com.goindol.teamtalk.client.service.FriendDAO;
-import com.goindol.teamtalk.client.service.UserDAO;
+import com.goindol.teamtalk.Main;
+import com.goindol.teamtalk.client.dto.UserDTO;
+import com.goindol.teamtalk.client.dao.ChatRoomDAO;
+import com.goindol.teamtalk.client.dao.ChatRoomParticipantsDAO;
+import com.goindol.teamtalk.client.dao.FriendDAO;
+import com.goindol.teamtalk.client.dao.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -99,19 +99,20 @@ public class ChatRoomInfoController implements Initializable {
                 Stage parentStage = (Stage) curStage.getOwner();
                 parentStage.close();
                 Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/MainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/MainView.fxml"));
                 Parent root = loader.load();
                 MainController main = loader.getController();
                 main.setUserDTO(userDTO);
                 main.showChatRoomList();
                 stage.setScene(new Scene(root, 400, 600));
                 stage.setTitle("Team Talk");
+                stage.setResizable(false);
+                stage.show();
                 stage.setOnCloseRequest(event1 -> {
                     userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
                     main.send("login/roomId/value");
-                    System.exit(0);});
-                stage.setResizable(false);
-                stage.show();
+                    //System.exit(0);
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -128,4 +129,5 @@ public class ChatRoomInfoController implements Initializable {
     }
 
     public void setMainController(MainController mainController) { this.mainController = mainController; }
+
 }

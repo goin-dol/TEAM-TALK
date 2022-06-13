@@ -1,8 +1,8 @@
-package com.goindol.teamtalk.client.service;
+package com.goindol.teamtalk.client.dao;
 
 
 import com.goindol.teamtalk.client.DB.DBDAO;
-import com.goindol.teamtalk.client.model.FriendDTO;
+import com.goindol.teamtalk.client.dto.FriendDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package com.goindol.teamtalk.client.model;
+package com.goindol.teamtalk.client.dto;
 
 public class UserDTO {
     private String userId;

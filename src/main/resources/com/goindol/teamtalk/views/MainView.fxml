@@ -36,7 +36,7 @@
                <graphic>
                   <ImageView fx:id="chatRoomListTabImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
                      <image>
-                        <Image url="@../images/chat2.png" />
+                        <Image url="@../images/chat.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -57,7 +57,7 @@
                <graphic>
                   <ImageView fx:id="friendListTabImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
                      <image>
-                        <Image url="@../images/friend2.png" />
+                        <Image url="@../images/friend.png" />
                      </image>
                   </ImageView>
                </graphic>

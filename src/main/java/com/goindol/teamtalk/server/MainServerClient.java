@@ -1,7 +1,7 @@
 package com.goindol.teamtalk.server;
 
-import com.goindol.teamtalk.client.service.ChatRoomParticipantsDAO;
-import com.goindol.teamtalk.client.service.FriendDAO;
+import com.goindol.teamtalk.client.dao.ChatRoomParticipantsDAO;
+import com.goindol.teamtalk.client.dao.FriendDAO;
 
 import java.io.IOException;
 import java.io.InputStream;

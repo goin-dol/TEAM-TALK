@@ -1,4 +1,4 @@
-package com.goindol.teamtalk.client.model;
+package com.goindol.teamtalk.client.dto;
 
 public class ChatRoomParticipantsDTO {
     private int chatRoomParticipants_id;
