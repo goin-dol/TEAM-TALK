@@ -143,14 +143,8 @@ public class FriendDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) try {
-                rs.close();
-            } catch (SQLException ex) {
-            }
-            if (pstmt != null) try {
-                pstmt.close();
-            } catch (SQLException ex) {
-            }
+            if(rs != null) try {rs.close();}catch(SQLException ex ) {}
+            if(pstmt != null) try {pstmt.close();}catch(SQLException ex) {}
             if(conn != null) try {conn.close();}catch(SQLException ex ) {}
         }
         return friendList;

@@ -267,7 +267,6 @@ public class MainController implements Initializable {
     }
 
     public void logOut(){
-        send("login/roomId/" + userDTO.getNickName());
         userDAO.logout(userDTO.getUserId(), userDTO.getNickName());
 
 

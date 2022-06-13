@@ -64,15 +64,21 @@ public class MainServerClient {
                         System.out.println("code : " + code);
                         if(code.equals("login")) {
                             ArrayList<String> sendUser = friendDAO.getFriendNickNameList(value);
-                            if(sendUser != null) {
-                                sendUser.add(value);
-                                realTimeSend(sendUser, code);
-                            }else {
-                                sendUser = new ArrayList<String>();
-                                sendUser.add(value);
-                                //ss
+                            if(roomId.equals("logout")) {
                                 realTimeSend(sendUser, code);
                             }
+                            else {
+                                if(sendUser != null) {
+                                    sendUser.add(value);
+                                    realTimeSend(sendUser, code);
+                                }else {
+                                    sendUser = new ArrayList<String>();
+                                    sendUser.add(value);
+                                    //ss
+                                    realTimeSend(sendUser, code);
+                                }
+                            }
+
                         }else if(code.equals("chatRoom")) {
                             ArrayList<String> sendUser = chatRoomParticipantsDAO.getChatRoomParticipants(Integer.parseInt(roomId));
                             realTimeSend(sendUser, code);
