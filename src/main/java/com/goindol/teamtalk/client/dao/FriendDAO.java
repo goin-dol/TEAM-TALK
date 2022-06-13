@@ -123,7 +123,7 @@ public class FriendDAO {
                         "`friendInfo`.`nickName`," +
                         "`friendInfo`.`friendNickName`," +
                         "`friendInfo`.`friendStatus`" +
-                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ? order by `friendInfo`.`friendStatus` DESC ";
+                        "FROM `DB_ppick`.`friendInfo` WHERE `friendInfo`.`nickName` = ?";
         try {
             conn = DBDAO.getConnection();
             pstmt = conn.prepareStatement(query);
