@@ -223,41 +223,45 @@ public class MainController implements Initializable {
     }
 
     public void addFriend(){
-
-        int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
-
-        if(status == 1) {
-            searchFriend.setText("");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("warning");
-            alert.setHeaderText("친구 추가 오류");
-            alert.setContentText("이미 추가된 사용자입니다. ");
-            alert.show();
-        }else if(status == 2){
-            searchFriend.setText("");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("warning");
-            alert.setHeaderText("친구 추가 오류");
-            alert.setContentText("존재하지 않은 사용자입니다. ");
-            alert.show();
-        }else if(userDTO.getNickName().equals(searchFriend.getText())) {
+        if(userDTO.getNickName().equals(searchFriend.getText())) {
             searchFriend.setText("");
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("warning");
             alert.setHeaderText("친구 추가 오류");
             alert.setContentText("자기 자신은 친구추가 할 수 없습니다. ");
             alert.show();
-        } else {
-            ObservableList<FriendDTO> friendListItems = friendList.getItems();
-            FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
-            friendListItems.add(friend);
-            Platform.runLater(()-> {
-                friendList.setItems(friendListItems);
-                friendList.setCellFactory(param -> new colorListCell());
-            });
-            searchFriend.setText("");
-            send("login/roomId/" + userDTO.getNickName());
+        }else {
+            int status = friendDAO.addFriend(userDTO.getNickName(), searchFriend.getText());
+
+            if(status == 1) {
+                searchFriend.setText("");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("친구 추가 오류");
+                alert.setContentText("이미 추가된 사용자입니다. ");
+                alert.show();
+            }else if(status == 2){
+                searchFriend.setText("");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("warning");
+                alert.setHeaderText("친구 추가 오류");
+                alert.setContentText("존재하지 않은 사용자입니다. ");
+                alert.show();
+            } else {
+                ObservableList<FriendDTO> friendListItems = friendList.getItems();
+                FriendDTO friend = friendDAO.getFriend(userDTO.getNickName(), searchFriend.getText());
+                friendListItems.add(friend);
+                Platform.runLater(()-> {
+                    friendList.setItems(friendListItems);
+                    friendList.setCellFactory(param -> new colorListCell());
+                });
+                searchFriend.setText("");
+                send("login/roomId/" + userDTO.getNickName());
+            }
         }
+
+
+
 
 
     }
