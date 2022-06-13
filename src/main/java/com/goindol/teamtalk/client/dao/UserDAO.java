@@ -22,7 +22,7 @@ public class UserDAO {
         return instance;
     }
 
-    public void signUp(String userId, String userPassword, String nickName) {
+    public synchronized void signUp(String userId, String userPassword, String nickName) {
         String query =
                 "INSERT INTO `DB_ppick`.`user`" +
                         "(" +
@@ -66,7 +66,7 @@ public class UserDAO {
     }
 
 
-    public int validateSignUp(String userId, String nickName) {
+    public synchronized int validateSignUp(String userId, String nickName) {
         int status = 0;
         String query1 =
                 "SELECT " +
@@ -120,7 +120,7 @@ public class UserDAO {
     }
 
 
-    public int login(String userId, String userPassword) {
+    public synchronized int login(String userId, String userPassword) {
         int status = 0;
         String overLap = "SELECT * FROM `DB_ppick`.`user` WHERE userId=?";
         String query =
@@ -189,7 +189,7 @@ public class UserDAO {
     }
 
 
-    public UserDTO getUser(String userId, String userPassword) {
+    public synchronized UserDTO getUser(String userId, String userPassword) {
         String query = "SELECT * FROM user WHERE userId = ? AND userPassword = ?";
         UserDTO userDTO = null;
         try {
@@ -224,7 +224,7 @@ public class UserDAO {
     }
 
 
-    public void logout(String userId, String nickName) {
+    public synchronized void logout(String userId, String nickName) {
         String update =
                 "UPDATE `DB_ppick`.`user`" +
                         "SET" +
