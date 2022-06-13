@@ -87,7 +87,7 @@ public class UserDAO {
 
         try {
             conn = DBDAO.getConnection();
-            pstmt = conn.prepareStatement(query);
+            pstmt = conn.prepareStatement(query1);
             pstmt.setString(1, userId);
             rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -95,7 +95,7 @@ public class UserDAO {
                 return status;
             }
 
-            pstmt = conn.prepareStatement(query1);
+            pstmt = conn.prepareStatement(query);
             pstmt.setString(1, nickName);
             rs = pstmt.executeQuery();
             if (rs.next()) {
