@@ -70,6 +70,7 @@ public class MainServerClient {
                             }else {
                                 sendUser = new ArrayList<String>();
                                 sendUser.add(value);
+                                //ss
                                 realTimeSend(sendUser, code);
                             }
                         }else if(code.equals("chatRoom")) {
